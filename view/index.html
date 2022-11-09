@@ -3,20 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>Shit Minecraft Launcher</title>
-</head>
-
-<body>
   <!-- Load stylesheet files -->
   <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css">
   <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.free.css">
   <!-- Load scripts -->
   <script src="./assets/scripts/jquery.js"></script>
   <script src="./assets/scripts/window.js"></script>
+  <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
+</head>
+
+<body>
+
   <!-- title bar -->
   <div id="win">
     <div class="title-bar">
@@ -43,7 +44,7 @@
           <div class="info">
             <a class="d-block" id="nickname">Elder_Driver</a>
           </div> -->
-          <element class="user-add" id="user-add">
+          <element class="user-add" id="user_add" style="cursor: pointer;">
             <i class="fa-regular nav-icon" id="nav-3"></i>
             <p>添加帐户</p>
           </element>
@@ -80,13 +81,55 @@
     </div>
     <main class="page">
       <div class="page" id="main"></div>
-      <div class="start">
+      <div class="btn">
         <button id="version_list_button">未选择任何版本</button>
         <button id="start"></button>
       </div>
     </main>
   </div>
+  <script type="text/javascript">
+    const btns = document.querySelectorAll("button");
+    btns.forEach(btn => {
+      btn.addEventListener("click", e => {
+        let span = document.createElement("span");
+        span.style.left = e.offsetX + "px";
+        span.style.top = e.offsetY + "px";
+        btn.appendChild(span);
+        setTimeout(() => {
+          span.remove();
+        }, 1000);
+      })
+    })
+  </script>
+  <script src="./assets/scripts/page.js"></script>
   <script src="./renderer.js"></script>
+  <div class="dont_display">
+    <div id="index">
+
+    </div>
+    <div id="user_add_pg">
+      <div class="list_card"></div>
+    </div>
+    <div id="v_setting_pg">
+
+    </div>
+    <div id="g_setting_pg">
+      <div class="card">
+        <div class="card-header">
+          <h3>启动选项</h3>
+        </div>
+        <div class="card-body">
+          <div class="input_text">
+            <div class="name">游戏窗口标题</div>
+            <input type="text" id="input_a" title="游戏窗口标题" required>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn">前往皮肤站</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
