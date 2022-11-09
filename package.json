@@ -1,0 +1,27 @@
+{
+    "name": "shit_minecraft_launcher",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder -w --x64",
+        "package": "electron-packager . HelloWorld --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
+    },
+    "author": "Broken_Deer",
+    "license": "GPL-3.0",
+    "devDependencies": {
+        "electron": "^21.2.2",
+        "electron-builder": "^23.6.0",
+        "electron-packager": "^17.1.1"
+    },
+    "dependencies": {},
+    "build": {
+        "copyright": "Broken_Deer",
+        "win": {
+            "target": [
+                "portable"
+            ]
+        }
+    }
+}
