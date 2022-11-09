@@ -5,15 +5,88 @@
   <meta charset="UTF-8">
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <title>Hello Worlddd!</title>
+  <title>Shit Minecraft Launcher</title>
 </head>
 
 <body>
-  <link rel="stylesheet" href="./assets/styles/index.css">
-  <h1>Hello World!</h1>
-  We are using Noddddddddddde.js <span id="node-version"></span>,
-  Chromium <span id="chrome-version"></span>,
-  and Electron <span id="electron-version"></span>.
+  <!-- Load stylesheet files -->
+  <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
+  <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.free.css">
+  <!-- Load scripts -->
+  <script src="./assets/scripts/jquery.js"></script>
+  <script src="./assets/scripts/window.js"></script>
+  <!-- title bar -->
+  <div id="win">
+    <div class="title-bar">
+      <div class="title">
+        <div id="icon"></div>
+        <div id="title">Shit Minecraft Launcher</div>
+      </div>
+      <div class="button">
+        <div class="window-btn" id="min"></div>
+        <div class="window-btn" id="close"></div>
+      </div>
+    </div>
+    <!-- Display content -->
+    <div class="sidebar" id="sidebar">
+      <li class="nav-header">帐户</li>
+      <div class="user-panel">
+        <div class="d-flex" id="user-panel">
+          <!--           <div class="image">
+            <picture id="avater">
+              <source srcset="https://bs.btlcraft.top/avatar/15?size=45" type="image/webp" />
+              <img src="https://bs.btlcraft.top/avatar/15?size=45&amp;png=1" class="bs-avatar" alt="User Image" />
+            </picture>
+          </div>
+          <div class="info">
+            <a class="d-block" id="nickname">Elder_Driver</a>
+          </div> -->
+          <element class="user-add" id="user-add">
+            <i class="fa-regular nav-icon" id="nav-3"></i>
+            <p>添加帐户</p>
+          </element>
+        </div>
+      </div>
+      <li class="nav-header">游戏</li>
+      <ul class="sidebar-links">
+        <li class="sidebar-item" id="sidebar-2">
+          <element id="version_list" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-2"></i>
+            <p>版本列表</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-4">
+          <element id="download" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-4"></i>
+            <p>下载</p>
+          </element>
+        </li>
+        <li class="nav-header">设置</li>
+        <li class="sidebar-item" id="sidebar-5">
+          <element id="v_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-5"></i>
+            <p>版本设置</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-6">
+          <element id="g_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-6"></i>
+            <p>全局设置</p>
+          </element>
+        </li>
+      </ul>
+    </div>
+    <main class="page">
+      <div class="page" id="main"></div>
+      <div class="start">
+        <button id="version_list_button">未选择任何版本</button>
+        <button id="start"></button>
+      </div>
+    </main>
+  </div>
+  <script src="./renderer.js"></script>
 </body>
 
 </html>
