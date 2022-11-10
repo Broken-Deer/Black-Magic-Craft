@@ -18,16 +18,31 @@ i.start-game::before {
     font-size: 1.3rem;
 }
 
+i.pro-settings::before {
+    content: "\f1de";
+    font-family: 'fa';
+    font-style: normal;
+    font-size: 1.3rem;
+}
+
+i.debug-settings::before {
+    content: "\f0ad";
+    font-family: 'fa';
+    font-style: normal;
+    font-size: 1.3rem;
+}
+
 div.title-bar>div.button #min::before {
     content: "\f068";
     font-size: 1.4rem;
-    line-height: 2.5;
+    line-height: 2.7;
+    transform: scale(0.95,1);
 }
 
 div.title-bar>div.button #close::before {
     content: "\f00d";
     font-size: 1.4rem;
-    line-height: 2;
+    line-height: 2.2;
 }
 
 i#nav-1:before {

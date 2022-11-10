@@ -10,7 +10,7 @@ const createWindow = () => {
         transparent: true,
         titleBarStyle: 'hidden',
         backgroundColor: '#00000000',
-        frame: false,
+        frame: true,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,

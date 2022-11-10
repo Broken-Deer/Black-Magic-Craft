@@ -3,14 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Shit Minecraft Launcher</title>
+  <title>Black Magic Craft</title>
   <!-- Load stylesheet files -->
   <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css">
-  <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.css">
-  <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.free.css">
   <!-- Load scripts -->
   <script src="./assets/scripts/jquery.js"></script>
   <script src="./assets/scripts/window.js"></script>
@@ -22,7 +20,8 @@
 
   <!-- title bar -->
   <div id="win">
-    <div class="btn-box" style="height: 89px;width: 257px;position: fixed;bottom: 0;right: 2rem;overflow: hidden;padding: 10px;pointer-events: none;">
+    <div class="btn-box"
+      style="height: 89px;width: 257px;position: fixed;bottom: 0;right: 2rem;overflow: hidden;padding: 10px;pointer-events: none;">
       <div class="btn" style="margin-top: 0rem;">
         <button id="version_list_button" class="btn_" tabindex="-1">未选择任何版本</button>
         <button id="start" class="btn_" tabindex="-1"></button>
@@ -31,7 +30,7 @@
     <div class="title-bar">
       <div class="title">
         <div id="icon"></div>
-        <div id="title">Shit Minecraft Launcher</div>
+        <div id="title">Black Magic Craft</div>
       </div>
       <div class="button">
         <div class="window-btn btn_" id="min"></div>
@@ -118,6 +117,7 @@
 
     </div>
     <div id="g_setting_pg">
+      <div class="page-title">全局设置</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title">
@@ -147,7 +147,7 @@
           <div class="input input-text">
             <span class="name">服务器地址</span>
             <div class="input-data">
-              <input type="text" id="input_a" title="启动游戏后自动进入服务器" placeholder="启动游戏后可以自动进入服务器" required>
+              <input type="text" id="input_a" title="服务器地址" placeholder="启动游戏后可以自动进入服务器" required>
               <div class="underline"></div>
             </div>
           </div>
@@ -180,11 +180,91 @@
               </ul>
             </div>
           </div>
-
-
         </div>
 
       </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="pro-settings"></i></div>
+            <div>
+              <h4>高级设置</h4>
+              <p>自定义启动命令</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+        </div>
+        <div class="card-body">
+          <div class="input input-text">
+            <span class="name">游戏参数</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="游戏参数" placeholder="默认" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">启动前执行</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="自定义启动器信息" placeholder="在游戏启动前执行" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">包装命令</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="包装命令" placeholder="会自动添加至启动命令前方" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">启动后执行</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="启动游戏后自动进入服务器" placeholder="在游戏启动后执行" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">Java 虚拟机参数</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="Java 虚拟机参数" placeholder="填写以覆盖默认设置" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">内存永久保存区域</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="内存永久保存区域" placeholder="填写整数（单位 MB）" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="debug-settings"></i></div>
+            <div>
+              <h4>调试选项</h4>
+              <p>如果你不知道这些选项的作用，请不要乱动它们！</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+        </div>
+        <div class="card-body">
+          <div class="input input-text">
+            <span class="name">本地库路径 (LWJGL)</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="本地库路径（LWJGL）" placeholder="由启动器提供，填写此选项以自定义游戏需要的本地库" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
   </div>
