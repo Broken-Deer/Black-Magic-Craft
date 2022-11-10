@@ -8,26 +8,34 @@
   <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css">
   <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/other/fontawesome/css/all.free.css">
   <!-- Load scripts -->
   <script src="./assets/scripts/jquery.js"></script>
   <script src="./assets/scripts/window.js"></script>
-  <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
+  <script src="./assets/scripts/input.js"></script>
+  <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
 </head>
 
-<body>
+<body style="transform: scale(0.95, 0.95); opacity: 0;">
 
   <!-- title bar -->
   <div id="win">
+    <div class="btn-box" style="height: 89px;width: 257px;position: fixed;bottom: 0;right: 2rem;overflow: hidden;padding: 10px;pointer-events: none;">
+      <div class="btn" style="margin-top: 0rem;">
+        <button id="version_list_button" class="btn_" tabindex="-1">未选择任何版本</button>
+        <button id="start" class="btn_" tabindex="-1"></button>
+      </div>
+    </div>
     <div class="title-bar">
       <div class="title">
         <div id="icon"></div>
         <div id="title">Shit Minecraft Launcher</div>
       </div>
       <div class="button">
-        <div class="window-btn" id="min"></div>
-        <div class="window-btn" id="close"></div>
+        <div class="window-btn btn_" id="min"></div>
+        <div class="window-btn btn_" id="close"></div>
       </div>
     </div>
     <!-- Display content -->
@@ -35,15 +43,6 @@
       <li class="nav-header">帐户</li>
       <div class="user-panel">
         <div class="d-flex" id="user-panel">
-          <!--           <div class="image">
-            <picture id="avater">
-              <source srcset="https://bs.btlcraft.top/avatar/15?size=45" type="image/webp" />
-              <img src="https://bs.btlcraft.top/avatar/15?size=45&amp;png=1" class="bs-avatar" alt="User Image" />
-            </picture>
-          </div>
-          <div class="info">
-            <a class="d-block" id="nickname">Elder_Driver</a>
-          </div> -->
           <element class="user-add" id="user_add" style="cursor: pointer;">
             <i class="fa-regular nav-icon" id="nav-3"></i>
             <p>添加帐户</p>
@@ -52,6 +51,12 @@
       </div>
       <li class="nav-header">游戏</li>
       <ul class="sidebar-links">
+        <li class="sidebar-item" id="sidebar-3">
+          <element id="start_game" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-7"></i>
+            <p>启动游戏</p>
+          </element>
+        </li>
         <li class="sidebar-item" id="sidebar-2">
           <element id="version_list" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-2"></i>
@@ -81,23 +86,22 @@
     </div>
     <main class="page">
       <div class="page" id="main"></div>
-      <div class="btn">
-        <button id="version_list_button">未选择任何版本</button>
-        <button id="start"></button>
-      </div>
     </main>
   </div>
   <script type="text/javascript">
-    const btns = document.querySelectorAll("button");
+    const btns = document.querySelectorAll(".btn_");
     btns.forEach(btn => {
-      btn.addEventListener("click", e => {
+      btn.addEventListener("mousedown", e => {
+        var a = btn.getAttribute('style')
+        btn.setAttribute('style', 'pointer-events:none; cursor: default;')
         let span = document.createElement("span");
         span.style.left = e.offsetX + "px";
         span.style.top = e.offsetY + "px";
         btn.appendChild(span);
         setTimeout(() => {
           span.remove();
-        }, 1000);
+          btn.setAttribute('style', a)
+        }, 500);
       })
     })
   </script>
@@ -116,19 +120,73 @@
     <div id="g_setting_pg">
       <div class="card">
         <div class="card-header">
-          <h3>启动选项</h3>
+          <div class="card-title">
+            <div class="card-icon"><i class="start-game"></i></div>
+            <div>
+              <h4>启动选项</h4>
+              <p>自定义启动游戏的一些配置</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
         </div>
         <div class="card-body">
-          <div class="input_text">
-            <div class="name">游戏窗口标题</div>
-            <input type="text" id="input_a" title="游戏窗口标题" required>
+          <div class="input input-text">
+            <span class="name">游戏窗口标题</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="游戏窗口标题" placeholder="默认" required>
+              <div class="underline"></div>
+            </div>
           </div>
+          <div class="input input-text">
+            <span class="name">自定义启动器信息</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="自定义启动器信息" placeholder="默认" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="input input-text">
+            <span class="name">服务器地址</span>
+            <div class="input-data">
+              <input type="text" id="input_a" title="启动游戏后自动进入服务器" placeholder="启动游戏后可以自动进入服务器" required>
+              <div class="underline"></div>
+            </div>
+          </div>
+
+          <div class="input input-list" id="version_isolation">
+            <span class="name">版本隔离</span>
+            <div class="input-data input-data-list" onclick="input_list(this,'185px')">
+              <div></div>
+              <ul class="option" style="display: none;">
+                <li class="option" onclick="set_input_list(this)">各版本独立</li>
+                <li class="option" onclick="set_input_list(this)">仅隔离远古版本</li>
+                <li class="option" onclick="set_input_list(this)">仅隔离可安装 Mod 的版本</li>
+                <li class="option" onclick="set_input_list(this)">仅隔离非正式版</li>
+                <li class="option" onclick="set_input_list(this)">仅隔离远古版本、非正式版、可安装 Mod 的版本</li>
+                <li class="option" onclick="set_input_list(this)">关闭（不推荐）</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="input input-list" id="version_isolation">
+            <span class="name">进程优先级</span>
+            <div class="input-data input-data-list" onclick="input_list(this,'153px')">
+              <div></div>
+              <ul class="option" style="display: none;">
+                <li class="option" onclick="set_input_list(this)">最高</li>
+                <li class="option" onclick="set_input_list(this)">较高</li>
+                <li class="option" onclick="set_input_list(this)">中</li>
+                <li class="option" onclick="set_input_list(this)">较低</li>
+                <li class="option" onclick="set_input_list(this)">最低</li>
+              </ul>
+            </div>
+          </div>
+
+
         </div>
-        <div class="card-footer">
-          <button class="btn">前往皮肤站</button>
-        </div>
+
       </div>
     </div>
+  </div>
   </div>
 </body>
 
