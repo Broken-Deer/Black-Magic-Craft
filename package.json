@@ -13,15 +13,38 @@
     "devDependencies": {
         "electron": "^21.2.2",
         "electron-builder": "^23.6.0",
-        "electron-packager": "^17.1.1"
+        "electron-packager": "^17.1.1",
+        "path": "^0.12.7"
     },
     "dependencies": {},
     "build": {
+        "productName": "Black Magic Craft",
+        "appId": "black_magic_craft",
         "copyright": "Broken_Deer",
         "win": {
             "target": [
                 "portable"
-            ]
+            ],
+            "icon": "./logo.ico"
+        },
+        "mac": {
+            "icon": "./logo.ico"
+        },
+        "linux": {
+            "icon": "./logo.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "guid": "idea",
+            "perMachine": true,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": true,
+            "installerIcon": "./logo.ico",
+            "uninstallerIcon": "./logo.ico",
+            "installerHeaderIcon": "./logo.ico",
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "idea"
         }
     }
 }

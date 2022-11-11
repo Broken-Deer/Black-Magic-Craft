@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+var path = require("path")
 let ipcMain = require('electron').ipcMain;
 var win
 const createWindow = () => {
@@ -15,7 +16,8 @@ const createWindow = () => {
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,
-        }
+        },
+        icon: path.join(__dirname, './logo.ico'),
     })
 
     win.loadFile('./view/index.html')

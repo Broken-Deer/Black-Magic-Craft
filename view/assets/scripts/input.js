@@ -22,10 +22,21 @@ function set_input_list(eventobj) {
 
 function expanded_card(eventobj) {
     var card = eventobj.parentNode.parentNode
+    $(eventobj).addClass('btn-disable')
+    setTimeout(() => {
+        $(eventobj).removeClass('btn-disable')
+    }, 310);
     if ($(card).hasClass('not-expanded')) {
+        $(card.lastElementChild).attr('style', 'overflow: hidden;')
         $(card).removeClass('not-expanded');
+        if (!$(card).hasClass('not-expanded')) {
+            setTimeout(() => {
+                $(card.lastElementChild).attr('style', '')
+            }, 300);
+        }
     }
     else {
         $(card).addClass('not-expanded');
+        $(card.lastElementChild).attr('style', 'overflow: hidden;')
     }
 }

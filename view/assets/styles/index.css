@@ -67,7 +67,7 @@ div.title-bar div#title {
 }
 
 div.title-bar>div.button {
-    width: calc(42px * 2);
+    width: calc(50px * 2);
     overflow: hidden;
     border-top-right-radius: 8px;
     display: flex;
@@ -75,7 +75,7 @@ div.title-bar>div.button {
 }
 
 div.title-bar>div.button .window-btn {
-    width: 44px;
+    width: 50px;
     display: flex;
     justify-content: center;
     font-family: 'fa-pro' !important;
@@ -383,13 +383,17 @@ i.angle-down {
 }
 
 .card-body {
-    overflow: hidden;
+    overflow: visible;
     max-height: 265px;
     transition: all .3s ease;
-    padding: 1.65rem 2.15rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+.card-body>div {
+    margin: 1.65rem 2.15rem;
 }
 
 .card-footer {
@@ -420,12 +424,14 @@ i.angle-down {
 
 .not-expanded .card-body {
     max-height: 0;
-    padding: 0rem 2.15rem;
     border-top: none;
     /* overflow: hidden; */
     /* display: flex; */
     /* flex-direction: column; */
     /* justify-content: flex-end; */
+}
+
+.not-expanded .card-body>div {
 }
 
 .not-expanded .card-header>.card-button>i.angle-down {
@@ -552,9 +558,9 @@ button#version_list_button {
 div.sidebar {
     box-shadow: 0px 0px 0px #000;
     background-color: #ffffff59;
-    margin-top: 44px;
+    margin-top: 50px;
     border-bottom-left-radius: 8px;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 71.1px);
 }
 
 .dont_display * {
@@ -607,11 +613,11 @@ span.name {
     padding-top: 0.1em;
     display: inline-grid;
     flex-direction: column;
-    justify-items: end;
-    align-items: center;
     width: auto;
     min-width: 16rem;
     background: #fff;
+    align-items: center;
+    justify-items: end;
 }
 
 .input-data-list:active>div {
@@ -626,9 +632,15 @@ span.name {
     transition: color .06s ease;
 }
 
+.input-data-list>div::after {
+    /* content: "1"; */
+    /* text-align: right; */
+    /* width: 100%; */
+}
+
 .input-list ul.option {
     height: 2rem;
-    position: fixed;
+    position: absolute;
     margin-top: 0.3rem;
     background: #fafafa;
     margin-right: -10px;
@@ -660,6 +672,15 @@ span.name {
     
 }
 
+.input-list ul.option>div {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top:0;
+    z-index: -1;
+}
+
 .input-text .underline {
     background: #1a73e8;
     margin-left: -8px;
@@ -682,4 +703,8 @@ div.page-title {
     font-size: 1.8rem;
     font-weight: 600;
     margin: 0 0 1.2rem 1rem;
+}
+
+.btn-disable {
+    pointer-events: none;
 }
