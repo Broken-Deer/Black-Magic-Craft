@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Black Magic Craft</title>
+  <!-- Load stylesheet files -->
+  <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css">
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css">
+  <!-- Load scripts -->
+  <script src="./assets/scripts/jquery.js"></script>
+  <script src="./assets/scripts/window.js"></script>
+  <script src="./assets/scripts/input.js"></script>
+  <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
+</head>
+
+<body style="transform: scale(0.95, 0.95); opacity: 0;">
+
+  <!-- title bar -->
+  <div id="win">
+    <div class="btn-box"
+      style="height: 89px;width: 257px;position: fixed;bottom: 0;right: 2rem;overflow: hidden;padding: 10px;pointer-events: none;">
+      <div class="btn" style="margin-top: 0rem;">
+        <button id="version_list_button" class="btn_" tabindex="-1">未选择任何版本</button>
+        <button id="start" class="btn_" tabindex="-1"></button>
+      </div>
+    </div>
+    <div class="title-bar">
+      <div class="title">
+        <div id="icon"></div>
+        <div id="title">Black Magic Craft</div>
+      </div>
+      <div class="button">
+        <div class="window-btn btn_" id="min"></div>
+        <div class="window-btn btn_" id="close"></div>
+      </div>
+    </div>
+    <!-- Display content -->
+    <div class="sidebar" id="sidebar">
+      <li class="nav-header">帐户</li>
+      <div class="user-panel">
+        <div class="d-flex" id="user-panel">
+          <element class="user-add" id="user_add" style="cursor: pointer;">
+            <i class="fa-regular nav-icon" id="nav-3"></i>
+            <p>添加帐户</p>
+          </element>
+        </div>
+      </div>
+      <li class="nav-header">游戏</li>
+      <ul class="sidebar-links">
+        <li class="sidebar-item" id="sidebar-3">
+          <element id="start_game" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-7"></i>
+            <p>启动游戏</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-2">
+          <element id="version_list" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-2"></i>
+            <p>版本列表</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-4">
+          <element id="download" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-4"></i>
+            <p>下载</p>
+          </element>
+        </li>
+        <li class="nav-header">设置</li>
+        <li class="sidebar-item" id="sidebar-5">
+          <element id="v_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-5"></i>
+            <p>版本设置</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-6">
+          <element id="g_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-6"></i>
+            <p>全局设置</p>
+          </element>
+        </li>
+      </ul>
+    </div>
+    <main class="page">
+      <div class="page" id="main"></div>
+    </main>
+  </div>
+  <script type="text/javascript">
+    const btns = document.querySelectorAll(".btn_");
+    btns.forEach(btn => {
+      btn.addEventListener("mousedown", e => {
+        var a = btn.getAttribute('style')
+        btn.setAttribute('style', 'pointer-events:none; cursor: default;')
+        let span = document.createElement("span");
+        span.style.left = e.offsetX + "px";
+        span.style.top = e.offsetY + "px";
+        btn.appendChild(span);
+        setTimeout(() => {
+          span.remove();
+          btn.setAttribute('style', a)
+        }, 500);
+      })
+    })
+  </script>
+  <script src="./assets/scripts/page.js"></script>
+  <script src="./renderer.js"></script>
+  <div class="dont_display">
+    <div id="index">
+
+    </div>
+    <div id="user_add_pg">
+      <div class="list_card"></div>
+    </div>
+    <div id="v_setting_pg">
+
+    </div>
+    <div id="g_setting_pg">
+      <div class="page-title">全局设置</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="start-game"></i></div>
+            <div>
+              <h4>启动选项</h4>
+              <p>自定义启动游戏的一些配置</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="input input-text">
+              <span class="name">游戏窗口标题</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="游戏窗口标题" placeholder="默认" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">自定义启动器信息</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="自定义启动器信息" placeholder="默认" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">服务器地址</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="服务器地址" placeholder="启动游戏后可以自动进入服务器" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+  
+            <div class="input input-list" id="version_isolation">
+              <span class="name">版本隔离</span>
+              <div class="input-data input-data-list" onclick="input_list(this,'185px')">
+                <div></div>
+                <ul class="option" style="display: none;">
+                  <li class="option" onclick="set_input_list(this)">各版本独立</li>
+                  <li class="option" onclick="set_input_list(this)">仅隔离远古版本</li>
+                  <li class="option" onclick="set_input_list(this)">仅隔离可安装 Mod 的版本</li>
+                  <li class="option" onclick="set_input_list(this)">仅隔离非正式版</li>
+                  <li class="option" onclick="set_input_list(this)">仅隔离远古版本、非正式版、可安装 Mod 的版本</li>
+                  <li class="option" onclick="set_input_list(this)">关闭（不推荐）</li>
+                  <div></div>
+                </ul>
+              </div>
+            </div>
+  
+            <div class="input input-list" id="version_isolation">
+              <span class="name">进程优先级</span>
+              <div class="input-data input-data-list" onclick="input_list(this,'153px')">
+                <div></div>
+                <ul class="option" style="display: none;">
+                  <li class="option" onclick="set_input_list(this)">最高</li>
+                  <li class="option" onclick="set_input_list(this)">较高</li>
+                  <li class="option" onclick="set_input_list(this)">中</li>
+                  <li class="option" onclick="set_input_list(this)">较低</li>
+                  <li class="option" onclick="set_input_list(this)">最低</li>
+                  <div></div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="pro-settings"></i></div>
+            <div>
+              <h4>高级设置</h4>
+              <p>自定义启动命令</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+        </div>
+        <div class="card-body" style="overflow: hidden;">
+          <div>
+            <div class="input input-text">
+              <span class="name">游戏参数</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="游戏参数" placeholder="默认" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">启动前执行</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="自定义启动器信息" placeholder="在游戏启动前执行" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">包装命令</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="包装命令" placeholder="会自动添加至启动命令前方" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">启动后执行</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="启动游戏后自动进入服务器" placeholder="在游戏启动后执行" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">Java 虚拟机参数</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="Java 虚拟机参数" placeholder="填写以覆盖默认设置" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">内存永久保存区域</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="内存永久保存区域" placeholder="填写整数（单位 MB）" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="debug-settings"></i></div>
+            <div>
+              <h4>调试选项</h4>
+              <p>如果你不知道这些选项的作用，请不要乱动它们！</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+        </div>
+        <div class="card-body" style="overflow: hidden;">
+          <div>
+            <div class="input input-text">
+              <span class="name">本地库路径 (LWJGL)</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="本地库路径（LWJGL）" placeholder="由启动器提供，填写此选项以自定义游戏需要的本地库" required>
+                <div class="underline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
