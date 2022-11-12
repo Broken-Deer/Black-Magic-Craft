@@ -22,6 +22,12 @@
     font-family: fa-pro;
     src: url(../fonts/fa-solid-900.woff2);
 }
+
+@font-face {
+    font-family: fa-brands;
+    src: url(../fonts/fa-brands-400.woff2);
+}
+
 /* 
 @font-face {
     font-family: iconfont;
@@ -35,4 +41,10 @@
 
 * {
     font-family: Harmony-re;
+}
+
+.fa-brands,
+.fa-brands::before,
+.fa-brands::after {
+    font-family: 'fa-brands' !important;
 }

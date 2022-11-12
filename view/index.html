@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Black Magic Craft</title>
-  <!-- Load stylesheet files -->
+  <!-- 加载样式表 -->
   <link rel="stylesheet" type="text/css" href="./assets/styles/index.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css">
   <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css">
-  <!-- Load scripts -->
+  <link rel="stylesheet" type="text/css" href="./assets/styles/control.css">
+  <!-- 加载脚本 -->
   <script src="./assets/scripts/jquery.js"></script>
   <script src="./assets/scripts/window.js"></script>
   <script src="./assets/scripts/input.js"></script>
@@ -18,8 +19,9 @@
 
 <body style="transform: scale(0.95, 0.95); opacity: 0;">
 
-  <!-- title bar -->
+  <!-- 窗口主体 -->
   <div id="win">
+    <div class="choose-file-msg">请在打开的窗口中选择文件</div>
     <div class="btn-box"
       style="height: 89px;width: 257px;position: fixed;bottom: 0;right: 2rem;overflow: hidden;padding: 10px;pointer-events: none;">
       <div class="btn" style="margin-top: 0rem;">
@@ -69,16 +71,16 @@
           </element>
         </li>
         <li class="nav-header">设置</li>
-        <li class="sidebar-item" id="sidebar-5">
-          <element id="v_setting" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-5"></i>
-            <p>版本设置</p>
-          </element>
-        </li>
         <li class="sidebar-item" id="sidebar-6">
           <element id="g_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-5"></i>
+            <p>游戏</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-5">
+          <element id="v_setting" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-6"></i>
-            <p>全局设置</p>
+            <p>启动器</p>
           </element>
         </li>
       </ul>
@@ -106,6 +108,8 @@
   </script>
   <script src="./assets/scripts/page.js"></script>
   <script src="./renderer.js"></script>
+
+  <!-- 不显示区 -->
   <div class="dont_display">
     <div id="index">
 
@@ -117,17 +121,68 @@
 
     </div>
     <div id="g_setting_pg">
-      <div class="page-title">全局设置</div>
+      <div class="page-title">全局游戏设置</div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="java-logo fa-brands"></i></div>
+            <div>
+              <h4>Java 路径</h4>
+              <p>自定义游戏运行所需Java的位置</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+        </div>
+        <div class="card-body">
+          <div>
+
+            <div class="input input-checkbox">
+              <span class="name">自动选择合适的 Java</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" id="java_auto_choose" checked="checked">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <script>
+              $('#java_auto_choose').click(
+                function () {
+                  if ($('#java_auto_choose').prop('checked')) {
+                    $('#E16616C6').addClass('disable');
+                  } else {
+                    $('#E16616C6').removeClass('disable');
+                  }
+                }
+              )
+            </script>
+            <div class="input input-text input-file" id="E16616C6">
+              <span class="name">Java 路径</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="Java 路径" required>
+                <div class="underline"></div>
+              </div>
+              <div class="choose-file"><i onclick="choose_java(this);"></i></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <div class="card-title">
             <div class="card-icon"><i class="start-game"></i></div>
             <div>
               <h4>启动选项</h4>
-              <p>自定义启动游戏的一些配置</p>
+              <p>自定义游戏启动行为</p>
             </div>
           </div>
-          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
         </div>
         <div class="card-body">
           <div>
@@ -136,6 +191,20 @@
               <div class="input-data">
                 <input type="text" id="input_a" title="游戏窗口标题" placeholder="默认" required>
                 <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">窗口大小</span>
+              <div style="display: flex;line-height: 1.7;">
+                <div class="input-data mini">
+                  <input type="text" id="input_a" title="宽" placeholder="800" required>
+                  <div class="underline"></div>
+                </div>
+                ×
+                <div class="input-data mini">
+                  <input type="text" id="input_a" title="宽" placeholder="600" required>
+                  <div class="underline"></div>
+                </div>
               </div>
             </div>
             <div class="input input-text">
@@ -152,23 +221,7 @@
                 <div class="underline"></div>
               </div>
             </div>
-  
-            <div class="input input-list" id="version_isolation">
-              <span class="name">版本隔离</span>
-              <div class="input-data input-data-list" onclick="input_list(this,'185px')">
-                <div></div>
-                <ul class="option" style="display: none;">
-                  <li class="option" onclick="set_input_list(this)">各版本独立</li>
-                  <li class="option" onclick="set_input_list(this)">仅隔离远古版本</li>
-                  <li class="option" onclick="set_input_list(this)">仅隔离可安装 Mod 的版本</li>
-                  <li class="option" onclick="set_input_list(this)">仅隔离非正式版</li>
-                  <li class="option" onclick="set_input_list(this)">仅隔离远古版本、非正式版、可安装 Mod 的版本</li>
-                  <li class="option" onclick="set_input_list(this)">关闭（不推荐）</li>
-                  <div></div>
-                </ul>
-              </div>
-            </div>
-  
+
             <div class="input input-list" id="version_isolation">
               <span class="name">进程优先级</span>
               <div class="input-data input-data-list" onclick="input_list(this,'153px')">
@@ -183,6 +236,30 @@
                 </ul>
               </div>
             </div>
+
+            <div class="input input-checkbox">
+              <span class="name">自动分配内存</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" id="automatic_memory">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <script>
+              $('#automatic_memory').click(
+                function () {
+                  if ($('#automatic_memory').prop('checked')) {
+                    $('#D3E268A7').addClass('disable');
+                  } else {
+                    $('#D3E268A7').removeClass('disable');
+                  }
+                }
+              )
+            </script>
+
           </div>
         </div>
 
@@ -197,9 +274,9 @@
               <p>自定义启动命令</p>
             </div>
           </div>
-          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
         </div>
-        <div class="card-body" style="overflow: hidden;">
+        <div class="card-body" style="overflow: hidden; height: 0;">
           <div>
             <div class="input input-text">
               <span class="name">游戏参数</span>
@@ -257,9 +334,9 @@
               <p>如果你不知道这些选项的作用，请不要乱动它们！</p>
             </div>
           </div>
-          <div class="card-button" onclick="expanded_card(this)"><i class="angle-down"></i></div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
         </div>
-        <div class="card-body" style="overflow: hidden;">
+        <div class="card-body" style="overflow: hidden; height: 0;">
           <div>
             <div class="input input-text">
               <span class="name">本地库路径 (LWJGL)</span>
@@ -268,8 +345,68 @@
                 <div class="underline"></div>
               </div>
             </div>
+            <div class="input input-checkbox">
+              <span class="name">不检查默认的 JVM 参数</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">不检查资源文件完整性</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">不检查 JVM 与游戏的兼容性</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">[Linux] 使用系统GLFW</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">[Linux] 使用系统OpenAL</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="">
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input">
+              <span class="name">启动 Developer Tools</span>
+              <button class="command-button" onclick="execute('OpenDevTools')">启动</button>
+            </div>
           </div>
         </div>
+
 
       </div>
 

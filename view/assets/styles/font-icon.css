@@ -1,4 +1,4 @@
-i.angle-down::before {
+.card-button>i::before {
     content: "\f107";
 }
 
@@ -30,6 +30,13 @@ i.debug-settings::before {
     font-family: 'fa';
     font-style: normal;
     font-size: 1.3rem;
+}
+
+i.java-logo::before {
+    content: "\f4e4";
+    font-family: 'fa';
+    font-style: normal;
+    font-size: 1.9rem;
 }
 
 div.title-bar>div.button #min::before {
@@ -75,4 +82,9 @@ i#nav-7:before {
 
 button#start::before {
     content: "\f135";
+}
+
+.choose-file>i::before {
+    content: "\f07c";
+    font-style: normal;
 }

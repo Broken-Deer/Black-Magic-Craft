@@ -1,5 +1,6 @@
 #main {
     transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    margin-bottom: 2rem;
 }
 
 body {
@@ -38,5 +39,36 @@ body {
         width: 400px;
         height: 400px;
         opacity: 0;
+    }
+}
+
+.input-error {
+    background: #e500001c !important;
+    outline: 1.5px solid #c70000 !important;
+    transform: scale(1);
+    animation: err1 .15s cubic-bezier(1, 1, 1, 1), err2 .15s cubic-bezier(1, 1, 1, 1) .15s;
+}
+
+.input-error * {
+    color: #c70000;
+}
+
+@keyframes err1 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.04);
+    }
+}
+
+@keyframes err2 {
+    from {
+        transform: scale(1.04);
+    }
+
+    to {
+        transform: scale(1);
     }
 }

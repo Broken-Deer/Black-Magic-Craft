@@ -1,0 +1,270 @@
+div.input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+    position: relative;
+    bottom: 0;
+    height: 32px;
+}
+
+span.name {
+    font-size: 0.9rem;
+    height: 1.4em;
+    min-width: 10em;
+    margin-right: 2.4em;
+}
+
+.input-text input {
+    border: none;
+    outline: none;
+    border-bottom: 2px #000000;
+    background: none;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    text-align: inherit;
+}
+
+.input-data {
+    border-radius: 4px;
+    overflow: hidden;
+    background: #ffffff;
+    outline: 1px solid #0000001c;
+    height: 30px;
+    width: 100%;
+    padding: 0 8px 2px 8px;
+    font-size: 1rem;
+    transition: all .2s ease;
+}
+
+.input-data:hover,
+button.command-button:hover,
+.input-file .choose-file:hover {
+    background: #00000005;
+}
+
+.input-data-list {
+    overflow: visible;
+    padding-top: 0.1em;
+    display: inline-grid;
+    flex-direction: column;
+    width: auto;
+    min-width: 16rem;
+    background: #fff;
+    align-items: center;
+    justify-items: end;
+}
+
+.input-data-list:active>div {
+    color: #00000094;
+}
+
+.input-data-list>div {
+    font-size: 0.8rem;
+    width: 15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: color .06s ease;
+}
+
+.input-list ul.option {
+    height: 2rem;
+    position: absolute;
+    margin-top: 0.3rem;
+    background: #fafafa;
+    margin-right: -10px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid #00000036;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    font-size: 0.8rem;
+    min-width: 16.3rem;
+    box-shadow: 0px 0px 6px #00000030;
+    cursor: default;
+    z-index: 10;
+}
+
+.input-list li.option {
+    list-style: none;
+    transition: all .1s ease;
+    padding: 5px 6px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.input-list li.option:hover {
+    background: #00000021;
+}
+
+.input-list li.option:active {
+    background: #00000036;
+    transform: scale(0.98);
+}
+
+.input-list ul.option>div {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.input-text .underline {
+    background: #1a73e8;
+    margin-left: -8px;
+    height: 2px;
+    width: calc(100% + 16px);
+    transform: scale(0, 1);
+    opacity: 0;
+    border-radius: 6px;
+    transition: transform .3s ease, opacity .3s ease;
+}
+
+.input-text input:focus~.underline {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform .3s ease, opacity .3s ease;
+}
+
+div.page-title {
+    font-family: 'Harmony-light';
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 1.2rem 1rem;
+}
+
+.btn-disable {
+    pointer-events: none;
+}
+
+
+/* 开关按钮 */
+
+.input-box {
+    width: 40px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-box label {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.input-box label span {
+    width: 39px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+    transition: 0.5s;
+    background-color: #fff;
+    border-radius: 200px;
+    outline: 1px solid #5a5a5ab7;
+    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99);
+}
+
+.input-box label span>div {
+    width: 14px;
+    height: 14px;
+    border-radius: 200px;
+    position: absolute;
+    background-color: #5a5a5a;
+    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99);
+}
+
+.input-box label input:checked~span {
+    outline: 1px solid #7da8e9;
+    background-color: #7da8e9;
+}
+
+.input-box:hover span>div {
+    transform: scale(1.1);
+}
+
+.input-box:active span>div {
+    transform: scale(0.85);
+}
+
+.input-box label input:checked~span>div {
+    background-color: #fff;
+    margin-left: calc(100% - 20px);
+}
+
+.input-box input {
+    display: none;
+}
+
+/* 命令按钮 */
+
+button.command-button {
+    width: 100%;
+    height: 30px;
+    max-width: 130px;
+    background: #ffffff;
+    outline: 1px solid #0000001c;
+    border: none;
+    border-radius: 4px;
+}
+
+button.command-button:active, .input-file .choose-file:active {
+    transform: scale(0.98);
+    background-color: #0000001f;
+}
+
+/* 文件选择 */
+
+.input-file .choose-file {
+    width: 62px;
+    height: 32px;
+    margin-left: 6.5px;
+    outline: 1px solid #0000001c;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.input-file .choose-file>i {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'fa';
+}
+
+/* 小型控件 */
+
+.mini {
+    max-width: 70px;
+    text-align: center;
+    display: inline;
+    margin: 0 10px;
+}
+
+/* 不可用控件 */
+
+.disable {
+    pointer-events: none;
+}
+
+.disable *,
+.disable input::-webkit-input-placeholder {
+    color: #00000069;
+}
+
+.disable .input-data,
+.disable .choose-file {
+    outline: 1px solid #00000000;
+}
+
+/* 其他设置 */
+
+input:focus::-webkit-input-placeholder {
+    color: #00000000;
+}

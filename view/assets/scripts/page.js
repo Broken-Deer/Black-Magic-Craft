@@ -1,7 +1,7 @@
 window.onload = function () {
-    setTimeout(() => {
-        $('body').attr('style', 'transform: scale(1, 1); ; opacity: 1; transition: transform .3s ease, opacity .3s ease')
-    }, 200);
+    $('body').attr('style',
+        'transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease')
+
     $('#user_add').bind('click', function () {
         hide_btn()
         $('#main').empty();
@@ -35,6 +35,16 @@ window.onload = function () {
             $('#main').attr('style', 'margin-top: 0; opacity: 1;')
         }, 500)
     });
+    if ($('#java_auto_choose').prop('checked')) {
+        $('#E16616C6').addClass('disable');
+    } else {
+        $('#E16616C6').removeClass('disable');
+    }
+    if ($('#automatic_memory').prop('checked')) {
+        $('#D3E268A7').addClass('disable');
+    } else {
+        $('#D3E268A7').removeClass('disable');
+    }
 };
 
 function display_btn() {

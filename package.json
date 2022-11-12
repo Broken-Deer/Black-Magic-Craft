@@ -1,7 +1,7 @@
 {
     "name": "black_magic_craft",
     "version": "1.0.0",
-    "description": "",
+    "description": "Black Magic Craft 启动器",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
