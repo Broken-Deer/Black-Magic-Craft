@@ -87,16 +87,7 @@
       </ul>
     </div>
     <main class="page">
-      <div class="page" id="main">
-        <div class="slider">
-          <div class="orbit">
-            <div></div>
-          </div>
-          <div class="slider_btn" id="CA028F76">
-            <div></div>
-          </div>
-        </div>
-      </div>
+      <div class="page" id="main"></div>
     </main>
   </div>
   <script type="text/javascript">
@@ -279,6 +270,22 @@
                   <div></div>
                 </div>
               </div>
+              <script>
+                $(function () {
+                  $("#CA028F76").draggable({
+                    axis: "x",
+                    containment: "parent",
+                    drag: function () {
+                      $(
+                        document.getElementById('CA028F76').previousElementSibling.firstElementChild
+                      ).attr(
+                        'style',
+                        'width:' + (parseInt($('#CA028F76').css('left')) + 3) + 'px'
+                      );
+                    }
+                  });
+                });
+              </script>
             </div>
 
 
