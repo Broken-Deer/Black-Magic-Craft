@@ -16,7 +16,8 @@
         "electron-packager": "^17.1.1",
         "path": "^0.12.7"
     },
-    "dependencies": {},
+    "dependencies": {
+    },
     "build": {
         "productName": "Black Magic Craft",
         "appId": "black_magic_craft",

@@ -48,3 +48,9 @@
 .fa-brands::after {
     font-family: 'fa-brands' !important;
 }
+
+span.text {
+    font-size: 0.8rem;
+    /* height: 1em; */
+    line-height: 2.2;
+}

@@ -5,6 +5,8 @@
 
 body {
     transition: transform .3s cubic-bezier(0.6, -0.58, 0.74, 0.05), opacity .3s cubic-bezier(0.6, -0.58, 0.74, 0.05);
+    width: calc(100vw - 10px);
+    height: calc(99.8vh - 10px);
 }
 
 .btn_ {
@@ -92,7 +94,7 @@ body {
 }
 
 .slider>div.orbit>div {
-    background: #00989D;
+    background: #7da8e9;
     height: 100%;
     width: 4px;
     min-width: 4px;
@@ -110,14 +112,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
+    z-index: 500;
     /* position: fixed !important; */
 }
 
 .slider>div.slider_btn>div {
     width: 53%;
     height: 53%;
-    background: #00989D;
+    background: #7da8e9;
     border-radius: 100%;
     transition: all .1s ease;
 }
@@ -127,5 +129,5 @@ body {
 }
 
 .slider>div.slider_btn:active>div {
-    transform: scale(0.9);
+    transform: scale(0.85);
 }

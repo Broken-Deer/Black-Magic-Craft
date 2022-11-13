@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, BrowserView, dialog } = require('electron');
 var path = require("path")
 let ipcMain = require('electron').ipcMain;
 var win
@@ -12,11 +12,14 @@ const createWindow = () => {
         titleBarStyle: 'hidden',
         backgroundColor: '#00000000',
         show: false,
-        frame:false,
+        frame: false,
+        webviewTag: true,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,
+            webSecurity: false,
+            webviewTag: true
         },
         icon: path.join(__dirname, './logo.ico')
     })
@@ -31,7 +34,21 @@ const createWindow = () => {
               "&scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL" +
               "&redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf"
           ); */
-    /* win.webContents.openDevTools() */
+    win.webContents.openDevTools()
+
+
+    win.webContents.session.webRequest.onHeadersReceived({ urls: ["*://*/*"] },
+        (d, c) => {
+            if (d.responseHeaders['X-Frame-Options']) {
+                delete d.responseHeaders['X-Frame-Options'];
+            } else if (d.responseHeaders['x-frame-options']) {
+                delete d.responseHeaders['x-frame-options'];
+            }
+
+            c({ cancel: false, responseHeaders: d.responseHeaders });
+        }
+    );
+
 }
 
 app.whenReady().then(() => {
@@ -55,7 +72,7 @@ ipcMain.on('window-close', function () {
     win.close();
 })
 ipcMain.on('OpenDevTools', function () {
-    win.webContents.openDevTools()
+    win.webContents.openDevTools();
 })
 
 ipcMain.on('choose_java', (event) => {
@@ -104,3 +121,7 @@ ipcMain.on('choose_java', (event) => {
         });
     }
 });
+
+ipcMain.on('ms_login',function (event, window_info) { 
+    console.log(window_info[0])
+ })

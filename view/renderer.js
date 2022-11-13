@@ -51,3 +51,6 @@ function choose_java(eventobj) {
     });
 }
 
+function ms_login() {
+    ipcRenderer.send('ms_login', [$(window).width(),$(window).height()])
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./auth.js"></script>
+  </head>
+  <body>
+    <webview
+      id="ms_login_webview"
+      src="https://login.microsoft.com"
+      style="display: inline-flex; width: 440px; height: 314px"
+      preload="./scripts/preload-ms.js"
+    ></webview>
+  </body>
+</html>

@@ -74,7 +74,7 @@ button.command-button:hover,
     margin-top: 0.3rem;
     background: #fafafa;
     margin-right: -10px;
-    padding: 7px 10px;
+    padding: 10px 10px;
     border-radius: 7px;
     border: 1px solid #00000036;
     transition: all 0.2s ease;
@@ -261,6 +261,14 @@ button.command-button:active, .input-file .choose-file:active {
 .disable .input-data,
 .disable .choose-file {
     outline: 1px solid #00000000;
+}
+
+.disable .slider_btn> div {
+    background: #7da8e952 !important;
+}
+
+.disable .orbit> div {
+    background: #7da8e952 !important;
 }
 
 /* 其他设置 */

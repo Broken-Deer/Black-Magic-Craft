@@ -25,9 +25,9 @@ function expanded_card(eventobj) {
     var body = card.lastElementChild
     var height = $(body).height()
     $(eventobj).addClass('btn-disable')/* 禁用按钮防止连点 */
-    setTimeout(() => { /* 300ms后恢复按钮 */
+    setTimeout(() => { /* 400ms后恢复按钮 */
         $(eventobj).removeClass('btn-disable') 
-    }, 300);
+    }, 400);
     if ($(card).hasClass('not-expanded')) {/* 如果已经处于折叠状态 */
         $(body).attr('style', 'height: 0;overflow: hidden;') /* 设置元素溢出隐藏，高度0 */
         $(card).removeClass('not-expanded'); /* 移除标记 */
