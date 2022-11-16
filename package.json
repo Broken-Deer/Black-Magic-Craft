@@ -6,7 +6,7 @@
     "scripts": {
         "start": "electron .",
         "build": "electron-builder -w --x64",
-        "package": "electron-packager . HelloWorld --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
+        "package": "electron-packager . black_magic_craft --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
     },
     "author": "Broken_Deer",
     "license": "GPL-3.0",
@@ -16,15 +16,13 @@
         "electron-packager": "^17.1.1",
         "path": "^0.12.7"
     },
-    "dependencies": {
-    },
     "build": {
         "productName": "Black Magic Craft",
         "appId": "black_magic_craft",
         "copyright": "Broken_Deer",
         "win": {
             "target": [
-                "portable"
+                "nsis"
             ],
             "icon": "./logo.ico"
         },
@@ -36,7 +34,7 @@
         },
         "nsis": {
             "oneClick": false,
-            "guid": "idea",
+            "guid": "BMC",
             "perMachine": true,
             "allowElevation": true,
             "allowToChangeInstallationDirectory": true,
@@ -45,7 +43,13 @@
             "installerHeaderIcon": "./logo.ico",
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
-            "shortcutName": "idea"
+            "shortcutName": "Black Magic Craft"
         }
+    },
+    "dependencies": {
+        "@xmcl/installer": "^4.4.0",
+        "babel-cli": "^6.26.0",
+        "got": "^12.5.2",
+        "http2-got": "^1.1.1"
     }
 }

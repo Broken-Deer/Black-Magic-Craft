@@ -1,0 +1,133 @@
+#main {
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    margin-bottom: 2rem;
+}
+
+body {
+    transition: transform .3s cubic-bezier(0.6, -0.58, 0.74, 0.05), opacity .3s cubic-bezier(0.6, -0.58, 0.74, 0.05);
+    width: calc(100vw - 10px);
+    height: calc(99.8vh - 10px);
+}
+
+.btn_ {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn_ span,
+.btn_dark_ span {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: animate .8s ease;
+}
+
+.btn_dark_ span {
+    background-color: #000;
+}
+
+@keyframes animate {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+
+    to {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+    }
+}
+
+.input-error {
+    background: #e500001c !important;
+    outline: 1.5px solid #c70000 !important;
+    transform: scale(1);
+    animation: err1 .15s cubic-bezier(1, 1, 1, 1), err2 .15s cubic-bezier(1, 1, 1, 1) .15s;
+}
+
+.input-error * {
+    color: #c70000;
+}
+
+@keyframes err1 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.04);
+    }
+}
+
+@keyframes err2 {
+    from {
+        transform: scale(1.04);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* 滑块 */
+
+.slider {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    /* overflow: hidden; */
+}
+
+.slider>div.orbit {
+    width: inherit;
+    height: 3px;
+    position: absolute;
+    background: #00000045;
+    border-radius: 10px;
+    /* z-index: -1; */
+}
+
+.slider>div.orbit>div {
+    background: #7da8e9;
+    height: 100%;
+    width: 4px;
+    min-width: 4px;
+    border-radius: 10px;
+}
+
+.slider>div.slider_btn {
+    width: 20px;
+    /* left: 0; */
+    /* top: 0; */
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid #00000014;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    /* position: fixed !important; */
+}
+
+.slider>div.slider_btn>div {
+    width: 53%;
+    height: 53%;
+    background: #7da8e9;
+    border-radius: 100%;
+    transition: all .1s ease;
+}
+
+.slider>div.slider_btn:hover>div {
+    transform: scale(1.15);
+}
+
+.slider>div.slider_btn:active>div {
+    transform: scale(0.85);
+}
