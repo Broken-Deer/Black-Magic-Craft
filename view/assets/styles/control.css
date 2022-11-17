@@ -12,7 +12,8 @@ span.name {
     font-size: 0.9rem;
     height: 1.4em;
     min-width: 10em;
-    margin-right: 2.4em;
+    /* margin-right: 2.4em; */
+    transition: color 0.2s ease;
 }
 
 .input-text input {
@@ -171,12 +172,12 @@ div.page-title {
 }
 
 .input-box label span>div {
-    width: 14px;
-    height: 14px;
-    border-radius: 200px;
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 200px !important;
     position: absolute;
-    background-color: #5a5a5a;
-    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99);
+    background-color: #5a5a5a !important;
+    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99) !important;
 }
 
 .input-box label input:checked~span {
@@ -193,7 +194,7 @@ div.page-title {
 }
 
 .input-box label input:checked~span>div {
-    background-color: #fff;
+    background-color: #fff !important;
     margin-left: calc(100% - 20px);
 }
 

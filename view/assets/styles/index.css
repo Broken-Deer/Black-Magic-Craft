@@ -236,7 +236,7 @@ main.page {
 div.page {
   /* max-width: 75rem; */
   margin: 0 auto;
-  padding: 2rem 1.2rem 4rem 1.2rem;
+  padding: 2rem 1.2rem 0rem 1.2rem;
   display: block;
   margin-top: 0;
   opacity: 1;
@@ -415,7 +415,7 @@ div.page {
   box-shadow: 0 0 6px #0000002b;
   background-color: #fbfbfbf2;
   border: 1px solid #0000002e;
-  margin: 15px 0 0 0;
+  margin: 15px 0 15px 0;
 }
 
 .card-icon {
@@ -495,6 +495,7 @@ div.page {
   flex-direction: column;
   justify-content: flex-end;
   transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* margin: -20px -15px 0 -15px; */
 }
 
 .card-body > div {
@@ -707,8 +708,8 @@ div.page > iframe > * {
 .popup_window_main {
   border-radius: 8px;
   background: #fff;
-  animation: 0.5s popup_window ease;
-  transition: all 0.5s ease;
+  animation: 0.4s popup_window ease;
+  /* transition: all 0.2s ease; */
 }
 .popup_window_main > * {
   padding: 1.15rem 0.65rem;
@@ -755,10 +756,13 @@ div.page > iframe > * {
 
 ul.list {
   width: 100%;
-  padding: 15px 20px;
-  background-color: rgba(255, 255, 255, 0.49);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.389);
-  border-radius: 7px;
+  padding: 0 20px 15px 20px;
+  /* background-color: #fbfbfbd1; */
+  /* box-shadow: 0px 0px 4px rgb(0 0 0 / 39%); */
+  /* border-radius: 7px; */
+  /* margin-top: 15px; */
+  max-height: calc(100vh - 170px);
+  overflow: overlay;
 }
 
 ul.list>li {
@@ -768,6 +772,7 @@ ul.list>li {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #00000030;
 }
 ul.list div.a, 
 ul.list div.a {
@@ -779,15 +784,15 @@ ul.list div.icon {
     width: 44px;
     background: no-repeat center/76%;
 }
-ul.list div.grass_block {
+ul.list li.grass_block .icon {
   background-image: url(../images/Grass_Block.webp);
 }
 
-ul.list div.crafting_table {
+ul.list li.crafting_table .icon {
   background-image: url(../images/Crafting_Table.webp);
 }
 
-ul.list div.ancient_debris {
+ul.list li.ancient_debris .icon {
   background-image: url(../images/Ancient_Debris.webp);
 }
 ul.list div.info {
@@ -838,4 +843,39 @@ ul.list div.button i::before {
 ul.list hr {
   border: none;
   border-bottom: 1px solid #00000030;
+}
+
+#download_pg div.input {
+margin-bottom: 0;
+}
+
+#download_pg .card {
+  margin-top: 0;
+}
+
+#download_pg .card-body > div {
+  margin: 14px 20px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#download_pg .card-body hr {
+  /* border-bottom: 1px solid #000; */
+  /* margin-left: -5px; */
+  /* width: calc(100% + 10px); */
+}
+
+#download_pg .card-body {
+  /* margin: -15px -20px 5px -20px; */
+  background: #fff;
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0px 3px 9px 0px #00000014;
+  transition: all .3s ease;
+}
+#download_pg div.input {
+  justify-content: space-between;
+}
+.list-last-one {
+  border: none !important;
 }

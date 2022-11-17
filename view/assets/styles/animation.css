@@ -121,7 +121,7 @@ body {
     height: 53%;
     background: #7da8e9;
     border-radius: 100%;
-    transition: all .1s ease;
+    transition: all 0.2s ease;
 }
 
 .slider>div.slider_btn:hover>div {

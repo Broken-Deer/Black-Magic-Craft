@@ -11,6 +11,7 @@ window.onload = function () {
     });
     $("#version_list").bind("click", function () {});
     $("#download").bind("click", function () {
+        change_page("#download_pg");
         version_list('vanilla');
     });
     $("#v_setting").bind("click", function () {

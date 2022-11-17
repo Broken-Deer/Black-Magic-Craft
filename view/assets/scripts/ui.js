@@ -116,9 +116,11 @@ async function show_ms_login_page(ms_login, webview) {
                             login_fail_alert("ms_login", "UUID 获取失败，你可能没有购买 Minecraft");
                             break;
                     }
+                } else if (url.startsWith(pref + "error=")) {
+                    popup_window_close("ms_login");
                 }
             });
-        }, 700);
+        }, 300);
     }
 }
 

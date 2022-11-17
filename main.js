@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require("electron");
+const { app, BrowserWindow, dialog, session } = require("electron");
 const execSync = require("child_process").exec;
 const f = require("fs");
 const os = require("os");
@@ -44,6 +44,25 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
+    session.defaultSession.cookies // 退出时清除cookie
+        .get({})
+        .then((cookies) => {
+            cookies.forEach((cookie) => {
+                let url = "";
+                // get prefix, like https://www.
+                url += cookie.secure ? "https://" : "http://";
+                url += cookie.domain.charAt(0) === "." ? "www" : "";
+                // append domain and path
+                url += cookie.domain;
+                url += cookie.path;
+                session.defaultSession.cookies.remove(url, cookie.name, (error) => {
+                    if (error) console.log(`error removing cookie ${cookie.name}`, error);
+                });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     if (process.platform !== "darwin") app.quit();
 });
 
@@ -111,9 +130,8 @@ ipcMain.on("choose_java", (event) => {
 
 /* 单独注册下载命令侦测器 */
 (async () => {
-    await import("./module/download.mjs");
+    await import("./src/installer/minecraft.mjs");
 })();
-
 
 function path_handle() {
     var exePath = process.cwd();
@@ -150,33 +168,3 @@ async function removeDir(dir) {
     }
     f.rmdirSync(dir); //如果文件夹是空的，就将自己删除掉
 }
-
-function folder_initialization() {
-    let Path = path_handle()["gamePath"];
-}
-/* 
-    request(
-        {
-            url: "https://piston-meta.mojang.com/mc/game/version_manifest.json",
-            method: "GET",
-            json: true,
-            headers: {
-                "content-type": "application/json",
-            },
-            body: {
-                id: "234232332",
-            },
-        },
-        (err, rep, body) => {
-            if (err) {
-                console.log(" request 请求get请求出现错误 err:", err);
-                return false;
-            }
-            // body表示返回的数据
-            if (body) {
-                // 请求成功
-            }
-        }
-    );
-
-*/

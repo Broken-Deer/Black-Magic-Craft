@@ -11,6 +11,7 @@
     "author": "Broken_Deer",
     "license": "GPL-3.0",
     "devDependencies": {
+        "@types/node": "^18.11.9",
         "electron": "^21.2.2",
         "electron-builder": "^23.6.0",
         "electron-packager": "^17.1.1",
@@ -48,8 +49,9 @@
     },
     "dependencies": {
         "@xmcl/installer": "^4.4.0",
-        "babel-cli": "^6.26.0",
         "got": "^12.5.2",
-        "http2-got": "^1.1.1"
+        "graceful-fs": "^4.2.10",
+        "p-limit": "^4.0.0",
+        "p-queue": "^7.3.0"
     }
 }
