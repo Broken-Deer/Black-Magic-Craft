@@ -53,13 +53,22 @@ function version_list(type) {
 
 function install_game(url, id) {
     popup_window("game_install");
+    $("#5E79266D").html(`正在安装${id}`);
+    $('#lib').html('');
+    $("#assets_file").html('');
     ipc.send("install_game", [url, id]);
+    var i = setInterval(() => {
+        if ($("#task1").hasClass("circle-check") && $("#task2").hasClass("circle-check") && $("#task3").hasClass("circle-check") && $("#task4").hasClass("circle-check")) {
+            popup_window_close('game_install')
+            clearInterval(i);
+           }
+    }, 50);// 循环检查这几个元素有没有打勾
 }
 
 async function install_progress() {}
 
-
-
 function updateUI(arg) {
-    console.log(arg)
+    $(`#${arg[2]}`).html(`${arg[0]} / ${arg[1]}`);
 }
+
+function taskControler(type) {}

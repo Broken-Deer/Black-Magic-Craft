@@ -28,24 +28,42 @@ export async function parallelDownload(from, to, plimit, event, taskname) {
                 const to_ = to[aaa];
                 if (f.existsSync(to_)) {
                     downloaded++;
-                    console.log(`下载完成(${downloaded}/${from.length})：${to_}已存在`);
+                    /* console.log(`下载完成(${downloaded}/${from.length})：${to_}已存在`); */
                     _event.reply("updateUI", [downloaded, from.length, _taskname]);
+                    if (downloaded > from.length * 0.95 && reply === true) {
+                        // 下载队列完成95%时向渲染进程汇报
+                        console.log(_event);
+                        _event.reply("taskdone",[_taskname]);
+                        reply = false;
+                    }
                 } else {
                     const pipeline = util.promisify(stream.pipeline);
                     makeDir(to_.replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
                     const downloadStream = got.stream(from_, { timeout: {} });
                     const fileWriterStream = f.createWriteStream(to_);
                     downloadStream.on("error", (error) => {
-                        console.log(`${to_}下载失败，跳过此文件`);
+                        /* console.log(`${to_}下载失败，跳过此文件`); */
                         downloaded++;
                         _event.reply("updateUI", [downloaded, from.length, _taskname]);
+                        if (downloaded > from.length * 0.95 && reply === true) {
+                            // 下载队列完成95%时向渲染进程汇报
+                            console.log(_event);
+                            _event.reply("taskdone",[_taskname]);
+                            reply = false;
+                        }
                     });
                     fileWriterStream
                         .on("error", () => {})
                         .on("finish", () => {
                             downloaded++;
-                            console.log(`下载完成(${downloaded}/${from.length})：${to_}`);
+                            /* console.log(`下载完成(${downloaded}/${from.length})：${to_}`); */
                             _event.reply("updateUI", [downloaded, from.length, _taskname]);
+                            if (downloaded > from.length * 0.95 && reply === true) {
+                                // 下载队列完成80%时向渲染进程汇报
+                                console.log(_event);
+                                _event.reply("taskdone",[_taskname]);
+                                reply = false;
+                            }
                         });
 
                     await pipeline(downloadStream, fileWriterStream);

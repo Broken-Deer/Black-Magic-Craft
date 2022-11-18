@@ -27,6 +27,7 @@ ipcMain.on("install_game", async function (event, args) {
     console.log("下载版本json");
     var download_to = `${Path}version/${args[1]}/${args[1]}.json`;
     await downloadFile(args[0], download_to);
+    event_.reply("taskdone", ["task1"]);
     var version_data = JSON.parse(f.readFileSync(download_to));
 
     let lib = version_data["libraries"];
@@ -61,7 +62,6 @@ ipcMain.on("install_game", async function (event, args) {
         if (typeof lib[i]["rules"] == "undefined") {
             allow = true;
             fileNum = fileNum + 1;
-            console.log(fileNum);
         } else {
             let rules = lib[i]["rules"];
 
@@ -77,7 +77,6 @@ ipcMain.on("install_game", async function (event, args) {
                     ) {
                         allow = true;
                         fileNum = fileNum + 1;
-                        console.log(fileNum);
                     } else if (
                         // 判定规则： action不允许，且当前系统信息全部不匹配 -> 允许下载
                         rules[index]["action"] === "disallow" &&
@@ -87,7 +86,6 @@ ipcMain.on("install_game", async function (event, args) {
                     ) {
                         allow = true;
                         fileNum = fileNum + 1;
-                        console.log(fileNum);
                     }
                 }
             }
@@ -121,10 +119,12 @@ ipcMain.on("install_game", async function (event, args) {
     complete_assets(version_data, event_); // 补全资源文件（可能补不全）
 
     /* 下载主文件 */
-    async () => {
+    (async () => {
+        console.log("开始下载主文件");
         await downloadFile(version_data["downloads"]["client"]["url"], `${Path}version/${args[1]}/${args[1]}.jar`, event_,'main');
         console.log("主文件下载完成");
-    };
+        event_.reply("taskdone", ['task2']);
+    })();
 });
 
 async function complete_assets(version_data, event) {
@@ -146,7 +146,7 @@ async function complete_assets(version_data, event) {
         from.push(`http://resources.download.minecraft.net/${hash_}/${hash}`);
         to.push(`${Path}assets/objects/${hash_}/${hash}`);
     });
-    await parallelDownload(from, to, 64, event_, 'assets_file');
+    await parallelDownload(from, to, 64, event_, "assets_file");
     console.log("资源文件补完");
 }
 

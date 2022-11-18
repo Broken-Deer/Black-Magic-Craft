@@ -32,7 +32,9 @@
   <!-- 窗口主体 -->
   <div id="win">
     <div class="popup_window" id="pop_up_window_shadow"></div>
-        <div class="choose-file-msg"><p>请在打开的窗口中选择文件</p></div>
+    <div class="choose-file-msg">
+      <p>请在打开的窗口中选择文件</p>
+    </div>
     <div class="btn-box"
       style="height: 89px; width: 257px; position: fixed; bottom: 0; right: 2rem; overflow: hidden; padding: 10px; pointer-events: none">
       <div class="btn" style="margin-top: 0rem">
@@ -55,8 +57,7 @@
       <li class="nav-header">帐户</li>
       <div class="user-panel">
         <div class="d-flex" id="user-panel">
-          <element class="user-add" id="user_add" style="cursor: pointer"
-            onclick="popup_window('ms_login', true)">
+          <element class="user-add" id="user_add" style="cursor: pointer" onclick="popup_window('ms_login', true)">
             <i class="fa-regular nav-icon" id="nav-3"></i>
             <p>添加帐户</p>
           </element>
@@ -472,7 +473,7 @@
             </div>
           </div>
         </div>
-        <ul class="list" id="_version_list" style="max-height: 0; padding: 0px 20px;">
+        <ul class="list disposable" id="_version_list" style="max-height: 0; padding: 0px 20px;">
 
         </ul>
 
@@ -502,9 +503,34 @@
       <div class="foot" style="display: none"></div>
     </div>
     <div class="popup_window_main" id="game_install">
-      <div class="body" id="game_install_body" style="width: calc(100vw - 200px);height: calc(100vh - 100px);">
+      <div class="head">
+        <div class="title"><i class="folder-arrow-down"></i>
+          <div>
+            <span id="5E79266D">正在安装</span>
+            <p>请稍等一会</p>
+          </div>
+        </div>
+
       </div>
-      <div class="foot" style="display: none"></div>
+      <div class="body" id="game_install_body" style="width: 600px;height: 210px;">
+        <ul class="task-list">
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task1"></i>获取版本信息</span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task2"></i>下载游戏主文件</span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task3"></i>补全依赖库文件</span>
+            <span class="count" id="lib"></span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task4"></i>补全资源文件</span>
+            <span class="count" id="assets_file"></span>
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </body>

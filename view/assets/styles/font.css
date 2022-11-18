@@ -26,10 +26,11 @@
 }
 
 @font-face {
-    font-family: fa-pro;
+    font-family: "Font Awesome 6 Duotone";
+    font-style: normal;
+    font-weight: 900;
     font-display: block;
-    font-weight: 600;
-    src: url(../fonts/fa-pro/fa-duotone-900.woff2);
+    src: url(../fonts/fa-pro/fa-duotone-900.woff2) format("woff2"), url(../fonts/fa-pro/fa-duotone-900.woff2) format("truetype");
 }
 
 @font-face {
