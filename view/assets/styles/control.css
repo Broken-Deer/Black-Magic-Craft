@@ -36,7 +36,7 @@ span.name {
     width: 100%;
     padding: 0 8px 2px 8px;
     font-size: 1rem;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
 }
 
 .input-data:hover,
@@ -57,16 +57,16 @@ button.command-button:hover,
     justify-items: end;
 }
 
-.input-data-list:active>div {
+.input-data-list:active > div {
     color: #00000094;
 }
 
-.input-data-list>div {
+.input-data-list > div {
     font-size: 0.8rem;
     width: 15rem;
     white-space: nowrap;
     overflow: hidden;
-    transition: color .06s ease;
+    transition: color 0.06s ease;
 }
 
 .input-list ul.option {
@@ -89,7 +89,7 @@ button.command-button:hover,
 
 .input-list li.option {
     list-style: none;
-    transition: all .1s ease;
+    transition: all 0.1s ease;
     padding: 5px 6px;
     border-radius: 6px;
     white-space: nowrap;
@@ -104,7 +104,7 @@ button.command-button:hover,
     transform: scale(0.98);
 }
 
-.input-list ul.option>div {
+.input-list ul.option > div {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -121,17 +121,17 @@ button.command-button:hover,
     transform: scale(0, 1);
     opacity: 0;
     border-radius: 6px;
-    transition: transform .3s ease, opacity .3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.input-text input:focus~.underline {
+.input-text input:focus ~ .underline {
     transform: scale(1);
     opacity: 1;
-    transition: transform .3s ease, opacity .3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 div.page-title {
-    font-family: 'Harmony-light';
+    font-family: "Harmony-light";
     font-size: 1.8rem;
     font-weight: 600;
     margin: 0 0 1.2rem 1rem;
@@ -140,7 +140,6 @@ div.page-title {
 .btn-disable {
     pointer-events: none;
 }
-
 
 /* 开关按钮 */
 
@@ -168,32 +167,32 @@ div.page-title {
     background-color: #fff;
     border-radius: 200px;
     outline: 1px solid #5a5a5ab7;
-    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99);
+    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99);
 }
 
-.input-box label span>div {
-    width: 14px !important;
-    height: 14px !important;
+.input-box label span > div {
+    width: 13.5px !important;
+    height: 13.5px !important;
     border-radius: 200px !important;
     position: absolute;
     background-color: #5a5a5a !important;
-    transition: all .3s cubic-bezier(0, 0.6, 0.32, 0.99) !important;
+    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99) !important;
 }
 
-.input-box label input:checked~span {
+.input-box label input:checked ~ span {
     outline: 1px solid #7da8e9;
     background-color: #7da8e9;
 }
 
-.input-box:hover span>div {
+.input-box:hover span > div {
     transform: scale(1.1);
 }
 
-.input-box:active span>div {
+.input-box:active span > div {
     transform: scale(0.85);
 }
 
-.input-box label input:checked~span>div {
+.input-box label input:checked ~ span > div {
     background-color: #fff !important;
     margin-left: calc(100% - 20px);
 }
@@ -214,7 +213,8 @@ button.command-button {
     border-radius: 4px;
 }
 
-button.command-button:active, .input-file .choose-file:active {
+button.command-button:active,
+.input-file .choose-file:active {
     transform: scale(0.98);
     background-color: #0000001f;
 }
@@ -228,15 +228,16 @@ button.command-button:active, .input-file .choose-file:active {
     outline: 1px solid #0000001c;
     background: #fff;
     border-radius: 4px;
+    transition: all 0.1s ease;
 }
 
-.input-file .choose-file>i {
+.input-file .choose-file > i {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'fa';
+    font-family: "fa";
 }
 
 /* 小型控件 */
@@ -262,16 +263,24 @@ button.command-button:active, .input-file .choose-file:active {
 .disable .input-data,
 .disable .choose-file {
     outline: 1px solid #00000000;
+    transition: all 0.2s ease;
 }
 
-.disable .slider_btn> div {
+.disable .slider_btn > div {
     background: #7da8e952 !important;
+    transition: all 0.2s ease;
 }
 
-.disable .orbit> div {
+.disable .orbit > div {
     background: #7da8e952 !important;
+    transition: all 0.2s ease;
 }
 
+.disable .input-box label input:checked ~ span {
+    outline: 1px solid #7da8e94f;
+    background-color: #7da8e94f;
+    transition: all 0.2s ease;
+}
 /* 其他设置 */
 
 input:focus::-webkit-input-placeholder {

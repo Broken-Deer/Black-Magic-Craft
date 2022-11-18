@@ -35,3 +35,18 @@ function choose_java(eventobj) {
         }
     });
 }
+
+
+
+function win_close() {
+    $("body").attr("style", "transform: scale(0.95, 0.95); ; opacity: 0;");
+    setTimeout(() => {
+        ipc.send("window-close");
+    }, 360);
+}
+function win_min() {
+    ipc.send("window-min");
+}
+ipc.on("updateUI", (event, message) => {
+    updateUI(message)
+});

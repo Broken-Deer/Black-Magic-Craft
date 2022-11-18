@@ -1,26 +1,28 @@
 function version_list(type) {
-    switch (type) {
-        case "vanilla":
-            $.get("https://piston-meta.mojang.com/mc/game/version_manifest.json", function (data, textStatus, jqXHR) {
-                if (jqXHR.status == 200) {
-                    var _version_list = data["versions"];
-                    for (let i = 0; i < _version_list.length; i++) {
-                        let version_info = _version_list[i];
-                        console.log(version_info);
-                        if (version_info["type"] == "release") {
-                            var icon = "grass_block";
-                            var type = "正式版";
-                        }
-                        if (version_info["type"] == "snapshot") {
-                            var icon = "crafting_table";
-                            var type = "测试版";
-                        }
-                        if (version_info["type"] == "old_beta" || version_info["type"] == "old_alpha") {
-                            var icon = "ancient_debris";
-                            var type = "远古版";
-                        }
-                        let date = new Date(version_info["releaseTime"]);
-                        $("#_version_list").append(`
+    setTimeout(() => {
+        // 页面切换动画播放完之后再操作
+        switch (type) {
+            case "vanilla":
+                $.get("https://piston-meta.mojang.com/mc/game/version_manifest.json", function (data, textStatus, jqXHR) {
+                    if (jqXHR.status == 200) {
+                        var _version_list = data["versions"];
+                        for (let i = 0; i < _version_list.length; i++) {
+                            let version_info = _version_list[i];
+                            console.log(version_info);
+                            if (version_info["type"] == "release") {
+                                var icon = "grass_block";
+                                var type = "正式版";
+                            }
+                            if (version_info["type"] == "snapshot") {
+                                var icon = "crafting_table";
+                                var type = "测试版";
+                            }
+                            if (version_info["type"] == "old_beta" || version_info["type"] == "old_alpha") {
+                                var icon = "ancient_debris";
+                                var type = "远古版";
+                            }
+                            let date = new Date(version_info["releaseTime"]);
+                            $("#_version_list").append(`
                             <li class="${icon}">
                                 <div class="a">
                                     <div class="icon"></div>
@@ -34,26 +36,30 @@ function version_list(type) {
                                 </div>
                             </li>
                             `);
+                        }
+                        setTimeout(() => {
+                            $("#B9C498C7").fadeOut(200);
+                            $("#_version_list").attr("style", "opacity: 1;");
+                            $("#5D4CBB91").removeClass("disable");
+                        }, 500);
+                    } else {
+                        // 失败后的操作;
                     }
-                    $(document.getElementById("_version_list").lastElementChild).addClass("list-last-one"); /* 最后一项添加list-last-one类表示底部不需要分割线 */
-                } else {
-                    // 失败后的操作;
-                }
-            });
-            break;
-    }
-
+                });
+                break;
+        }
+    }, 500);
 }
 
 function install_game(url, id) {
+    popup_window("game_install");
     ipc.send("install_game", [url, id]);
 }
-function win_close() {
-    $("body").attr("style", "transform: scale(0.95, 0.95); ; opacity: 0;");
-    setTimeout(() => {
-        ipc.send("window-close");
-    }, 360);
-}
-function win_min() {
-    ipc.send("window-min");
+
+async function install_progress() {}
+
+
+
+function updateUI(arg) {
+    console.log(arg)
 }

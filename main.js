@@ -2,8 +2,8 @@ const { app, BrowserWindow, dialog, session } = require("electron");
 const execSync = require("child_process").exec;
 const f = require("fs");
 const os = require("os");
-var path = require("path");
-let ipcMain = require("electron").ipcMain;
+const path = require("path");
+const ipcMain = require("electron").ipcMain;
 var win;
 const createWindow = () => {
     win = new BrowserWindow({
@@ -44,7 +44,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-    session.defaultSession.cookies // 退出时清除cookie
+/*     session.defaultSession.cookies // 退出时清除cookie
         .get({})
         .then((cookies) => {
             cookies.forEach((cookie) => {
@@ -62,7 +62,7 @@ app.on("window-all-closed", () => {
         })
         .catch((error) => {
             console.log(error);
-        });
+        }); */
     if (process.platform !== "darwin") app.quit();
 });
 

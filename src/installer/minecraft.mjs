@@ -3,12 +3,11 @@ import f from "fs";
 import os from "os";
 import { join, resolve } from "path";
 import { ipcMain } from "electron";
-import got from "got";
 import path from "path";
-import { pipeline } from "stream";
-import { parallelDownload } from "../http/download.mjs";
+import { downloadFile, parallelDownload } from "../http/download.mjs";
 
 ipcMain.on("install_game", async function (event, args) {
+    const event_ = event;
     console.log(`创建安装任务, 版本名称：${args[1]}`);
     /* 获取安装位置 */
     var Path = path_handle()["gamePath"];
@@ -18,185 +17,137 @@ ipcMain.on("install_game", async function (event, args) {
         f.mkdirSync(`${Path}version`);
     }
 
-    /* 如果已经存在此文件夹，直接删掉并重新创建，之前应该已经检查过输入的名称了 */
+    /* 如果已经存在此版本名的文件夹，直接删掉并重新创建，之前已经检查过输入的名称了 */
     if (f.existsSync(`${Path}version/${args[1]}`)) {
         await removeDir(`${Path}version/${args[1]}`);
     }
     f.mkdirSync(`${Path}version/${args[1]}`);
 
-    /* 分步骤下载文件全部完成后继续往下执行 */
-    await new Promise(function (resolve, reject) {
-        console.log("1. 下载版本json");
+    /* 下载版本json */
+    console.log("下载版本json");
+    var download_to = `${Path}version/${args[1]}/${args[1]}.json`;
+    await downloadFile(args[0], download_to);
+    var version_data = JSON.parse(f.readFileSync(download_to));
 
-        /* 初始化 */
-        var download_to = `${Path}version/${args[1]}/${args[1]}.json`;
-        const downloadStream = got.stream(args[0]);
-        const fileWriterStream = f.createWriteStream(download_to);
+    let lib = version_data["libraries"];
+    let libPath = Path + "libraries/";
 
-        /* 放置侦测器监听下载 */
-        downloadStream.on("error", () => {});
-        fileWriterStream
-            .on("error", () => {})
-            .on("finish", () => {
-                console.log("第一步完成");
-                resolve(JSON.parse(f.readFileSync(download_to))); // 解码下载到的数据为js对象并送往下一步
-            });
+    /* 转换系统信息，使其能够正确匹配版本json */
+    let os_type = 0;
+    switch (os.type()) {
+        case "Windows_NT":
+            os_type = "windows";
+            break;
+        case "Linux":
+            os_type = "linux";
+            break;
+        case "Darwin":
+            os_type = "osx";
+            break;
+        default: // 上面三种以外的拒绝安装（如果之后能测试其他系统的话我会加到里面）
+            resolve();
+            break;
+    }
+    let os_arch = os.arch();
+    let os_version = os.release();
+    /* fileNum表示需要下载的文件个数 */
+    var fileNum = 0;
+    var from = [];
+    var to = [];
+    for (let i = 0; i < lib.length; i++) {
+        /* 给麻将擦屁股：检查当前系统的信息是否符合条件，符合条件了允许下载 */
+        /* allow表示是否同意下载此键的内容 */
+        let allow = false;
+        if (typeof lib[i]["rules"] == "undefined") {
+            allow = true;
+            fileNum = fileNum + 1;
+            console.log(fileNum);
+        } else {
+            let rules = lib[i]["rules"];
 
-        /* 下载并写入 */
-        downloadStream.pipe(fileWriterStream);
-    }).then((version_data) => {
-        /* 初始化 */
-        let lib = version_data["libraries"];
-        let libPath = Path + "libraries/";
-
-        /* 转换系统信息，使其能够正确匹配版本json */
-        let os_type = 0;
-        switch (os.type()) {
-            case "Windows_NT":
-                os_type = "windows";
-                break;
-            case "Linux":
-                os_type = "linux";
-                break;
-            case "Darwin":
-                os_type = "osx";
-                break;
-            default: // 上面三种以外的拒绝安装（如果之后能测试其他系统的话我会加到里面）
-                resolve();
-                break;
-        }
-        let os_arch = os.arch();
-        let os_version = os.release();
-        /* fileNum表示需要下载的文件个数，downloadNum表示已经下载的个数 */
-        var fileNum = 0;
-        var downloadedNum = 0;
-        for (let i = 0; i < lib.length; i++) {
-            /* 给麻将擦屁股：检查当前系统的信息是否符合条件，符合条件了允许下载 */
-            /* allow表示是否同意下载此键的内容 */
-            let allow = false;
-            if (typeof lib[i]["rules"] == "undefined") {
-                allow = true;
-                fileNum = fileNum + 1;
-                console.log(fileNum);
-            } else {
-                let rules = lib[i]["rules"];
-
-                for (let index = 0; index < rules.length; index++) {
-                    /* 给麻将擦屁股：如果规则中不包含os键，直接他妈的跳过 */
-                    if (typeof rules[index]["os"] != "undefined") {
-                        if (
-                            // 判定规则：action允许，且os键里的条件要么没指定要么匹配当前系统 -> 允许下载
-                            rules[index]["action"] === "allow" &&
-                            (typeof rules[index]["os"]["name"] == "undefined" || os_type === rules[index]["os"]["name"]) &&
-                            (typeof rules[index]["os"]["arch"] == "undefined" || os_arch === rules[index]["os"]["arch"]) &&
-                            (typeof rules[index]["os"]["version"] == "undefined" || os_version.search(rules[index]["os"]["version"]) !== -1)
-                        ) {
-                            allow = true;
-                            fileNum = fileNum + 1;
-                            console.log(fileNum);
-                        } else if (
-                            // 判定规则： action不允许，且当前系统信息全部不匹配 -> 允许下载
-                            rules[index]["action"] === "disallow" &&
-                            os_type != rules[index]["os"]["name"] &&
-                            os_arch != rules[index]["os"]["arch"] &&
-                            os_version.search(rules[index]["os"]["version"]) == -1
-                        ) {
-                            allow = true;
-                            fileNum = fileNum + 1;
-                            console.log(fileNum);
-                        }
-                    }
-                }
-            } /* 根据上面的结果决定是否下载 */
-            if (allow == true) {
-                /* 先检查是否为native库 */
-                let download_info;
-                if (typeof lib[i]["downloads"]["classifiers"] == "undefined") {
-                    download_info = lib[i]["downloads"]["artifact"];
-                } else {
-                    if (typeof lib[i]["downloads"]["classifiers"][`native-${os_type}`] != "undefined") {
-                        download_info = lib[i]["downloads"]["classifiers"][`native-${os_type}`];
-                        console.log("有一个native库");
-                    } else if (typeof lib[i]["downloads"]["artifact"] != "undefined") {
-                        download_info = lib[i]["downloads"]["artifact"];
-                    }
-                }
-                /* 上面检查完了之后还需检查下载信息，如果未指定则跳过此次下载 */
-                if (typeof download_info != "undefined") {
-                    /* 如果文件夹不存在就先创建 */
-                    makeDir((libPath + download_info["path"]).replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
-                    /*  */
-                    const downloadStream = got.stream(download_info["url"]);
-                    const fileWriterStream = f.createWriteStream(libPath + download_info["path"]);
-                    /* 放置侦测器监听下载 */
-                    downloadStream.on("error", () => {});
-                    fileWriterStream
-                        .on("error", () => {
-                            console.log("一个错误");
-                        }) //错误处理
-                        .on("finish", () => {
-                            downloadedNum = downloadedNum + 1;
-                            console.log("a" + downloadedNum);
-                            if (fileNum == downloadedNum) {
-                                console.log("依赖库已补完");
-                                complete_assets(version_data);
-                            }
-                        });
-
-                    /* 下载并写入 */
-                    downloadStream.pipe(fileWriterStream);
-                } else {
-                    downloadedNum = downloadedNum + 1;
-                    console.log("a" + downloadedNum);
-                    if (fileNum == downloadedNum) {
-                        console.log("依赖库已补完");
-                        complete_assets(version_data);
+            for (let index = 0; index < rules.length; index++) {
+                /* 给麻将擦屁股：如果规则中不包含os键，直接他妈的跳过 */
+                if (typeof rules[index]["os"] != "undefined") {
+                    if (
+                        // 判定规则：action允许，且os键里的条件要么没指定要么匹配当前系统 -> 允许下载
+                        rules[index]["action"] === "allow" &&
+                        (typeof rules[index]["os"]["name"] == "undefined" || os_type === rules[index]["os"]["name"]) &&
+                        (typeof rules[index]["os"]["arch"] == "undefined" || os_arch === rules[index]["os"]["arch"]) &&
+                        (typeof rules[index]["os"]["version"] == "undefined" || os_version.search(rules[index]["os"]["version"]) !== -1)
+                    ) {
+                        allow = true;
+                        fileNum = fileNum + 1;
+                        console.log(fileNum);
+                    } else if (
+                        // 判定规则： action不允许，且当前系统信息全部不匹配 -> 允许下载
+                        rules[index]["action"] === "disallow" &&
+                        os_type != rules[index]["os"]["name"] &&
+                        os_arch != rules[index]["os"]["arch"] &&
+                        os_version.search(rules[index]["os"]["version"]) == -1
+                    ) {
+                        allow = true;
+                        fileNum = fileNum + 1;
+                        console.log(fileNum);
                     }
                 }
             }
+        } /* 根据上面的结果决定是否下载 */
+        if (allow == true) {
+            /* 先检查是否为native库 */
+            let download_info;
+            if (typeof lib[i]["downloads"]["classifiers"] == "undefined") {
+                download_info = lib[i]["downloads"]["artifact"];
+            } else {
+                if (typeof lib[i]["downloads"]["classifiers"][`native-${os_type}`] != "undefined") {
+                    download_info = lib[i]["downloads"]["classifiers"][`native-${os_type}`];
+                    console.log("有一个native库");
+                } else if (typeof lib[i]["downloads"]["artifact"] != "undefined") {
+                    download_info = lib[i]["downloads"]["artifact"];
+                }
+            }
+            /* 上面检查完了之后还需检查下载信息，如果未指定则跳过此次下载 */
+            if (typeof download_info != "undefined") {
+                /* 如果文件夹不存在就先创建 */
+                makeDir((libPath + download_info["path"]).replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
+                from.push(download_info["url"]);
+                to.push(libPath + download_info["path"]);
+            }
         }
-        /* 下载主文件 */
-        var download_to = `${Path}version/${args[1]}/${args[1]}.jar`;
-        const downloadStream = got.stream(version_data["downloads"]["client"]["url"]);
-        console.log(version_data["downloads"]["client"]["url"]);
-        const fileWriterStream = f.createWriteStream(download_to);
-        downloadStream.on("error", () => {});
-        fileWriterStream
-            .on("error", () => {})
-            .on("finish", () => {
-                console.log("游戏主文件下载完成");
-            });
-        downloadStream.pipe(fileWriterStream);
-    });
+    }
+    (async () => {
+        await parallelDownload(from, to, 64, event_, "lib");
+        console.log("依赖库已补完");
+    })();
+    complete_assets(version_data, event_); // 补全资源文件（可能补不全）
+
+    /* 下载主文件 */
+    async () => {
+        await downloadFile(version_data["downloads"]["client"]["url"], `${Path}version/${args[1]}/${args[1]}.jar`, event_,'main');
+        console.log("主文件下载完成");
+    };
 });
 
-function complete_assets(version_data) {
+async function complete_assets(version_data, event) {
+    const event_ = event;
     /* 下载资源索引，解析后调用函数补完资源文件 */
     var Path = path_handle()["gamePath"];
     var assets_index_file = `${Path}assets/indexes/${version_data["assetIndex"]["id"]}.json`;
-    makeDir(assets_index_file.replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
-    const assetsIndexdownloadStream = got.stream(version_data["assetIndex"]["url"]);
-    const assetsIndexfileWriterStream = f.createWriteStream(assets_index_file);
-    assetsIndexdownloadStream.on("error", () => {}); // 下载失败处理
-    assetsIndexfileWriterStream
-        .on("error", () => {}) // 写入失败处理
-        .on("finish", async () => {
-            console.log("资源索引下载完成");
-            var assets_index = JSON.parse(f.readFileSync(assets_index_file, "utf-8"));
-            var assets_list = assets_index["objects"];
-            var from = [];
-            var to = [];
-            Object.keys(assets_list).forEach((e) => {
-                // 下载每一个键描述的内容
-                let hash = assets_list[e]["hash"];
-                let hash_ = hash.substring(0, 2);
-                makeDir(`${Path}assets/objects/${hash_}`);
-                from.push(`http://resources.download.minecraft.net/${hash_}/${hash}`);
-                to.push(`${Path}assets/objects/${hash_}/${hash}`);
-            });
-           await parallelDownload(from, to, 5)
-        });
-    assetsIndexdownloadStream.pipe(assetsIndexfileWriterStream);
+    await downloadFile(version_data["assetIndex"]["url"], assets_index_file);
+    console.log("资源索引下载完成");
+    var assets_index = JSON.parse(f.readFileSync(assets_index_file, "utf-8"));
+    var assets_list = assets_index["objects"];
+    var from = [];
+    var to = [];
+    Object.keys(assets_list).forEach((e) => {
+        // 下载每一个键描述的内容
+        let hash = assets_list[e]["hash"];
+        let hash_ = hash.substring(0, 2);
+        makeDir(`${Path}assets/objects/${hash_}`);
+        from.push(`http://resources.download.minecraft.net/${hash_}/${hash}`);
+        to.push(`${Path}assets/objects/${hash_}/${hash}`);
+    });
+    await parallelDownload(from, to, 64, event_, 'assets_file');
+    console.log("资源文件补完");
 }
 
 function path_handle() {
@@ -246,9 +197,3 @@ function makeDir(dirname) {
         }
     }
 }
-
-
-
-
-
-

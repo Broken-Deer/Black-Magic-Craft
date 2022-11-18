@@ -24,15 +24,15 @@
   <script src="./assets/scripts/auth.js"></script>
   <script src="./assets/scripts/loadconfig.js"></script>
   <script src="./assets/scripts/installer.js"></script>
-  <script src="./assets/scripts/page.js"></script>
+  <script src="./assets/scripts/onload.js"></script>
   <script src="./renderer.js"></script>
 </head>
 
 <body style="transform: scale(0.95, 0.95); opacity: 0">
   <!-- 窗口主体 -->
   <div id="win">
-    <div class="popup_window" id="pop_up_window_shadow" onclick="popup_window_close()"></div>
-    <div class="choose-file-msg">请在打开的窗口中选择文件</div>
+    <div class="popup_window" id="pop_up_window_shadow"></div>
+        <div class="choose-file-msg"><p>请在打开的窗口中选择文件</p></div>
     <div class="btn-box"
       style="height: 89px; width: 257px; position: fixed; bottom: 0; right: 2rem; overflow: hidden; padding: 10px; pointer-events: none">
       <div class="btn" style="margin-top: 0rem">
@@ -56,7 +56,7 @@
       <div class="user-panel">
         <div class="d-flex" id="user-panel">
           <element class="user-add" id="user_add" style="cursor: pointer"
-            onclick="show_ms_login_page('ms_login', true)">
+            onclick="popup_window('ms_login', true)">
             <i class="fa-regular nav-icon" id="nav-3"></i>
             <p>添加帐户</p>
           </element>
@@ -430,11 +430,11 @@
       </div>
     </div>
     <div id="download_pg">
+      <div class="page-title">安装游戏</div>
       <div class="card">
         <div class="card-body">
           <div>
-            <span class="name">选择 Minecraft 版本</span>
-            <div class="input input-checkbox">
+            <div class="input input-checkbox disable" id="5D4CBB91">
               <span class="name">显示远古版、快照版</span>
               <div class="input-box">
                 <label>
@@ -450,20 +450,34 @@
                 const a = document.querySelectorAll(".crafting_table");
                 const b = document.querySelectorAll(".ancient_debris");
                 if ($("#2B39A329").prop("checked")) {
-                  $(a).fadeIn(1)
-                  $(b).fadeIn(1)
+                  $(a).removeClass('dispnone')
+                  $(b).removeClass('dispnone')
                 } else {
-
-                  $(a).fadeOut(1)
-                  $(b).fadeOut(1)
+                  $(a).addClass('dispnone')
+                  $(b).addClass('dispnone')
                 }
               });
             </script>
-
+            <div style="opacity: 1;" id="B9C498C7">
+              <span>正在加载版本列表</span>
+              <!-- ↓加载动画↓ -->
+              <div style="width: 32px;height: 32px;display: inline-block;transform: scale(0.6);">
+                <div class="Sf-Kd mspin-medium" id="loading">
+                  <div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <!-- ↑加载动画↑ -->
+            </div>
           </div>
         </div>
-        <ul class="list" id="_version_list"> </ul>
+        <ul class="list" id="_version_list" style="max-height: 0; padding: 0px 20px;">
+
+        </ul>
+
       </div>
+
 
 
     </div>
@@ -476,14 +490,19 @@
       <div class="body" id="ms_login_body" style="width: 440.8px; height: 328.8px">
         <div></div>
         <!-- ↓加载动画↓ -->
-        <div style="margin: auto auto; width: 36px; height: 36px">
-          <div class="Sf-Kd mspin-medium" id="loading" style="opacity: 0">
+        <div style="margin: auto auto; width: 36px; height: 36px;position: absolute;z-index: -1;">
+          <div class="Sf-Kd mspin-medium" id="loading">
             <div>
               <div></div>
             </div>
           </div>
         </div>
         <!-- ↑加载动画↑ -->
+      </div>
+      <div class="foot" style="display: none"></div>
+    </div>
+    <div class="popup_window_main" id="game_install">
+      <div class="body" id="game_install_body" style="width: calc(100vw - 200px);height: calc(100vh - 100px);">
       </div>
       <div class="foot" style="display: none"></div>
     </div>
