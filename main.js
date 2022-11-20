@@ -4,6 +4,11 @@ const f = require("fs");
 const os = require("os");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
+(async () => {
+    await import("./src/installer/minecraft.mjs");
+    await import("./src/game/launch.mjs");
+})();
+
 var win;
 const createWindow = () => {
     win = new BrowserWindow({
@@ -44,7 +49,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-/*     session.defaultSession.cookies // 退出时清除cookie
+    /*     session.defaultSession.cookies // 退出时清除cookie
         .get({})
         .then((cookies) => {
             cookies.forEach((cookie) => {
@@ -127,11 +132,6 @@ ipcMain.on("choose_java", (event) => {
             });
     }
 });
-
-/* 单独注册下载命令侦测器 */
-(async () => {
-    await import("./src/installer/minecraft.mjs");
-})();
 
 function path_handle() {
     var exePath = process.cwd();
