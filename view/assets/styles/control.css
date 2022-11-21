@@ -12,7 +12,7 @@ span.name {
     font-size: 0.9rem;
     height: 1.4em;
     min-width: 10em;
-    /* margin-right: 2.4em; */
+    margin-right: 2.4em;
     transition: color 0.2s ease;
 }
 

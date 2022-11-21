@@ -24,13 +24,10 @@
   <script src="./assets/scripts/auth.js"></script>
   <script src="./assets/scripts/loadconfig.js"></script>
   <script src="./assets/scripts/installer.js"></script>
-  <script src="./assets/scripts/onload.js"></script>
   <script src="./assets/scripts/vue.js"></script>
   <script src="./i18n/zh_cn.js"></script>
   <script src="./renderer.js"></script>
-  <script>
-
-  </script>
+  <script type="module" src="./assets/scripts/onload.js"></script>
 </head>
 
 <body style="transform: scale(0.95, 0.95); opacity: 0">
@@ -58,47 +55,47 @@
       </div>
     </div>
     <div class="sidebar" id="sidebar">
-      <li class="nav-header">帐户</li>
+      <li class="sidebar-header">帐户</li>
       <div class="user-panel">
         <div class="d-flex" id="user-panel">
-          <element class="user-add" id="user_add" style="cursor: pointer" onclick="popup_window('ms_login', true)">
+          <span class="user-add" id="user_add" style="cursor: pointer" onclick="popup_window('ms_login', true)">
             <i class="fa-regular nav-icon" id="nav-3"></i>
             <p>添加帐户</p>
-          </element>
+          </span>
         </div>
       </div>
-      <li class="nav-header">游戏</li>
+      <li class="sidebar-header">游戏</li>
       <ul class="sidebar-links">
         <li class="sidebar-item" id="sidebar-3">
-          <element id="start_game" class="sidebar">
+          <span id="start_game" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-7"></i>
             <p>启动游戏</p>
-          </element>
+          </span>
         </li>
         <li class="sidebar-item" id="sidebar-2">
-          <element id="version_list" class="sidebar">
+          <span id="version_list" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-2"></i>
             <p>版本列表</p>
-          </element>
+          </span>
         </li>
         <li class="sidebar-item" id="sidebar-4">
-          <element id="download" class="sidebar">
+          <span id="download" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-4"></i>
             <p>下载</p>
-          </element>
+          </span>
         </li>
-        <li class="nav-header">设置</li>
+        <li class="sidebar-header">设置</li>
         <li class="sidebar-item" id="sidebar-6">
-          <element id="g_setting" class="sidebar">
+          <span id="g_setting" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-5"></i>
             <p>游戏</p>
-          </element>
+          </span>
         </li>
         <li class="sidebar-item" id="sidebar-5">
-          <element id="v_setting" class="sidebar">
+          <span id="v_setting" class="sidebar">
             <i class="fa-regular nav-icon" id="nav-6"></i>
             <p>启动器</p>
-          </element>
+          </span>
         </li>
       </ul>
     </div>
@@ -108,23 +105,6 @@
       </div>
     </main>
   </div>
-  <script type="text/javascript">
-    const btns = document.querySelectorAll(".btn_");
-    btns.forEach((btn) => {
-      btn.addEventListener("mousedown", (e) => {
-        var a = btn.getAttribute("style");
-        btn.setAttribute("style", "pointer-events:none; cursor: default;");
-        let span = document.createElement("span");
-        span.style.left = e.offsetX + "px";
-        span.style.top = e.offsetY + "px";
-        btn.appendChild(span);
-        setTimeout(() => {
-          span.remove();
-          btn.setAttribute("style", a);
-        }, 500);
-      });
-    });
-  </script>
 
   <!-- 不显示区 -->
   <div class="dont_display">
@@ -133,38 +113,19 @@
     <div id="user_add_pg">
       <div class="list_card"></div>
     </div>
-    <div id="v_setting_pg"></div>
     <div id="g_setting_pg">
-      <div class="page-title" id="text">{{ ui.g_setting_pg_title }}</div>
+      <div class="page-title" id="text">{{ ui.global_settings.title }}</div>
 
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon"><i class="java-logo fa-brands"></i></div>
-            <div>
-              <h4 id="text">{{ ui.java_path_title }}</h4>
-              <p id="text">{{ ui.java_path_description }}</p>
-            </div>
-          </div>
-          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
-        </div>
+        <card-header :title="ui.global_settings.java_path_title"
+          :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
         <div class="card-body">
           <div>
-            <div class="input input-checkbox">
-              <span class="name">{{ ui.auto_choose_java }}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" id="java_auto_choose" checked="checked" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
+            <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"></checkbox>
             <div class="input input-text input-file" id="E16616C6">
-              <span class="name">{{ ui.java_path }}</span>
+              <span class="name">{{ ui.global_settings.java_path }}</span>
               <div class="input-data">
-                <input type="text" id="input_a" title="{{ ui.java_path }}" required />
+                <input type="text" id="input_a" title="{{ ui.global_settings.java_path }}" required />
                 <div class="underline"></div>
               </div>
               <div class="choose-file">
@@ -180,8 +141,8 @@
           <div class="card-title">
             <div class="card-icon"><i class="start-game"></i></div>
             <div>
-              <h4>{{ui.launch_options_title}}</h4>
-              <p>{{ui.launch_options_description}}</p>
+              <h4>{{ui.global_settings.launch_options_title}}</h4>
+              <p>{{ui.global_settings.launch_options_description}}</p>
             </div>
           </div>
           <div class="card-button" onclick="expanded_card(this)"><i></i></div>
@@ -189,69 +150,65 @@
         <div class="card-body">
           <div>
             <div class="input input-text">
-              <span class="name">{{ui.game_window_title}}</span>
+              <span class="name">{{ui.global_settings.game_window_title}}</span>
               <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.game_window_title}}" :placeholder="ui.game_window_title_placeholder" required />
+                <input type="text" id="input_a" title="{{ui.global_settings.game_window_title}}"
+                  :placeholder="ui.global_settings.game_window_title_placeholder" required />
                 <div class="underline"></div>
               </div>
             </div>
             <div class="input input-text">
-              <span class="name">{{ui.customize_launcher_info}}</span>
+              <span class="name">{{ui.global_settings.customize_launcher_info}}</span>
               <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.customize_launcher_info}}" :placeholder="ui.customize_launcher_info_placeholder" required />
+                <input type="text" id="input_a" title="{{ui.global_settings.customize_launcher_info}}"
+                  :placeholder="ui.global_settings.customize_launcher_info_placeholder" required />
                 <div class="underline"></div>
               </div>
             </div>
             <div class="input input-text">
-              <span class="name">{{ui.server_address}}</span>
+              <span class="name">{{ui.global_settings.server_address}}</span>
               <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.server_address}}" :placeholder="ui.server_address_placeholder" required />
+                <input type="text" id="input_a" title="{{ui.global_settings.server_address}}"
+                  :placeholder="ui.global_settings.server_address_placeholder" required />
                 <div class="underline"></div>
               </div>
             </div>
             <div class="input input-list" id="version_isolation">
-              <span class="name">{{ui.process_priority}}</span>
+              <span class="name">{{ui.global_settings.process_priority}}</span>
               <div class="input-data input-data-list" onclick="input_list(this,'156px')">
                 <div></div>
                 <ul class="option" style="display: none">
-                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_highest}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_higher}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_medium}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_lower}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_minimum}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_highest}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_higher}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_medium}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_lower}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_minimum}}</li>
                   <div></div>
                 </ul>
               </div>
             </div>
 
             <div class="input input-text">
-              <span class="name">{{ui.window_size}}</span>
+              <span class="name">{{ui.global_settings.window_size}}</span>
               <div style="display: flex; line-height: 1.7">
                 <div class="input-data mini">
-                  <input type="text" id="input_a" title="{{ui.window_width}}" placeholder="800" required />
+                  <input type="text" id="input_a" title="{{ui.global_settings.window_width}}" placeholder="800"
+                    required />
                   <div class="underline"></div>
                 </div>
                 ×
                 <div class="input-data mini">
-                  <input type="text" id="input_a" title="{{ui.window_height}}" placeholder="600" required />
+                  <input type="text" id="input_a" title="{{ui.global_settings.window_height}}" placeholder="600"
+                    required />
                   <div class="underline"></div>
                 </div>
               </div>
             </div>
 
-            <div class="input input-checkbox">
-              <span class="name">{{ui.automatic_memory_allocation}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" id="automatic_memory" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
+            <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')">
+            </checkbox>
             <div class="input input-text" id="D3E268A7">
-              <span class="name">{{ui.game_memory}}</span>
+              <span class="name">{{ui.global_settings.game_memory}}</span>
               <div style="display: flex; line-height: 1.7">
                 <div class="slider">
                   <div class="orbit">
@@ -262,7 +219,8 @@
                   </div>
                 </div>
                 <div class="input-data mini">
-                  <input type="text" id="memory_value" title="{{ui.game_memory}}" placeholder="" required />
+                  <input type="text" id="memory_value" title="{{ui.global_settings.game_memory}}" placeholder=""
+                    required />
                   <div class="underline"></div>
                 </div>
                 <span class="text">MB</span>
@@ -273,60 +231,22 @@
       </div>
 
       <div class="card not-expanded">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon"><i class="pro-settings"></i></div>
-            <div>
-              <h4>{{ui.advanced_settings}}</h4>
-              <p>{{ui.advanced_settings_description}}</p>
-            </div>
-          </div>
-          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
-        </div>
+        <card-header :title="ui.global_settings.advanced_settings"
+          :description="ui.global_settings.advanced_settings_description" icon="pro-settings"></card-header>
         <div class="card-body" style="overflow: hidden; height: 0">
           <div>
-            <div class="input input-text">
-              <span class="name">{{ui.game_parameters}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.game_parameters}}" :placeholder="ui.game_parameters_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-text">
-              <span class="name">{{ui.exec_before_starting}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.exec_before_starting}}" :placeholder="ui.exec_before_starting_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-text">
-              <span class="name">{{ui.wrap_command}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.wrap_command}}" :placeholder="ui.wrap_command_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-text">
-              <span class="name">{{ui.exec_after_starting}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.exec_after_starting}}" :placeholder="ui.exec_after_starting_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-text">
-              <span class="name">{{ui.jvm_parameters}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.jvm_parameters}}" :placeholder="ui.jvm_parameters_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-text">
-              <span class="name">{{ui.memory_persistence_area}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.memory_persistence_area}}" :placeholder="ui.memory_persistence_area_placeholder" required />
-                <div class="underline"></div>
-              </div>
-            </div>
+            <inputbox :name="ui.global_settings.game_parameters"
+              :placeholder="ui.global_settings.game_parameters_placeholder"></inputbox>
+            <inputbox :name="ui.global_settings.exec_before_starting"
+              :placeholder="ui.global_settings.exec_before_starting_placeholder"></inputbox>
+            <inputbox :name="ui.global_settings.wrap_command"
+              :placeholder="ui.global_settings.wrap_command_placeholder"></inputbox>
+            <inputbox :name="ui.global_settings.exec_after_starting"
+              :placeholder="ui.global_settings.exec_after_starting_placeholder"></inputbox>
+            <inputbox :name="ui.global_settings.jvm_parameters"
+              :placeholder="ui.global_settings.jvm_parameters_placeholder"></inputbox>
+            <inputbox :name="ui.global_settings.memory_persistence_area"
+              :placeholder="ui.global_settings.memory_persistence_area_placeholder"></inputbox>
           </div>
         </div>
       </div>
@@ -336,84 +256,32 @@
           <div class="card-title">
             <div class="card-icon"><i class="debug-settings"></i></div>
             <div>
-              <h4>{{ui.debugging_options}}</h4>
-              <p>{{ui.debugging_options_description}}</p>
+              <h4>{{ui.global_settings.debugging_options}}</h4>
+              <p>{{ui.global_settings.debugging_options_description}}</p>
             </div>
           </div>
           <div class="card-button" onclick="expanded_card(this)"><i></i></div>
         </div>
         <div class="card-body" style="overflow: hidden; height: 0">
           <div>
-            <div class="input input-text">
-              <span class="name">{{ui.lwjgl}}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ui.lwjgl}}" :placeholder="ui.lwjgl_placeholder"
-                  required />
-                <div class="underline"></div>
-              </div>
-            </div>
-            <div class="input input-checkbox">
-              <span class="name">{{ui.dont_check_jvm_parameters}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" name="" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="input input-checkbox">
-              <span class="name">{{ui.dont_check_assets_files}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" name="" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="input input-checkbox">
-              <span class="name">{{ui.dont_check_JVM_compatibility}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" name="" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="input input-checkbox">
-              <span class="name">{{ui.use_system_GLFW}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" name="" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="input input-checkbox">
-              <span class="name">{{ui.use_system_OpenAL}}</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" name="" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
+            <inputbox :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder"></inputbox>
+            <checkbox :name="ui.global_settings.dont_check_jvm_parameters"></checkbox>
+            <checkbox :name="ui.global_settings.dont_check_assets_files"></checkbox>
+            <checkbox :name="ui.global_settings.dont_check_JVM_compatibility"></checkbox>
+            <checkbox :name="ui.global_settings.use_system_GLFW"></checkbox>
+            <checkbox :name="ui.global_settings.use_system_OpenAL"></checkbox>
             <div class="input">
-              <span class="name">{{ui.dev_tools}}</span>
-              <button class="command-button" onclick="execute('OpenDevTools')">{{ui.dev_tools_btn}}</button>
+              <span class="name">{{ui.global_settings.dev_tools}}</span>
+              <button class="command-button"
+                onclick="execute('OpenDevTools')">{{ui.global_settings.dev_tools_btn}}</button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div id="l_setting_pg">
+      <inputbox></inputbox>
+      <checkbox name="自动分配内存"></checkbox>
     </div>
     <div id="download_pg">
       <div class="page-title">安装游戏</div>
@@ -506,5 +374,8 @@
     </div>
   </div>
 </body>
+<script type="module">
+
+</script>
 
 </html>

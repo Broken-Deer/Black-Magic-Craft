@@ -176,7 +176,7 @@ div.sidebar .sidebar-active::after {
     border-radius: 3px;
 }
 
-div.sidebar .sidebar-item element,
+div.sidebar .sidebar-item span,
 div.sidebar .sidebar-item a {
     color: #232323;
     width: 100%;
@@ -184,7 +184,7 @@ div.sidebar .sidebar-item a {
     cursor: pointer;
 }
 
-div.sidebar element.sidebar,
+div.sidebar span.sidebar,
 div.sidebar a.sidebar {
     opacity: 1 !important;
     border-bottom: 0 !important;
@@ -202,7 +202,7 @@ div.sidebar li.active {
 
 a,
 img,
-element,
+span,
 button {
     text-decoration: none;
     user-select: none;
@@ -212,7 +212,7 @@ div.sidebar {
     width: 230px;
 }
 
-div.sidebar .sidebar-item element.sidebar:hover,
+div.sidebar .sidebar-item span.sidebar:hover,
 div.sidebar .sidebar-item a.sidebar:hover {
     border-radius: 0.4rem;
     background-color: #aeaeae45;
@@ -262,7 +262,7 @@ a {
     margin: 0 0 1rem 0;
 }
 
-li.nav-header {
+li.sidebar-header {
     color: #292d32;
     padding: 0.5rem 0.75rem;
     font-size: 0.9rem;
@@ -282,7 +282,7 @@ i.nav-icon {
     text-align: center;
 }
 
-element.sidebar p,
+span.sidebar p,
 a.sidebar p {
     display: inline;
 }
