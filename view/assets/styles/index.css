@@ -28,27 +28,15 @@
 }
 
 #win {
-    /* width: calc(100vw - 10px); */
-    /* height: calc(99.8vh - 0px); */
     width: 100%;
     height: 100%;
-    /* margin-left: 5px; */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0px 0px 5px #00000047;
     transition: background-color 0.3s ease;
-    /* background-image: linear-gradient(to right, #ffffff9c 0%, #ffffffb5 100%), linear-gradient(to right, #43e97b 0%, #38f9d7 100%); */
-    /* background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); */
-    /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
-    /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
     background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-    /* background-image: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); */
-    /* background-image: linear-gradient(135deg, #ebc0fd 0%, #d9ded8 100%); */
-    /* background-image: linear-gradient(135deg, #9890e3 0%, #b1f4cf 100%); */
-    /* background-color: #ffffffab; */
 }
 
-/* 标题栏 */
 div.title-bar {
     height: 50px;
     background: #cacaca5e;
@@ -100,8 +88,6 @@ div.title-bar > div.button #max svg {
     height: 15px;
 }
 
-/* 侧边栏 */
-
 div.sidebar {
     font-size: 16px;
     position: fixed;
@@ -113,7 +99,6 @@ div.sidebar {
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 4rem;
-    /* transition: all .2s cubic-bezier(0, 0.83, 0.47, 1); */
     padding: 1rem 0.5rem 0 0.5rem;
     padding-bottom: 3rem;
 }
@@ -131,15 +116,12 @@ main.page {
     padding-bottom: 2rem;
     display: block;
     padding-left: 230px;
-    /* padding-right: 2vw; */
     overflow-y: overlay;
     overflow-x: hidden;
-    /* margin-top: 5rem; */
     height: 100%;
 }
 
 div.page {
-    /* max-width: 75rem; */
     margin: 0 auto;
     padding: 1rem 1.2rem 0rem 1.2rem;
     display: block;
@@ -258,7 +240,6 @@ a {
 }
 
 .user-panel {
-    /* border-bottom: 1px solid rgb(222, 226, 230); */
     margin: 0 0 1rem 0;
 }
 
@@ -286,8 +267,6 @@ span.sidebar p,
 a.sidebar p {
     display: inline;
 }
-
-/* 页面主要内容 */
 
 h1 {
     font-family: Harmony-re;
@@ -400,7 +379,6 @@ div.page {
     flex-direction: column;
     justify-content: flex-end;
     transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    /* margin: -20px -15px 0 -15px; */
 }
 
 .card-body > div {
@@ -434,7 +412,6 @@ div.page {
 }
 
 .not-expanded .card-body {
-    /* max-height: 0; */
     border-top: none;
 }
 
@@ -597,7 +574,7 @@ div.page > iframe > * {
     border-radius: inherit;
     position: fixed;
     background: #0000004f;
-    /* z-index: -2000; */
+
     pointer-events: none;
     opacity: 0;
     transition: all 0.2s cubic-bezier(0, 0.68, 0.25, 1);
@@ -632,7 +609,6 @@ div.page > iframe > * {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* position: absolute; */
 }
 
 @keyframes popup_window {
@@ -709,7 +685,7 @@ ul.list li.ancient_debris .icon {
 }
 ul.list div.info {
     padding: 0 0 0 6px;
-    /* height: auto; */
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -781,9 +757,6 @@ ul.list hr {
 }
 #download_pg div.input {
     justify-content: space-between;
-    /* float: right; */
-    /* right: 0; */
-    /* margin-left: auto; */
 }
 .list-last-one {
     border: none !important;
@@ -812,18 +785,14 @@ ul.task-list > li {
     align-items: center;
     justify-content: space-between;
     border-radius: 5px;
-    /* background-color: rgba(0, 0, 0, 0.058); */
+
     margin-bottom: 4px;
     color: #131415;
     padding: 0 12px;
-    /* display: inline-block; */
 }
 
 ul.task-list > li:hover {
     background-color: #0000000c;
-}
-
-i.task-list-icon {
 }
 
 #game_install h4 {
@@ -847,8 +816,6 @@ i.task-list-icon {
 }
 
 #game_install li span.count {
-    /* display: flex; */
-    /* width: 300px; */
     font-size: 14px;
     color: #000000a3;
 }

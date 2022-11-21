@@ -38,7 +38,28 @@ i.java-logo::before {
     font-style: normal;
     font-size: 1.9rem;
 }
-i.spinner-third,i.circle-check {
+i.arrows-rotate {
+    margin-top: 6px;
+}
+i.arrows-rotate::before {
+    content: "\f021";
+    font-family: "fa-pro";
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.6rem;
+}
+i.paintbrush {
+    margin-top: 4px;
+}
+i.paintbrush::before {
+    content: '\f1fc';
+    font-family: 'fa-pro';
+    font-weight: 200;
+    font-style: normal;
+    font-size: 1.3rem;
+}
+i.spinner-third,
+i.circle-check {
     font-family: "Font Awesome 6 Duotone";
     font-style: normal;
     font-weight: 600;
@@ -48,7 +69,7 @@ i.spinner-third,i.circle-check {
     align-items: center;
 }
 i.circle-check {
-    font-family: 'fa-pro';
+    font-family: "fa-pro";
     font-weight: 200;
     margin-right: 10px;
 }
@@ -63,7 +84,7 @@ i.spinner-third::after {
 }
 
 i.circle-check::before {
-    content: '\f058';
+    content: "\f058";
     color: #008501;
 }
 
@@ -118,11 +139,11 @@ button#start::before {
 }
 
 i.folder-arrow-down {
-    font-family: 'fa-pro';
+    font-family: "fa-pro";
 }
 
 i.folder-arrow-down::before {
-    content: '\f019';
+    content: "\f019";
     font-style: normal;
     font-weight: 400;
     font-size: 30px;

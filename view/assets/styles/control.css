@@ -286,3 +286,16 @@ button.command-button:active,
 input:focus::-webkit-input-placeholder {
     color: #00000000;
 }
+
+
+.input-color {
+    border-radius: 4px;
+    overflow: hidden;
+    background: #ffffff;
+    outline: 1px solid #0000001c;
+    height: 30px;
+    width: 100%;
+    padding: 0 8px 2px 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}

@@ -8,7 +8,6 @@ function version_list(type) {
                         var _version_list = data["versions"];
                         for (let i = 0; i < _version_list.length; i++) {
                             let version_info = _version_list[i];
-                            console.log(version_info);
                             if (version_info["type"] == "release") {
                                 var icon = "grass_block";
                                 var type = "正式版";
@@ -56,13 +55,16 @@ function install_game(url, id) {
     $("#5E79266D").html(`正在安装${id}`);
     $('#lib').html('');
     $("#assets_file").html('');
-    ipc.send("install_game", [url, id]);
-    var i = setInterval(() => {
-        if ($("#task1").hasClass("circle-check") && $("#task2").hasClass("circle-check") && $("#task3").hasClass("circle-check") && $("#task4").hasClass("circle-check")) {
-            popup_window_close('game_install')
-            clearInterval(i);
-           }
-    }, 50);// 循环检查这几个元素有没有打勾
+    setTimeout(() => {
+        console.log('发送安装命令')
+        ipc.send("install_game", [url, id]);
+        var i = setInterval(() => {
+            if ($("#task1").hasClass("circle-check") && $("#task2").hasClass("circle-check") && $("#task3").hasClass("circle-check") && $("#task4").hasClass("circle-check")) {
+                popup_window_close("game_install");
+                clearInterval(i);
+            }
+        }, 50); // 循环检查这几个元素有没有打勾
+    }, 500);
 }
 
 async function install_progress() {}

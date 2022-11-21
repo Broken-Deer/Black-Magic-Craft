@@ -1,11 +1,13 @@
-import inputbox from "../components/inputbox.js";
+import inputText from "../components/inputText.js";
 import checkbox from "../components/checkbox.js";
 import cardHeader from "../components/cardHeader.js";
+import loading from "../components/loading.js";
+import commandButton from "../components/commandButton.js";
+import inputColor from "../components/inputColor.js";
 
 window.onload = function () {
     $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
 
-    $("#user_add").bind("click", () => {});
     $("#start_game").bind("click", () => {
         display_btn();
         $("#main").empty();
@@ -24,20 +26,6 @@ window.onload = function () {
             slider("CA028F76", "memory_value", 128, 16384);
         }, 550);
     });
-    if ($("#java_auto_choose").prop("checked")) {
-        $("#E16616C6").addClass("disable");
-    } else {
-        $("#E16616C6").removeClass("disable");
-    }
-    if ($("#automatic_memory").prop("checked")) {
-        $("#D3E268A7").addClass("disable");
-    } else {
-        $("#D3E268A7").removeClass("disable");
-    }
-    /*   const webview = document.querySelector("webview");
-  webview.addEventListener("dom-ready", () => {
-    webview.openDevTools();
-  }); */
     zh_cn();
     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
@@ -137,7 +125,7 @@ window.onload = function () {
                 },
             };
         },
-        components: { inputbox, checkbox, cardHeader },
+        components: { inputText, checkbox, cardHeader, loading, commandButton, inputColor },
     }).mount(".dont_display");
 };
 document.addEventListener("DOMContentLoaded", () => {});
