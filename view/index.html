@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Black Magic Craft</title>
+  <!-- 加载样式表 -->
+  <link rel="stylesheet" type="text/css" href="./assets/styles/index.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/styles/animation.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/styles/control.css" />
+  <!-- 加载脚本 -->
+  <script src="./assets/scripts/jquery.js"></script>
+  <script>
+    if (typeof module === "object") {
+      window.jQuery = window.$ = module.exports;
+    }
+  </script>
+  <script src="./assets/scripts/jquery-ui.min.js"></script>
+  <script src="./assets/scripts/window.js"></script>
+  <script src="./assets/scripts/input.js"></script>
+  <script src="./assets/scripts/ui.js"></script>
+  <script src="./assets/scripts/auth.js"></script>
+  <script src="./assets/scripts/loadconfig.js"></script>
+  <script src="./assets/scripts/installer.js"></script>
+  <script src="./assets/scripts/onload.js"></script>
+  <script src="./assets/scripts/vue.js"></script>
+  <script src="./i18n/zh_cn.js"></script>
+  <script src="./renderer.js"></script>
+  <script>
+
+  </script>
+</head>
+
+<body style="transform: scale(0.95, 0.95); opacity: 0">
+  <!-- 窗口主体 -->
+  <div id="win">
+    <div class="popup_window" id="pop_up_window_shadow"></div>
+    <div class="choose-file-msg">
+      <p>请在打开的窗口中选择文件</p>
+    </div>
+    <div class="btn-box"
+      style="height: 89px; width: 257px; position: fixed; bottom: 0; right: 2rem; overflow: hidden; padding: 10px; pointer-events: none">
+      <div class="btn" style="margin-top: 0rem">
+        <button id="version_list_button" class="btn_" tabindex="-1">未选择任何版本</button>
+        <button id="start" class="" tabindex="-1" onclick="start()"></button>
+      </div>
+    </div>
+    <div class="title-bar">
+      <div class="title">
+        <div id="icon"></div>
+        <div id="title">Black Magic Craft</div>
+      </div>
+      <div class="button">
+        <div class="window-btn" id="min" onclick="win_min()"></div>
+        <div class="window-btn" id="close" onclick="win_close()"></div>
+      </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+      <li class="nav-header">帐户</li>
+      <div class="user-panel">
+        <div class="d-flex" id="user-panel">
+          <element class="user-add" id="user_add" style="cursor: pointer" onclick="popup_window('ms_login', true)">
+            <i class="fa-regular nav-icon" id="nav-3"></i>
+            <p>添加帐户</p>
+          </element>
+        </div>
+      </div>
+      <li class="nav-header">游戏</li>
+      <ul class="sidebar-links">
+        <li class="sidebar-item" id="sidebar-3">
+          <element id="start_game" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-7"></i>
+            <p>启动游戏</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-2">
+          <element id="version_list" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-2"></i>
+            <p>版本列表</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-4">
+          <element id="download" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-4"></i>
+            <p>下载</p>
+          </element>
+        </li>
+        <li class="nav-header">设置</li>
+        <li class="sidebar-item" id="sidebar-6">
+          <element id="g_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-5"></i>
+            <p>游戏</p>
+          </element>
+        </li>
+        <li class="sidebar-item" id="sidebar-5">
+          <element id="v_setting" class="sidebar">
+            <i class="fa-regular nav-icon" id="nav-6"></i>
+            <p>启动器</p>
+          </element>
+        </li>
+      </ul>
+    </div>
+    <main class="page">
+      <div class="page" id="main">
+
+      </div>
+    </main>
+  </div>
+  <script type="text/javascript">
+    const btns = document.querySelectorAll(".btn_");
+    btns.forEach((btn) => {
+      btn.addEventListener("mousedown", (e) => {
+        var a = btn.getAttribute("style");
+        btn.setAttribute("style", "pointer-events:none; cursor: default;");
+        let span = document.createElement("span");
+        span.style.left = e.offsetX + "px";
+        span.style.top = e.offsetY + "px";
+        btn.appendChild(span);
+        setTimeout(() => {
+          span.remove();
+          btn.setAttribute("style", a);
+        }, 500);
+      });
+    });
+  </script>
+
+  <!-- 不显示区 -->
+  <div class="dont_display">
+    <!-- 页面 -->
+    <div id="index"></div>
+    <div id="user_add_pg">
+      <div class="list_card"></div>
+    </div>
+    <div id="v_setting_pg"></div>
+    <div id="g_setting_pg">
+      <div class="page-title" id="text">{{ ui.g_setting_pg_title }}</div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="java-logo fa-brands"></i></div>
+            <div>
+              <h4 id="text">{{ ui.java_path_title }}</h4>
+              <p id="text">{{ ui.java_path_description }}</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="input input-checkbox">
+              <span class="name">{{ ui.auto_choose_java }}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" id="java_auto_choose" checked="checked" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-text input-file" id="E16616C6">
+              <span class="name">{{ ui.java_path }}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ ui.java_path }}" required />
+                <div class="underline"></div>
+              </div>
+              <div class="choose-file">
+                <i onclick="choose_java(this);"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="start-game"></i></div>
+            <div>
+              <h4>{{ui.launch_options_title}}</h4>
+              <p>{{ui.launch_options_description}}</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="input input-text">
+              <span class="name">{{ui.game_window_title}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.game_window_title}}" :placeholder="ui.game_window_title_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.customize_launcher_info}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.customize_launcher_info}}" :placeholder="ui.customize_launcher_info_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.server_address}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.server_address}}" :placeholder="ui.server_address_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-list" id="version_isolation">
+              <span class="name">{{ui.process_priority}}</span>
+              <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                <div></div>
+                <ul class="option" style="display: none">
+                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_highest}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_higher}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_medium}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_lower}}</li>
+                  <li class="option" onclick="set_input_list(this)">{{ui.process_priority_minimum}}</li>
+                  <div></div>
+                </ul>
+              </div>
+            </div>
+
+            <div class="input input-text">
+              <span class="name">{{ui.window_size}}</span>
+              <div style="display: flex; line-height: 1.7">
+                <div class="input-data mini">
+                  <input type="text" id="input_a" title="{{ui.window_width}}" placeholder="800" required />
+                  <div class="underline"></div>
+                </div>
+                ×
+                <div class="input-data mini">
+                  <input type="text" id="input_a" title="{{ui.window_height}}" placeholder="600" required />
+                  <div class="underline"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="input input-checkbox">
+              <span class="name">{{ui.automatic_memory_allocation}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" id="automatic_memory" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-text" id="D3E268A7">
+              <span class="name">{{ui.game_memory}}</span>
+              <div style="display: flex; line-height: 1.7">
+                <div class="slider">
+                  <div class="orbit">
+                    <div></div>
+                  </div>
+                  <div class="slider_btn" id="CA028F76">
+                    <div></div>
+                  </div>
+                </div>
+                <div class="input-data mini">
+                  <input type="text" id="memory_value" title="{{ui.game_memory}}" placeholder="" required />
+                  <div class="underline"></div>
+                </div>
+                <span class="text">MB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="pro-settings"></i></div>
+            <div>
+              <h4>{{ui.advanced_settings}}</h4>
+              <p>{{ui.advanced_settings_description}}</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+        </div>
+        <div class="card-body" style="overflow: hidden; height: 0">
+          <div>
+            <div class="input input-text">
+              <span class="name">{{ui.game_parameters}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.game_parameters}}" :placeholder="ui.game_parameters_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.exec_before_starting}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.exec_before_starting}}" :placeholder="ui.exec_before_starting_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.wrap_command}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.wrap_command}}" :placeholder="ui.wrap_command_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.exec_after_starting}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.exec_after_starting}}" :placeholder="ui.exec_after_starting_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.jvm_parameters}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.jvm_parameters}}" :placeholder="ui.jvm_parameters_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-text">
+              <span class="name">{{ui.memory_persistence_area}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.memory_persistence_area}}" :placeholder="ui.memory_persistence_area_placeholder" required />
+                <div class="underline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card not-expanded">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-icon"><i class="debug-settings"></i></div>
+            <div>
+              <h4>{{ui.debugging_options}}</h4>
+              <p>{{ui.debugging_options_description}}</p>
+            </div>
+          </div>
+          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+        </div>
+        <div class="card-body" style="overflow: hidden; height: 0">
+          <div>
+            <div class="input input-text">
+              <span class="name">{{ui.lwjgl}}</span>
+              <div class="input-data">
+                <input type="text" id="input_a" title="{{ui.lwjgl}}" :placeholder="ui.lwjgl_placeholder"
+                  required />
+                <div class="underline"></div>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">{{ui.dont_check_jvm_parameters}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">{{ui.dont_check_assets_files}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">{{ui.dont_check_JVM_compatibility}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">{{ui.use_system_GLFW}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input input-checkbox">
+              <span class="name">{{ui.use_system_OpenAL}}</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" name="" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="input">
+              <span class="name">{{ui.dev_tools}}</span>
+              <button class="command-button" onclick="execute('OpenDevTools')">{{ui.dev_tools_btn}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="download_pg">
+      <div class="page-title">安装游戏</div>
+      <div class="card">
+        <div class="card-body">
+          <div>
+            <div class="input input-checkbox disable" id="5D4CBB91">
+              <span class="name">显示远古版、快照版</span>
+              <div class="input-box">
+                <label>
+                  <input type="checkbox" id="2B39A329" checked="checked" />
+                  <span>
+                    <div class="button"></div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div style="opacity: 1;" id="B9C498C7">
+              <span>正在加载版本列表</span>
+              <!-- ↓加载动画↓ -->
+              <div style="width: 32px;height: 32px;display: inline-block;transform: scale(0.6);">
+                <div class="Sf-Kd mspin-medium" id="loading">
+                  <div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <!-- ↑加载动画↑ -->
+            </div>
+          </div>
+        </div>
+        <ul class="list disposable" id="_version_list" style="max-height: 0; padding: 0px 20px;">
+
+        </ul>
+
+      </div>
+
+
+
+    </div>
+    <!-- 弹窗 -->
+    <div class="popup_window_main" id="ms_login">
+      <div class="head" style="display: none">
+        <span class="title"></span>
+        <div class="btn" id="popup_window_closer"><i></i></div>
+      </div>
+      <div class="body" id="ms_login_body" style="width: 440.8px; height: 328.8px">
+        <div></div>
+        <!-- ↓加载动画↓ -->
+        <div style="margin: auto auto; width: 36px; height: 36px;position: absolute;z-index: -1;">
+          <div class="Sf-Kd mspin-medium" id="loading">
+            <div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <!-- ↑加载动画↑ -->
+      </div>
+      <div class="foot" style="display: none"></div>
+    </div>
+    <div class="popup_window_main" id="game_install">
+      <div class="head">
+        <div class="title"><i class="folder-arrow-down"></i>
+          <div>
+            <span id="5E79266D">正在安装</span>
+            <p>请稍等一会</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="body" id="game_install_body" style="width: 600px;height: 210px;">
+        <ul class="task-list">
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task1"></i>获取版本信息</span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task2"></i>下载游戏主文件</span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task3"></i>补全依赖库文件</span>
+            <span class="count" id="lib"></span>
+          </li>
+          <li>
+            <span><i class="spinner-third task-list-icon" id="task4"></i>补全资源文件</span>
+            <span class="count" id="assets_file"></span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

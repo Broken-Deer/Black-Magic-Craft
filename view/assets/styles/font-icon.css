@@ -1,0 +1,130 @@
+.card-button > i::before {
+    content: "\f107";
+}
+
+i.start-game {
+    width: 30px;
+    height: 30px;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+i.start-game::before {
+    content: "\f135";
+    font-family: "fa";
+    font-style: normal;
+    font-size: 1.3rem;
+}
+
+i.pro-settings::before {
+    content: "\f1de";
+    font-family: "fa";
+    font-style: normal;
+    font-size: 1.3rem;
+}
+
+i.debug-settings::before {
+    content: "\f0ad";
+    font-family: "fa";
+    font-style: normal;
+    font-size: 1.3rem;
+}
+
+i.java-logo::before {
+    content: "\f4e4";
+    font-family: "fa";
+    font-style: normal;
+    font-size: 1.9rem;
+}
+i.spinner-third,i.circle-check {
+    font-family: "Font Awesome 6 Duotone";
+    font-style: normal;
+    font-weight: 600;
+    margin-right: 9.1px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+}
+i.circle-check {
+    font-family: 'fa-pro';
+    font-weight: 200;
+    margin-right: 10px;
+}
+i.spinner-third::before {
+    content: "\f3f4";
+    position: absolute;
+}
+
+i.spinner-third::after {
+    content: "\f3f4\f3f4";
+    color: silver;
+}
+
+i.circle-check::before {
+    content: '\f058';
+    color: #008501;
+}
+
+div.title-bar > div.button #min::before {
+    content: "\f068";
+    font-size: 1.4rem;
+    line-height: 2.7;
+    transform: scale(0.85, 1);
+}
+
+div.title-bar > div.button #close::before {
+    content: "\f00d";
+    font-size: 1.4rem;
+    line-height: 2.2;
+}
+
+i#nav-1:before {
+    content: "\f3fd";
+}
+
+i#nav-2:before {
+    content: "\f0c9";
+}
+
+i#nav-3:before {
+    content: "\f234";
+}
+
+i#nav-4:before {
+    content: "\f019";
+}
+
+i#nav-5:before {
+    content: "\f013";
+}
+
+i#nav-6:before {
+    content: "\f085";
+}
+
+i#nav-7:before {
+    content: "\f135";
+}
+
+button#start::before {
+    content: "\f135";
+}
+
+.choose-file > i::before {
+    content: "\f07c";
+    font-style: normal;
+}
+
+i.folder-arrow-down {
+    font-family: 'fa-pro';
+}
+
+i.folder-arrow-down::before {
+    content: '\f019';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    margin-right: 20px;
+}
