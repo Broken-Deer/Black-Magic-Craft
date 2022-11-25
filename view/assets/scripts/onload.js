@@ -4,28 +4,19 @@ import cardHeader from "../components/cardHeader.js";
 import loading from "../components/loading.js";
 import commandButton from "../components/commandButton.js";
 import inputColor from "../components/inputColor.js";
-
+import sidebarItem from "../components/sidebarItem.js";
 window.onload = function () {
     $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
 
     $("#start_game").bind("click", () => {
-        display_btn();
-        $("#main").empty();
+
     });
     $("#version_list").bind("click", () => {});
     $("#download").bind("click", () => {
-        change_page("#download_pg");
-        version_list("vanilla");
+
     });
-    $("#l_setting").bind("click", () => {
-        change_page("#l_setting_pg");
-    });
-    $("#g_setting").bind("click", () => {
-        change_page("#g_setting_pg");
-        setTimeout(() => {
-            slider("CA028F76", "memory_value", 128, 16384);
-        }, 550);
-    });
+    $("#l_setting").bind("click", () => {});
+    $("#g_setting").bind("click", () => {});
     zh_cn();
     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
@@ -125,7 +116,10 @@ window.onload = function () {
                 },
             };
         },
-        components: { inputText, checkbox, cardHeader, loading, commandButton, inputColor },
+        components: { inputText, checkbox, cardHeader, loading, commandButton, inputColor, sidebarItem },
     }).mount(".dont_display");
+    Vue.createApp({
+        components: { sidebarItem },
+    }).mount(".sidebar-links");
 };
 document.addEventListener("DOMContentLoaded", () => {});

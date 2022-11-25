@@ -64,39 +64,15 @@
           </span>
         </div>
       </div>
-      <li class="sidebar-header">游戏</li>
+
       <ul class="sidebar-links">
-        <li class="sidebar-item" id="sidebar-3">
-          <span id="start_game" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-7"></i>
-            <p>启动游戏</p>
-          </span>
-        </li>
-        <li class="sidebar-item" id="sidebar-2">
-          <span id="version_list" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-2"></i>
-            <p>版本列表</p>
-          </span>
-        </li>
-        <li class="sidebar-item" id="sidebar-4">
-          <span id="download" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-4"></i>
-            <p>下载</p>
-          </span>
-        </li>
+        <li class="sidebar-header">游戏</li>
+        <sidebar-item title="启动游戏" icon="nav-7" click="display_btn();$('#main').empty();"></sidebar-item>
+        <sidebar-item title="版本列表" icon="nav-2"></sidebar-item>
+        <sidebar-item title="下载" icon="nav-4" click="change_page('#download_pg');version_list('vanilla');"></sidebar-item>
         <li class="sidebar-header">设置</li>
-        <li class="sidebar-item" id="sidebar-6">
-          <span id="g_setting" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-5"></i>
-            <p>游戏</p>
-          </span>
-        </li>
-        <li class="sidebar-item" id="sidebar-5">
-          <span id="l_setting" class="sidebar">
-            <i class="fa-regular nav-icon" id="nav-6"></i>
-            <p>启动器</p>
-          </span>
-        </li>
+        <sidebar-item title="游戏" icon="nav-5" click="change_page('#g_setting_pg');"></sidebar-item>
+        <sidebar-item title="启动器" icon="nav-6" click="change_page('#l_setting_pg');"></sidebar-item>
       </ul>
     </div>
     <main class="page">

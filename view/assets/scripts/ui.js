@@ -43,9 +43,9 @@ function hide_btn() {
 function change_page(page_id) {
     hide_btn();
     $("#main").attr("style", "margin-top: -20px; opacity: 0;");
-    var disposables = document.querySelectorAll(".disposable");
-    $(disposables).empty();
     setTimeout(() => {
+        var disposables = document.querySelectorAll(".disposable");
+        $(disposables).empty();
         $("#main").attr("style", "display:none");
         $("#main").empty();
 
@@ -55,6 +55,13 @@ function change_page(page_id) {
     setTimeout(() => {
         $("#main").attr("style", "margin-top: 0; opacity: 1;");
     }, 500);
+    after_change_page();
+}
+
+function after_change_page() {
+    setTimeout(() => {
+        slider("CA028F76", "memory_value", 128, 16384);
+    }, 550);
 }
 
 function slider(id, text_box_id, minimum, maximum) {

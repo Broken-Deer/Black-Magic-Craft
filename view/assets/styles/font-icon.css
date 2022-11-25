@@ -101,7 +101,7 @@ div.title-bar > div.button #close::before {
     line-height: 2.2;
 }
 
-i#nav-1:before {
+i#user-add:before {
     content: "\f3fd";
 }
 
