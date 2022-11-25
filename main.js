@@ -27,6 +27,12 @@ const createWindow = () => {
             contextIsolation: false,
             webSecurity: false,
             webviewTag: true,
+            experimentalFeatures: true,
+        },
+        vibrancy: {
+            theme: "light", // (default) or 'dark' or '#rrggbbaa'
+            effect: "acrylic", // (default) or 'blur'
+            disableOnBlur: true, // (default)
         },
         icon: path.join(__dirname, "./logo.ico"),
     });

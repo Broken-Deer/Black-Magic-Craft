@@ -2,7 +2,7 @@ import loading from "../components/loading.js";
 
 export default {
     template: /* html */ `
-        <div id="download_pg">
+        <div id="download_pg" style="display: none">
           <div class="page-title">安装游戏</div>
           <div class="card">
             <div class="card-body">

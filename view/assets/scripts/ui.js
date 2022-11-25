@@ -40,32 +40,22 @@ function hide_btn() {
     $(".btn").attr("style", "margin-top: 5.5rem;transition: margin-top .3s cubic-bezier(0.6, -0.28, 0.74, 0.05);");
 }
 
-function change_page(page_id) {
+function change_page(id2) {
+    const el = document.querySelectorAll("#main>div");
     hide_btn();
-    before_change_page()
     $("#main").attr("style", "margin-top: -20px; opacity: 0;");
     setTimeout(() => {
         var disposables = document.querySelectorAll(".disposable");
         $(disposables).empty();
         $("#main").attr("style", "display:none");
-        $("#main").empty();
+        $(el).attr("style", "display:none");
 
-        $(page_id).clone(true).appendTo("#main");
+        $(id2).attr("style", "");
         $("#main").attr("style", "");
     }, 250);
     setTimeout(() => {
         $("#main").attr("style", "margin-top: 0; opacity: 1;");
-        after_change_page();
     }, 500);
-}
-
-function after_change_page() {
-        slider("CA028F76", "memory_value", 128, 16384);
-}
-
-function before_change_page() {
-    $('#CA028F76').unbind();
-    $("#CA028F76").attr('style', '')
 }
 
 function slider(id, text_box_id, minimum, maximum) {

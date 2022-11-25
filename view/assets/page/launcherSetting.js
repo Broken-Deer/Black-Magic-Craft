@@ -6,7 +6,7 @@ import inputColor from "../components/inputColor.js";
 
 export default {
     template: /* html */ `
-        <div id="l_setting_pg">
+        <div id="l_setting_pg" style="display: none">
             <div class="page-title">启动器设置</div>
             <div class="card">
             <card-header title="更新" description="配置启动器更新选项" icon="arrows-rotate"></card-header>
