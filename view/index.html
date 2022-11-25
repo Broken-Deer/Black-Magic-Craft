@@ -69,7 +69,8 @@
         <li class="sidebar-header">游戏</li>
         <sidebar-item title="启动游戏" icon="nav-7" click="display_btn();$('#main').empty();"></sidebar-item>
         <sidebar-item title="版本列表" icon="nav-2"></sidebar-item>
-        <sidebar-item title="下载" icon="nav-4" click="change_page('#download_pg');version_list('vanilla');"></sidebar-item>
+        <sidebar-item title="下载" icon="nav-4" click="change_page('#download_pg');version_list('vanilla');">
+        </sidebar-item>
         <li class="sidebar-header">设置</li>
         <sidebar-item title="游戏" icon="nav-5" click="change_page('#g_setting_pg');"></sidebar-item>
         <sidebar-item title="启动器" icon="nav-6" click="change_page('#l_setting_pg');"></sidebar-item>
@@ -77,245 +78,231 @@
     </div>
     <main class="page">
       <div class="page" id="main">
+        <div id="index"></div>
+        <div id="g_setting_pg">
+          <div class="page-title" id="text">{{ ui.global_settings.title }}</div>
+          <div class="card">
+            <card-header :title="ui.global_settings.java_path_title"
+              :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
+            <div class="card-body">
+              <div>
+                <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"></checkbox>
+                <div class="input input-text input-file" id="E16616C6">
+                  <span class="name">{{ ui.global_settings.java_path }}</span>
+                  <div class="input-data">
+                    <input type="text" id="input_a" title="{{ ui.global_settings.java_path }}" required />
+                    <div class="underline"></div>
+                  </div>
+                  <div class="choose-file">
+                    <i onclick="choose_java(this);"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <card-header :title="ui.global_settings.launch_options_title"
+              :description="ui.global_settings.launch_options_description" icon="start-game"></card-header>
+            <div class="card-body">
+              <div>
+                <input-text :name="ui.global_settings.game_window_title"
+                  :placeholder="ui.global_settings.game_window_title_placeholder"></input-text>
+                <input-text :name="ui.global_settings.customize_launcher_info"
+                  :placeholder="ui.global_settings.customize_launcher_info_placeholder"></input-text>
+                <input-text :name="ui.global_settings.server_address"
+                  :placeholder="ui.global_settings.server_address_placeholder"></input-text>
+                <div class="input input-list" id="version_isolation">
+                  <span class="name">{{ui.global_settings.process_priority}}</span>
+                  <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                    <div></div>
+                    <ul class="option" style="display: none">
+                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_highest}}
+                      </li>
+                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_higher}}
+                      </li>
+                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_medium}}
+                      </li>
+                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_lower}}
+                      </li>
+                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_minimum}}
+                      </li>
+                      <div></div>
+                    </ul>
+                  </div>
+                </div>
 
+                <div class="input input-text">
+                  <span class="name">{{ui.global_settings.window_size}}</span>
+                  <div style="display: flex; line-height: 1.7">
+                    <div class="input-data mini">
+                      <input type="text" id="input_a" title="{{ui.global_settings.window_width}}" placeholder="800"
+                        required />
+                      <div class="underline"></div>
+                    </div>
+                    ×
+                    <div class="input-data mini">
+                      <input type="text" id="input_a" title="{{ui.global_settings.window_height}}" placeholder="600"
+                        required />
+                      <div class="underline"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')">
+                </checkbox>
+                <div class="input input-text" id="D3E268A7">
+                  <span class="name">{{ui.global_settings.game_memory}}</span>
+                  <div style="display: flex; line-height: 1.7">
+                    <div class="slider">
+                      <div class="orbit">
+                        <div></div>
+                      </div>
+                      <div class="slider_btn" id="CA028F76">
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="input-data mini">
+                      <input type="text" id="memory_value" title="{{ui.global_settings.game_memory}}" placeholder=""
+                        required />
+                      <div class="underline"></div>
+                    </div>
+                    <span class="text">MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card not-expanded">
+            <card-header :title="ui.global_settings.advanced_settings"
+              :description="ui.global_settings.advanced_settings_description" icon="pro-settings"></card-header>
+            <div class="card-body" style="overflow: hidden; height: 0">
+              <div>
+                <input-text :name="ui.global_settings.game_parameters"
+                  :placeholder="ui.global_settings.game_parameters_placeholder"></input-text>
+                <input-text :name="ui.global_settings.exec_before_starting"
+                  :placeholder="ui.global_settings.exec_before_starting_placeholder"></input-text>
+                <input-text :name="ui.global_settings.wrap_command"
+                  :placeholder="ui.global_settings.wrap_command_placeholder">
+                </input-text>
+                <input-text :name="ui.global_settings.exec_after_starting"
+                  :placeholder="ui.global_settings.exec_after_starting_placeholder"></input-text>
+                <input-text :name="ui.global_settings.jvm_parameters"
+                  :placeholder="ui.global_settings.jvm_parameters_placeholder"></input-text>
+                <input-text :name="ui.global_settings.memory_persistence_area"
+                  :placeholder="ui.global_settings.memory_persistence_area_placeholder"></input-text>
+              </div>
+            </div>
+          </div>
+          <div class="card not-expanded">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-icon"><i class="debug-settings"></i></div>
+                <div>
+                  <h4>{{ui.global_settings.debugging_options}}</h4>
+                  <p>{{ui.global_settings.debugging_options_description}}</p>
+                </div>
+              </div>
+              <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+            </div>
+            <div class="card-body" style="overflow: hidden; height: 0">
+              <div>
+                <input-text :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder">
+                </input-text>
+                <checkbox :name="ui.global_settings.dont_check_jvm_parameters"></checkbox>
+                <checkbox :name="ui.global_settings.dont_check_assets_files"></checkbox>
+                <checkbox :name="ui.global_settings.dont_check_JVM_compatibility"></checkbox>
+                <checkbox :name="ui.global_settings.use_system_GLFW"></checkbox>
+                <checkbox :name="ui.global_settings.use_system_OpenAL"></checkbox>
+                <command-button :name="ui.global_settings.dev_tools" :text="ui.global_settings.dev_tools_btn"
+                  click="execute('OpenDevTools')">
+                </command-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="l_setting_pg">
+          <div class="page-title">启动器设置</div>
+          <div class="card">
+            <card-header title="更新" description="配置启动器更新选项" icon="arrows-rotate"></card-header>
+            <div class="card-body">
+              <div>
+                <checkbox name="使用预览版启动器"></checkbox>
+                <checkbox name="自动更新"></checkbox>
+                <checkbox name="检查更新时同时检查插件是否有更新"></checkbox>
+                <command-button name="立即检查更新" text="检查更新"></command-button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <card-header title="个性化" description="设置启动器外观" icon="paintbrush"></card-header>
+            <div class="card-body">
+              <div>
+                <div class="input input-list" id="version_isolation">
+                  <span class="name">主题</span>
+                  <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                    <div></div>
+                    <ul class="option" style="display: none">
+                      <li class="option" onclick="set_input_list(this)">平滑</li>
+                      <li class="option" onclick="set_input_list(this)">方形</li>
+                      <li class="option" onclick="set_input_list(this)">复古</li>
+                      <li class="option" onclick="set_input_list(this)">官方启动器</li>
+                      <li class="option" onclick="set_input_list(this)">Windows 11</li>
+                      <div></div>
+                    </ul>
+                  </div>
+                </div>
+                <input-color name="主题色"></input-color>
+                <div class="input input-list" id="version_isolation">
+                  <span class="name">背景</span>
+                  <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                    <div></div>
+                    <ul class="option" style="display: none">
+                      <li class="option" onclick="set_input_list(this)">主题色</li>
+                      <li class="option" onclick="set_input_list(this)">渐变</li>
+                      <li class="option" onclick="set_input_list(this)">图片</li>
+                      <li class="option" onclick="set_input_list(this)">必应每日一图</li>
+                      <li class="option" onclick="set_input_list(this)">自定义</li>
+                      <div></div>
+                    </ul>
+                  </div>
+                </div>
+                <input-text name="字体"></input-text>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="download_pg">
+          <div class="page-title">安装游戏</div>
+          <div class="card">
+            <div class="card-body">
+              <div>
+                <div class="input input-checkbox disable" id="5D4CBB91">
+                  <span class="name">显示远古版、快照版</span>
+                  <div class="input-box">
+                    <label>
+                      <input type="checkbox" id="2B39A329" checked="checked" />
+                      <span>
+                        <div class="button"></div>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div style="opacity: 1;" id="B9C498C7">
+                  <span>正在加载版本列表</span>
+                  <loading styles="width: 32px;height: 32px;display: inline-block;transform: scale(0.6);"></loading>
+                </div>
+              </div>
+            </div>
+            <ul class="list disposable" id="_version_list" style="max-height: 0; padding: 0px 20px;">
+            </ul>
+          </div>
+        </div>
       </div>
     </main>
   </div>
 
   <!-- 不显示区 -->
   <div class="dont_display">
-    <!-- 页面 -->
-    <div id="index"></div>
-    <div id="user_add_pg">
-      <div class="list_card"></div>
-    </div>
-    <div id="g_setting_pg">
-      <div class="page-title" id="text">{{ ui.global_settings.title }}</div>
-
-      <div class="card">
-        <card-header :title="ui.global_settings.java_path_title"
-          :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
-        <div class="card-body">
-          <div>
-            <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"></checkbox>
-            <div class="input input-text input-file" id="E16616C6">
-              <span class="name">{{ ui.global_settings.java_path }}</span>
-              <div class="input-data">
-                <input type="text" id="input_a" title="{{ ui.global_settings.java_path }}" required />
-                <div class="underline"></div>
-              </div>
-              <div class="choose-file">
-                <i onclick="choose_java(this);"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon"><i class="start-game"></i></div>
-            <div>
-              <h4>{{ui.global_settings.launch_options_title}}</h4>
-              <p>{{ui.global_settings.launch_options_description}}</p>
-            </div>
-          </div>
-          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
-        </div>
-        <div class="card-body">
-          <div>
-            <input-text :name="ui.global_settings.game_window_title"
-              :placeholder="ui.global_settings.game_window_title_placeholder"></input-text>
-            <input-text :name="ui.global_settings.customize_launcher_info"
-              :placeholder="ui.global_settings.customize_launcher_info_placeholder"></input-text>
-            <input-text :name="ui.global_settings.server_address"
-              :placeholder="ui.global_settings.server_address_placeholder"></input-text>
-            <div class="input input-list" id="version_isolation">
-              <span class="name">{{ui.global_settings.process_priority}}</span>
-              <div class="input-data input-data-list" onclick="input_list(this,'156px')">
-                <div></div>
-                <ul class="option" style="display: none">
-                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_highest}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_higher}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_medium}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_lower}}</li>
-                  <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_minimum}}</li>
-                  <div></div>
-                </ul>
-              </div>
-            </div>
-
-            <div class="input input-text">
-              <span class="name">{{ui.global_settings.window_size}}</span>
-              <div style="display: flex; line-height: 1.7">
-                <div class="input-data mini">
-                  <input type="text" id="input_a" title="{{ui.global_settings.window_width}}" placeholder="800"
-                    required />
-                  <div class="underline"></div>
-                </div>
-                ×
-                <div class="input-data mini">
-                  <input type="text" id="input_a" title="{{ui.global_settings.window_height}}" placeholder="600"
-                    required />
-                  <div class="underline"></div>
-                </div>
-              </div>
-            </div>
-
-            <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')">
-            </checkbox>
-            <div class="input input-text" id="D3E268A7">
-              <span class="name">{{ui.global_settings.game_memory}}</span>
-              <div style="display: flex; line-height: 1.7">
-                <div class="slider">
-                  <div class="orbit">
-                    <div></div>
-                  </div>
-                  <div class="slider_btn" id="CA028F76">
-                    <div></div>
-                  </div>
-                </div>
-                <div class="input-data mini">
-                  <input type="text" id="memory_value" title="{{ui.global_settings.game_memory}}" placeholder=""
-                    required />
-                  <div class="underline"></div>
-                </div>
-                <span class="text">MB</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card not-expanded">
-        <card-header :title="ui.global_settings.advanced_settings"
-          :description="ui.global_settings.advanced_settings_description" icon="pro-settings"></card-header>
-        <div class="card-body" style="overflow: hidden; height: 0">
-          <div>
-            <input-text :name="ui.global_settings.game_parameters"
-              :placeholder="ui.global_settings.game_parameters_placeholder"></input-text>
-            <input-text :name="ui.global_settings.exec_before_starting"
-              :placeholder="ui.global_settings.exec_before_starting_placeholder"></input-text>
-            <input-text :name="ui.global_settings.wrap_command"
-              :placeholder="ui.global_settings.wrap_command_placeholder"></input-text>
-            <input-text :name="ui.global_settings.exec_after_starting"
-              :placeholder="ui.global_settings.exec_after_starting_placeholder"></input-text>
-            <input-text :name="ui.global_settings.jvm_parameters"
-              :placeholder="ui.global_settings.jvm_parameters_placeholder"></input-text>
-            <input-text :name="ui.global_settings.memory_persistence_area"
-              :placeholder="ui.global_settings.memory_persistence_area_placeholder"></input-text>
-          </div>
-        </div>
-      </div>
-
-      <div class="card not-expanded">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon"><i class="debug-settings"></i></div>
-            <div>
-              <h4>{{ui.global_settings.debugging_options}}</h4>
-              <p>{{ui.global_settings.debugging_options_description}}</p>
-            </div>
-          </div>
-          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
-        </div>
-        <div class="card-body" style="overflow: hidden; height: 0">
-          <div>
-            <input-text :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder">
-            </input-text>
-            <checkbox :name="ui.global_settings.dont_check_jvm_parameters"></checkbox>
-            <checkbox :name="ui.global_settings.dont_check_assets_files"></checkbox>
-            <checkbox :name="ui.global_settings.dont_check_JVM_compatibility"></checkbox>
-            <checkbox :name="ui.global_settings.use_system_GLFW"></checkbox>
-            <checkbox :name="ui.global_settings.use_system_OpenAL"></checkbox>
-            <command-button :name="ui.global_settings.dev_tools" :text="ui.global_settings.dev_tools_btn"
-              click="execute('OpenDevTools')">
-            </command-button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="l_setting_pg">
-      <div class="page-title">启动器设置</div>
-      <div class="card">
-        <card-header title="更新" description="配置启动器更新选项" icon="arrows-rotate"></card-header>
-        <div class="card-body">
-          <div>
-            <checkbox name="使用预览版启动器"></checkbox>
-            <checkbox name="自动更新"></checkbox>
-            <checkbox name="检查更新时同时检查插件是否有更新"></checkbox>
-            <command-button name="立即检查更新" text="检查更新"></command-button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <card-header title="个性化" description="设置启动器外观" icon="paintbrush"></card-header>
-        <div class="card-body">
-          <div>
-            <div class="input input-list" id="version_isolation">
-              <span class="name">主题</span>
-              <div class="input-data input-data-list" onclick="input_list(this,'156px')">
-                <div></div>
-                <ul class="option" style="display: none">
-                  <li class="option" onclick="set_input_list(this)">平滑</li>
-                  <li class="option" onclick="set_input_list(this)">方形</li>
-                  <li class="option" onclick="set_input_list(this)">复古</li>
-                  <li class="option" onclick="set_input_list(this)">官方启动器</li>
-                  <li class="option" onclick="set_input_list(this)">Windows 11</li>
-                  <div></div>
-                </ul>
-              </div>
-            </div>
-            <input-color name="主题色"></input-color>
-            <div class="input input-list" id="version_isolation">
-              <span class="name">背景</span>
-              <div class="input-data input-data-list" onclick="input_list(this,'156px')">
-                <div></div>
-                <ul class="option" style="display: none">
-                  <li class="option" onclick="set_input_list(this)">主题色</li>
-                  <li class="option" onclick="set_input_list(this)">渐变</li>
-                  <li class="option" onclick="set_input_list(this)">图片</li>
-                  <li class="option" onclick="set_input_list(this)">必应每日一图</li>
-                  <li class="option" onclick="set_input_list(this)">自定义</li>
-                  <div></div>
-                </ul>
-              </div>
-            </div>
-            <input-text name="字体"></input-text>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="download_pg">
-      <div class="page-title">安装游戏</div>
-      <div class="card">
-        <div class="card-body">
-          <div>
-            <div class="input input-checkbox disable" id="5D4CBB91">
-              <span class="name">显示远古版、快照版</span>
-              <div class="input-box">
-                <label>
-                  <input type="checkbox" id="2B39A329" checked="checked" />
-                  <span>
-                    <div class="button"></div>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div style="opacity: 1;" id="B9C498C7">
-              <span>正在加载版本列表</span>
-              <loading styles="width: 32px;height: 32px;display: inline-block;transform: scale(0.6);"></loading>
-            </div>
-          </div>
-        </div>
-        <ul class="list disposable" id="_version_list" style="max-height: 0; padding: 0px 20px;">
-        </ul>
-      </div>
-
-
-
-    </div>
     <!-- 弹窗 -->
     <div class="popup_window_main" id="ms_login">
       <div class="head" style="display: none">
@@ -360,8 +347,5 @@
     </div>
   </div>
 </body>
-<script type="module">
-
-</script>
 
 </html>

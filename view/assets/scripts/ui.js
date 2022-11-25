@@ -42,6 +42,7 @@ function hide_btn() {
 
 function change_page(page_id) {
     hide_btn();
+    before_change_page()
     $("#main").attr("style", "margin-top: -20px; opacity: 0;");
     setTimeout(() => {
         var disposables = document.querySelectorAll(".disposable");
@@ -54,27 +55,32 @@ function change_page(page_id) {
     }, 250);
     setTimeout(() => {
         $("#main").attr("style", "margin-top: 0; opacity: 1;");
+        after_change_page();
     }, 500);
-    after_change_page();
 }
 
 function after_change_page() {
-    setTimeout(() => {
         slider("CA028F76", "memory_value", 128, 16384);
-    }, 550);
+}
+
+function before_change_page() {
+    $('#CA028F76').unbind();
+    $("#CA028F76").attr('style', '')
 }
 
 function slider(id, text_box_id, minimum, maximum) {
-    $("#" + id).draggable({
-        axis: "x",
-        containment: "parent",
-        drag: function () {
-            left = parseInt($("#" + id).css("left"));
-            orbit = document.getElementById(id).previousElementSibling;
-            $(orbit.firstElementChild).attr("style", "width:" + (left + 3) + "px");
-            $("#" + text_box_id).attr("placeholder", ((left / (parseInt($(orbit).css("width")) - 20)) * (maximum - minimum) + minimum).toFixed());
-        },
-    });
+    setTimeout(() => {
+        $("#" + id).draggable({
+            axis: "x",
+            containment: "parent",
+            drag: function () {
+                left = parseInt($("#" + id).css("left"));
+                orbit = document.getElementById(id).previousElementSibling;
+                $(orbit.firstElementChild).attr("style", "width:" + (left + 3) + "px");
+                $("#" + text_box_id).attr("placeholder", ((left / (parseInt($(orbit).css("width")) - 20)) * (maximum - minimum) + minimum).toFixed());
+            },
+        });
+    }, 100);
 }
 function disable(event, id) {
     if ($(event).prop("checked")) {
@@ -83,3 +89,5 @@ function disable(event, id) {
         $(`#${id}`).removeClass("disable");
     }
 }
+
+function change_sideabr(id) {}
