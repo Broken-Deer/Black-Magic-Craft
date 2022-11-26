@@ -52,8 +52,8 @@ i.paintbrush {
     margin-top: 4px;
 }
 i.paintbrush::before {
-    content: '\f1fc';
-    font-family: 'fa-pro';
+    content: "\f1fc";
+    font-family: "fa-pro";
     font-weight: 200;
     font-style: normal;
     font-size: 1.3rem;
@@ -105,10 +105,6 @@ i#user-add:before {
     content: "\f3fd";
 }
 
-i#nav-2:before {
-    content: "\f0c9";
-}
-
 i#nav-3:before {
     content: "\f234";
 }
@@ -126,7 +122,7 @@ i#nav-6:before {
 }
 
 i#nav-7:before {
-    content: "\f135";
+    content: "\f625";
 }
 
 button#start::before {
@@ -148,4 +144,23 @@ i.folder-arrow-down::before {
     font-weight: 400;
     font-size: 30px;
     margin-right: 20px;
+}
+
+.sidebar-button i::before {
+    content: "\f0c9";
+}
+i.rectangle-terminal::before{
+    content: '\e236';
+}
+i.screwdriver-wrench::before {
+    content: '\f7d9';
+}
+i.folders::before {
+    content: '\f660';
+}
+i#newspaper::before {
+    content: '\f1ea';
+}
+i#cube::before{
+    content: '\f1b2';
 }

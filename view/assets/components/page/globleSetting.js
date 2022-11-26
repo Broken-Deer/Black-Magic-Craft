@@ -1,9 +1,9 @@
-import inputText from "../components/inputText.js";
-import checkbox from "../components/checkbox.js";
-import cardHeader from "../components/cardHeader.js";
-import commandButton from "../components/commandButton.js";
-import inputColor from "../components/inputColor.js";
-import zh_cn from "../scripts/onload.js";
+import inputText from "../inputText.js";
+import checkbox from "../checkbox.js";
+import cardHeader from "../cardHeader.js";
+import commandButton from "../commandButton.js";
+import inputColor from "../inputColor.js";
+import zh_cn from "../../scripts/onload.js";
 
 export default {
     data() {
@@ -11,8 +11,15 @@ export default {
     },
     template: /* html */ `
          <div id="g_setting_pg" style="display: none">
-          <div class="page-title" id="text">{{ ui.global_settings.title }}</div>
-          <div class="card">
+                   <div class="child-sidebar">
+            <ul>
+              <li class="active" onclick="sidebar_active(this)"><i class="rectangle-terminal"></i>自动安装</li>
+              <li onclick="sidebar_active(this)"><i class="screwdriver-wrench"></i>手动安装</li>
+              <li onclick="sidebar_active(this)"><i class="folders"></i>导入整合包</li>
+            </ul>
+          </div>
+          <div class="rua">
+                      <div class="card">
             <card-header :title="ui.global_settings.java_path_title"
               :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
             <div class="card-body">
@@ -149,6 +156,7 @@ export default {
                 </command-button>
               </div>
             </div>
+          </div>
           </div>
         </div>`,
     components: { inputText, checkbox, cardHeader, commandButton, inputColor },

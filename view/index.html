@@ -54,35 +54,22 @@
         <div class="window-btn" id="close" onclick="win_close()"></div>
       </div>
     </div>
-    <div class="sidebar" id="sidebar">
-      <li class="sidebar-header">帐户</li>
-      <div class="user-panel">
-        <div class="d-flex" id="user-panel">
-          <span class="user-add" id="user_add" style="cursor: pointer" onclick="popup_window('ms_login', true)">
-            <i class="fa-regular nav-icon" id="nav-3"></i>
-            <p>添加帐户</p>
-          </span>
-        </div>
+    <div class="sidebar sidebar-close" id="sidebar">
+      <!-- popup_window('ms_login', true) -->
+      <div>
+        <div class="sidebar-button" onclick="sidebar()"><i></i></div>
+        <ul class="sidebar-links">
+          <!-- 侧边栏 -->
+        </ul>
       </div>
-
-      <ul class="sidebar-links">
-        <li class="sidebar-header">游戏</li>
-        <sidebar-item title="启动游戏" icon="nav-7" click="display_btn();$(document.querySelectorAll('#main>div');).attr('style', 'display:none');"></sidebar-item>
-        <sidebar-item title="版本列表" icon="nav-2"></sidebar-item>
-        <sidebar-item title="下载" icon="nav-4" click="change_page('#download_pg');version_list('vanilla');">
-        </sidebar-item>
-        <li class="sidebar-header">设置</li>
-        <sidebar-item title="游戏" icon="nav-5" click="change_page('#g_setting_pg');"></sidebar-item>
-        <sidebar-item title="启动器" icon="nav-6" click="change_page('#l_setting_pg');"></sidebar-item>
-      </ul>
     </div>
-    <main class="page">
+    <main class="page" onclick="$('#sidebar').addClass('sidebar-close');">
       <div class="page" id="main">
-      </div>
+        <!-- 页面主要内容 -->
     </main>
   </div>
 
-  <!-- 不显示区 -->
+  <!-- 不显示 -->
   <div class="dont_display">
     <!-- 弹窗 -->
     <div class="popup_window_main" id="ms_login">
@@ -104,7 +91,6 @@
             <p>请稍等一会</p>
           </div>
         </div>
-
       </div>
       <div class="body" id="game_install_body" style="width: 600px;height: 210px;">
         <ul class="task-list">

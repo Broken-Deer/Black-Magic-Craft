@@ -1,14 +1,21 @@
-import inputText from "../components/inputText.js";
-import checkbox from "../components/checkbox.js";
-import cardHeader from "../components/cardHeader.js";
-import commandButton from "../components/commandButton.js";
-import inputColor from "../components/inputColor.js";
+import inputText from "../inputText.js";
+import checkbox from "../checkbox.js";
+import cardHeader from "../cardHeader.js";
+import commandButton from "../commandButton.js";
+import inputColor from "../inputColor.js";
 
 export default {
     template: /* html */ `
         <div id="l_setting_pg" style="display: none">
-            <div class="page-title">启动器设置</div>
-            <div class="card">
+          <div class="child-sidebar">
+            <ul>
+              <li class="active" onclick="sidebar_active(this)"><i class="rectangle-terminal"></i>自动安装</li>
+              <li onclick="sidebar_active(this)"><i class="screwdriver-wrench"></i>手动安装</li>
+              <li onclick="sidebar_active(this)"><i class="folders"></i>导入整合包</li>
+            </ul>
+          </div>
+          <div class="rua">
+                        <div class="card">
             <card-header title="更新" description="配置启动器更新选项" icon="arrows-rotate"></card-header>
             <div class="card-body">
               <div>
@@ -56,6 +63,8 @@ export default {
               </div>
             </div>
           </div>
+          </div>
+
         </div>`,
     components: { inputText, checkbox, cardHeader, commandButton, inputColor },
 };

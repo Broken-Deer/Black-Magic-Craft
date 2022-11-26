@@ -81,3 +81,25 @@ function disable(event, id) {
 }
 
 function change_sideabr(id) {}
+
+function sidebar() {
+    if ($("#sidebar").hasClass("sidebar-close")) {
+        $("#sidebar").removeClass("sidebar-close");
+    } else {
+        $("#sidebar").addClass("sidebar-close");
+    }
+}
+
+function sidebar_hidden() {
+    if ($("#sidebar").hasClass("sidebar-close")) {
+        $("#sidebar").addClass("sidebar-close");
+    }
+    $("#sidebar").attr("style", "width: 0px !important");
+}
+
+function sidebar_active(el) {
+    $("*.active").removeClass("active");
+    setTimeout(() => {
+        $(el).addClass("active");
+    }, 100);
+}

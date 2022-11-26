@@ -6,9 +6,11 @@ import commandButton from "../components/commandButton.js";
 import inputColor from "../components/inputColor.js";
 import sidebarItem from "../components/sidebarItem.js";
 
-import downloadPage from "../page/downloadPage.js";
-import globleSetting from "../page/globleSetting.js";
-import launcherSetting from "../page/launcherSetting.js";
+import downloadPage from "../components/page/downloadPage.js";
+import globleSetting from "../components/page/globleSetting.js";
+import launcherSetting from "../components/page/launcherSetting.js";
+
+import sidebar from "../components/sidebar.js";
 
 export default zh_cn = {
     ui: {
@@ -110,13 +112,16 @@ Vue.createApp({
     components: { inputText, checkbox, cardHeader, loading, commandButton, inputColor, sidebarItem },
 }).mount("#win");
 Vue.createApp({
-    components: { sidebarItem },
+    template: /* html */ `
+    <sidebar></sidebar>
+    `,
+    components: { sidebar },
 }).mount(".sidebar-links");
 Vue.createApp({
-    template: /* html */ `
+        template: /* html */ `
         <download-page></download-page>
         <globle-setting></globle-setting>
         <launcher-setting></launcher-setting>
         `,
-    components: { downloadPage, globleSetting, launcherSetting },
+    components: { downloadPage, globleSetting, launcherSetting, loading, checkbox },
 }).mount("#main");
