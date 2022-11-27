@@ -36,7 +36,7 @@ export default {
                 </ul>
               </div>
             </div>
-            <input-color name="主题色"></input-color>
+            <command-button name="主题色" text="设置主题色" click="popup_window('color_chooser')"></command-button>
             <div class="input input-list" id="version_isolation">
               <span class="name">背景</span>
               <div class="input-data input-data-list" onclick="input_list(this,'156px')">

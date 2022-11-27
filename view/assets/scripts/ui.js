@@ -210,11 +210,11 @@ function UpdateUI(h, s, v, exclude) {
     e = hsvToRgb(hd, sd, vd);
     var hh = hsvToRgb(document.getElementById("h").value, 100, 100);
     document.getElementById("style").innerHTML = /* css */ `
-                div.box>div:last-child>div.color input#s::-webkit-slider-runnable-track {
+                div#color_chooser>div:last-child>div.color input#s::-webkit-slider-runnable-track {
                     background-image: linear-gradient(to right, rgb(255, 255, 255) 0, rgb(${hh[0]}, ${hh[1]}, ${hh[2]}));
                 }
 
-                div.box>div:last-child>div.color input#v::-webkit-slider-runnable-track {
+                div#color_chooser>div:last-child>div.color input#v::-webkit-slider-runnable-track {
                     background-image: linear-gradient(to right, rgb(0, 0, 0) 0, rgb(${hh[0]}, ${hh[1]}, ${hh[2]}));
                 }
                 #a {
