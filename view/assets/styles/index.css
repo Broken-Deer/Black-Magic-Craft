@@ -39,7 +39,7 @@
     box-shadow: 0px 0px 5px #00000047;
     transition: background-color 0.3s ease;
     /* background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); */
-    /* background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); */
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
     /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
     /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
@@ -49,7 +49,7 @@
     /* background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%); */
     /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
     /* background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%); */
-    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+    /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
     /* background: url(https://drscdn.500px.org/photo/29113281/q%3D80_h%3D600/v2?sig=d2154aab82d4596020a8b022661bb4209bd2347b7907b90f1eca2dc0fe23d8af) no-repeat center; */
     /* background-size: cover; */
 }
@@ -61,7 +61,7 @@ div.title-bar {
     border-radius: 8px 8px 0 0;
     display: flex;
     justify-content: space-between;
-    background: #008023;
+    background: #600081;
     color: #fff;
 }
 
@@ -367,7 +367,7 @@ div.page {
 .card-icon i {
     font-family: 'fa';
     font-style: normal;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 }
 
 .card-header,
@@ -437,7 +437,7 @@ div.page {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    transition: height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: height 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .card-body>div {
@@ -564,7 +564,7 @@ button#version_list_button {
     border: none;
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 0px #00000045;
-    background: #008023;
+    background: #600081;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1021,7 +1021,7 @@ div.child-sidebar li::before {
 }
 
 div.child-sidebar li.active::before {
-    background-color: #008023;
+    background-color: #600081;
     content: "";
 }
 

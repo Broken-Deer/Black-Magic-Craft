@@ -33,14 +33,16 @@ span.name {
     background: #ffffff;
     outline: 1px solid #0000001c;
     height: 30px;
-    width: 100%;
+    /* width: 100%; */
+    flex: 1;
     padding: 0 8px 2px 8px;
     font-size: 1rem;
     transition: all 0.2s ease;
 }
 
 .input-data-file {
-        width: 440px;
+        /* width: 440px; */
+        display: inline-block;
 }
 
 .input-data:hover,
@@ -118,7 +120,7 @@ button.command-button:hover,
 }
 
 .input-text .underline {
-    background: #008023;
+    background: #600081;
     margin-left: -8px;
     height: 2px;
     width: calc(100% + 16px);
@@ -184,8 +186,8 @@ div.page-title {
 }
 
 .input-box label input:checked~span {
-    outline: 1px solid #008023;
-    background-color: #008023;
+    outline: 1px solid #44005b;
+    background-color: #44005b;
 }
 
 .input-box:hover span>div {
@@ -233,6 +235,7 @@ button.command-button:active,
     background: #fff;
     border-radius: 4px;
     transition: all 0.1s ease;
+    display: inline-block;
 }
 
 .input-file .choose-file>i {
@@ -242,6 +245,7 @@ button.command-button:active,
     justify-content: center;
     align-items: center;
     font-family: "fa";
+    flex-shrink: 0;
 }
 
 /* 小型控件 */

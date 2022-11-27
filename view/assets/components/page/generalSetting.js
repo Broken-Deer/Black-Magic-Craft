@@ -11,7 +11,7 @@ export default {
         <div class="card-body">
           <div>
             <p>Black Magic Craft 是一个实用、优雅、美观、开源的 Minecraft 启动器，由 Broken_Deer 用 ❤️ 制作，您的赞助将帮助 Black Magic Craft 获得更好的发展</p>
-            <p style="margin-top: 5px;">Black Magic Craft 本体的所有内容都是免费的，但某些扩展可能会向你收取费用</p>
+            <p>Black Magic Craft <strong>本体</strong>的所有内容都是免费的，插件则按照插件作者的要求。插件作者收取的费用与 Black Magic Craft 无关</p>
           </div>
         </div>
       </div>

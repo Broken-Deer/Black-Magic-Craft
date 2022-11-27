@@ -191,3 +191,15 @@ content: '\f193';
 i.arrow-left::before {
     content: '\f060';
 }
+
+i.user-tie::before {
+    content: '\f508';
+}
+
+i.pen-to-square::before {
+    content: '\f044';
+}
+
+i.triangle-exclamation::before {
+    content: '\f071';
+}
