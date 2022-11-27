@@ -8,11 +8,15 @@ export default {
                 <p id="text">{{ description }}</p>
             </div>
           </div>
-          <div class="card-button" onclick="expanded_card(this)"><i></i></div>
+          <div class="card-button" :onclick="click"><i></i></div>
         </div>`,
     props: {
         title: String,
         description: String,
         icon: String,
+        click: {
+            type: String,
+            default: "expanded_card(this)",
+        },
     },
 };

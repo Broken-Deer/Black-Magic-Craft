@@ -19,7 +19,7 @@ export default {
                 <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"></checkbox>
                 <div class="input input-text input-file" id="E16616C6">
                   <span class="name">{{ ui.global_settings.java_path }}</span>
-                  <div class="input-data">
+                  <div class="input-data input-data-file">
                     <input type="text" id="input_a" title="{{ ui.global_settings.java_path }}" required />
                     <div class="underline"></div>
                   </div>

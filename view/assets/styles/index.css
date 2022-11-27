@@ -40,7 +40,7 @@
     transition: background-color 0.3s ease;
     /* background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); */
     /* background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); */
-    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
     /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
     /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
     /* background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%); */
@@ -49,7 +49,7 @@
     /* background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%); */
     /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
     /* background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%); */
-    /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
+    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
     /* background: url(https://drscdn.500px.org/photo/29113281/q%3D80_h%3D600/v2?sig=d2154aab82d4596020a8b022661bb4209bd2347b7907b90f1eca2dc0fe23d8af) no-repeat center; */
     /* background-size: cover; */
 }
@@ -61,7 +61,7 @@ div.title-bar {
     border-radius: 8px 8px 0 0;
     display: flex;
     justify-content: space-between;
-    background: #116fcd;
+    background: #008023;
     color: #fff;
 }
 
@@ -442,6 +442,7 @@ div.page {
 
 .card-body>div {
     margin: 23px 33px;
+    font-size: 14px;
 }
 
 .card-footer {
@@ -563,7 +564,7 @@ button#version_list_button {
     border: none;
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 0px #00000045;
-    background: #116fcd;
+    background: #008023;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1020,7 +1021,7 @@ div.child-sidebar li::before {
 }
 
 div.child-sidebar li.active::before {
-    background-color: #007bff;
+    background-color: #008023;
     content: "";
 }
 
@@ -1056,7 +1057,39 @@ div.child-sidebar i {
     min-width: unset;
     width: 130px;
 }
+
 .rua>div {
     width: 100%;
     /* transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); */
 }
+
+div.user-data {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.user-data>div:first-child {
+    display: flex;
+}
+
+div.user-data>div:first-child>img {
+    pointer-events: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+    box-shadow: 0 0 11px #0000004a;
+}
+
+div.user-data>div:first-child>div {
+    /* width: 100%; */
+    padding: 0 0 0 20px;
+}
+
+div.user-data>div:first-child>div>p {
+    color: #00000091;
+    margin-top: 0px;
+    /* margin-left: 4px; */
+    font-size: 13px;
+}
+
+div.user-data>div:last-child {width: 100px;height: 68px;display: flex;flex-direction: column;justify-content: space-between;}

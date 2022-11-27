@@ -127,13 +127,13 @@ Vue.createApp({
     `,
     components: { sidebar },
 }).mount(".sidebar-links");
-Vue.createApp({
-    template: /* html */ `
+/* Vue.createApp({
+    template: `
         <download-page></download-page>
         <settings></settings>
         `,
     components: { downloadPage, settings },
-}).mount("#main");
+}).mount("#main"); */
 Vue.createApp({
     template: /* html */ `
 <ms-login></ms-login>

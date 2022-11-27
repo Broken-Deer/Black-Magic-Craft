@@ -6,7 +6,7 @@ import inputColor from "../inputColor.js";
 
 export default {
     template: /* html */ `
-    <div id="09B2534F">
+    <div id="A3FAE39B">
       <div class="card">
         <div class="card-body">
           <div>
