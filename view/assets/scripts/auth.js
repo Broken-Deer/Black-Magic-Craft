@@ -76,7 +76,6 @@ async function show_login_window() {
     /* 添加事件侦测器，用来检测重定向事件 */
     webview.addEventListener("did-redirect-navigation", async (r) => {
         var url = r["url"];
-        console.log(url);
         const pref = "https://login.live.com/oauth20_desktop.srf?";
         /* 如果重定向地址以https://login.live.com/oauth20_desktop.srf?code= 开头，从中截取code的值，并丢给验证程序进行验证 */
         if (url.startsWith(pref + "code=")) {
@@ -84,7 +83,6 @@ async function show_login_window() {
             console.log("第一步完成");
             $("webview").remove();
             var code = url.substring(pref.length).split("&")[0].split("=")[1];
-            console.log(code);
             /* 把code丢给登录程序，检查返回值 */
             await ms_oauth(code);
             switch (status_code) {
@@ -140,7 +138,6 @@ async function ms_oauth(code) {
                 "&scope=" +
                 encodeURI("service::user.auth.xboxlive.com::MBI_SSL"),
             success: function (response) {
-                console.log(response);
                 access_token = response["access_token"];
                 console.log("第二步完成");
             },
@@ -151,17 +148,6 @@ async function ms_oauth(code) {
     }
     /* 用授权令牌进行xbox身份验证 */
     console.log("3. 用授权令牌进行xbox身份验证");
-    console.log(
-        JSON.stringify({
-            Properties: {
-                AuthMethod: "RPS",
-                SiteName: "user.auth.xboxlive.com",
-                RpsTicket: access_token,
-            },
-            RelyingParty: "http://auth.xboxlive.com",
-            TokenType: "JWT",
-        })
-    );
     try {
         await $.ajax({
             headers: {
@@ -180,13 +166,8 @@ async function ms_oauth(code) {
                 TokenType: "JWT",
             }),
             success: function (response) {
-                console.log(response);
-                console.log("XBL Token:");
                 xbl_token = response["Token"];
-                console.log(xbl_token);
-                console.log("uhs:");
                 xbl_uhs = response["DisplayClaims"]["xui"][0]["uhs"];
-                console.log(xbl_uhs);
                 console.log("第三步完成");
             },
         });
@@ -211,8 +192,6 @@ async function ms_oauth(code) {
             }),
             success: function (response) {
                 xsts_token = response["Token"];
-                console.log("XSTS Token:");
-                console.log(xsts_token);
                 console.log("第四步完成");
             },
         });
@@ -234,10 +213,7 @@ async function ms_oauth(code) {
                 identityToken: `XBL3.0 x=${xbl_uhs}; ${xsts_token}`,
             }),
             success: function (response) {
-                console.log(response);
                 minecraft_access_token = response["access_token"];
-                console.log("Minecraft access token:");
-                console.log(minecraft_access_token);
                 console.log("第五步完成");
             },
         });
@@ -258,7 +234,6 @@ async function ms_oauth(code) {
             url: "https://api.minecraftservices.com/entitlements/mcstore",
             data: "",
             success: function (response) {
-                console.log(response);
                 console.log("第六步完成");
             },
         });
@@ -279,7 +254,6 @@ async function ms_oauth(code) {
             url: "https://api.minecraftservices.com/minecraft/profile",
             data: "",
             success: function (response) {
-                console.log(response);
                 console.log("第七步完成");
             },
         });
