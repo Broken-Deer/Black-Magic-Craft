@@ -18,6 +18,7 @@
     }
   </script>
   <script src="./assets/scripts/jquery-ui.min.js"></script>
+  <script src="./assets/scripts/ac-colors.min.js"></script>
   <script src="./assets/scripts/vue.js"></script>
   <script src="./assets/scripts/window.js"></script>
   <script src="./assets/scripts/input.js"></script>
@@ -28,6 +29,8 @@
   <script src="./i18n/zh_cn.js"></script>
   <script src="./renderer.js"></script>
   <script type="module" src="./assets/scripts/onload.js"></script>
+<!-- 由脚本控制的样式表 -->
+  <style id="style"></style>
 </head>
 
 <body style="transform: scale(0.95, 0.95); opacity: 0">
@@ -71,47 +74,7 @@
 
   <!-- 不显示 -->
   <div class="dont_display">
-    <!-- 弹窗 -->
-    <div class="popup_window_main" id="ms_login">
-      <div class="head" style="display: none">
-        <span class="title"></span>
-        <div class="btn" id="popup_window_closer"><i></i></div>
-      </div>
-      <div class="body" id="ms_login_body" style="width: 440.8px; height: 328.8px">
-        <div></div>
-        <loading styles="margin: auto auto; width: 36px; height: 36px;position: absolute;z-index: -1;"></loading>
-      </div>
-      <div class="foot" style="display: none"></div>
-    </div>
-    <div class="popup_window_main" id="game_install">
-      <div class="head">
-        <div class="title"><i class="folder-arrow-down"></i>
-          <div>
-            <span id="5E79266D">正在安装</span>
-            <p>请稍等一会</p>
-          </div>
-        </div>
-      </div>
-      <div class="body" id="game_install_body" style="width: 600px;height: 210px;">
-        <ul class="task-list">
-          <li>
-            <span><i class="spinner-third task-list-icon" id="task1"></i>获取版本信息</span>
-          </li>
-          <li>
-            <span><i class="spinner-third task-list-icon" id="task2"></i>下载游戏主文件</span>
-          </li>
-          <li>
-            <span><i class="spinner-third task-list-icon" id="task3"></i>补全依赖库文件</span>
-            <span class="count" id="lib"></span>
-          </li>
-          <li>
-            <span><i class="spinner-third task-list-icon" id="task4"></i>补全资源文件</span>
-            <span class="count" id="assets_file"></span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
+    <!-- 在这里挂载弹窗内容 -->
   </div>
 </body>
 

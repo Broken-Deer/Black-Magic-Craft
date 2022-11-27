@@ -1,18 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="./auth.js"></script>
-  </head>
-  <body>
-    <webview
-      id="ms_login_webview"
-      src="https://login.microsoft.com"
-      style="display: inline-flex; width: 440px; height: 314px"
-      preload="./scripts/preload-ms.js"
-    ></webview>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜色选择器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        div.box {
+            width: 440px;
+            height: 328px;
+            padding-right: 1px;
+            background-color: #e5e5e5;
+            border-radius: 8px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        div.box *::-webkit-scrollbar {
+            width: 3.5px;
+        }
+
+        div.box *::-webkit-scrollbar-thumb {
+            background-color: #7a7a7a;
+            border-radius: 10px;
+        }
+
+        div.box *::-webkit-scrollbar-track {
+            background-color: #00000000;
+        }
+
+        div.box>div:first-child {
+            width: 75px;
+            height: 100%;
+            background-color: #ededed;
+            overflow: hidden overlay;
+        }
+
+        div.box>div:first-child ul {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        div.box>div:first-child ul>li {
+            width: 100%;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div.box>div:first-child ul>li>div {
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgb(0 0 0 / 33%);
+            background-color: #27009e;
+        }
+
+        div.box>div:last-child {
+            width: 100%;
+            height: 100%;
+            padding: 16px 0 20px 0;
+            overflow: hidden overlay;
+        }
+
+        div.box>div:last-child>div.nearly-color {
+            width: calc(100% - 39px);
+            height: 50px;
+            margin: 0 auto;
+            border-radius: 3px;
+            box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+            overflow: hidden;
+            display: flex;
+        }
+
+        div.box>div:last-child>div.nearly-color .a,
+        div.box>div:last-child>div.nearly-color .b {
+            height: 100%;
+            transition: transform .2s ease;
+        }
+                    div.box>div:last-child>div.nearly-color .a:hover {
+        transform: scale(1.2);
+        }
+
+        div.box>div:last-child>div.nearly-color .a {
+            width: 15%;
+        }
+
+        div.box>div:last-child>div.nearly-color .b {
+            width: 50%;
+        }
+
+        div.box>div:last-child>div.color {
+            width: 335px;
+            height: 110px;
+            margin: 10px auto 5px auto;
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+        }
+
+        div.box>div:last-child>div.color input {
+            appearance: none;
+            width: 170px;
+            height: 30px;
+            background-color: #0000;
+            outline: none;
+            float: left;
+            display: flex;
+            align-items: center;
+        }
+
+        div.box>div:last-child>div.color input::-webkit-slider-thumb {
+            appearance: none;
+            border: 3.4px solid rgb(0, 0, 0);
+            height: 16.5px;
+            width: 16.5px;
+            margin-top: -3px;
+            border-radius: 80px;
+            background: #0000;
+            transition: all .15s ease;
+        }
+
+        div.box>div:last-child>div.color input:active::-webkit-slider-thumb {
+            border: 3.4px solid rgba(0, 0, 0, 0.445);
+        }
+
+        div.box>div:last-child>div.color input::-webkit-slider-runnable-track {
+            appearance: none;
+            height: 11px;
+            border-radius: 10px;
+        }
+
+        div.box>div:last-child>div.color input#h::-webkit-slider-runnable-track {
+            background-image: linear-gradient(to right, red 0, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, red 100%)
+        }
+
+        div.box>div:last-child>div.color input#s::-webkit-slider-runnable-track {
+            background-image: linear-gradient(to right, rgb(255, 255, 255) 0, red 100%);
+        }
+
+        div.box>div:last-child>div.color input#v::-webkit-slider-runnable-track {
+            background-image: linear-gradient(to right, rgb(0, 0, 0) 0, red 100%);
+        }
+
+        div.box>div:last-child>div.color input::before {
+            margin-right: 10px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        div.box>div:last-child>div.color input#h::before {
+            content: 'H';
+        }
+
+        div.box>div:last-child>div.color input#s::before {
+            content: 'S';
+        }
+
+        div.box>div:last-child>div.color input#v::before {
+            content: 'V';
+        }
+
+        div.box>div:last-child>div.color div.input {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
+        div.box>div:last-child>div.color div.input>div {
+            display: flex;
+            font-size: 12px;
+            margin-right: 13px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        div.box>div:last-child>div.color div.input>div>div {
+            margin-right: 10px;
+            font-weight: 500;
+            color: #666666;
+        }
+
+        div.box>div:last-child>div.color input[type="text"] {
+            width: 106px;
+            height: 27px;
+            padding: 5px 7px;
+            border: 1px solid #d0d7de82;
+            border-radius: 6px;
+            background-color: #00000000;
+            outline: none;
+            transition: all .2s ease;
+            font-family: monospace;
+        }
+
+        div.box>div:last-child>div.color input[type="text"]:focus-visible {
+            border: 1px solid #0080ff;
+            box-shadow: inset 0 0 0 1px #0969da;
+        }
+
+
+        div.box>div:last-child>ul {
+            width: calc(100% - 40px);
+            height: auto;
+            margin: 0 auto;
+        }
+
+        div.box>div:last-child>ul>li {
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+        }
+
+        div.box>div:last-child>ul>li div {
+            width: 70px;
+            height: 100%;
+            color: #666666;
+            padding-left: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+        }
+
+        div.box>div:last-child>ul>li input {
+            width: 256px;
+            height: 27px;
+            padding: 5px 12px;
+            border: 1px solid #d0d7de82;
+            border-radius: 6px;
+            background-color: #00000000;
+            outline: none;
+            transition: all .2s ease;
+            font-family: monospace;
+        }
+
+        div.box>div:last-child>ul>li input:focus-visible {
+            border: 1px solid #0080ff;
+            box-shadow: inset 0 0 0 1px #0969da;
+        }
+    </style>
+    <style id="aaa"></style>
+    <script src="https://cdn.jsdelivr.net/npm/ac-colors@1/dist/ac-colors.min.js"></script>
+    <script>
+        function inputUpdateUI(el, type) {
+            var val = String(el.value)
+            var color
+            console.log(val)
+
+            if (type == 'hex') {
+                color = new Color({ "color": String(val), "type": "hex" })
+                console.log(color)
+                var hsv = rgbToHsv(color.rgb)
+                UpdateUI(hsv[0], hsv[1], hsv[2], type)
+                return
+            } else {
+                if (type != 'rgb') {
+                    val = String(val).match(/\((.+?)\)/g)[0]
+                }
+                val = val.substring(1, val.length - 1).replace(/\%/g, '').replace(/\n/g, '')
+                console.log(val)
+                val = val.split(',')
+                console.log([Number(val[0]), Number(val[1]), Number(val[2])])
+                if (type == 'hsv') {
+                    UpdateUI(Number(val[0]), Number(val[1]), Number(val[2]), type)
+                    return
+                } else {
+                    color = new Color({ "color": [Number(val[0]), Number(val[1]), Number(val[2])], "type": type })
+                }
+            }
+
+            console.log(color.rgb)
+            var hsv = rgbToHsv(color.rgb)
+            UpdateUI(hsv[0], hsv[1], hsv[2], type)
+        }
+        function SliderUpdateUI() {
+            UpdateUI(
+                Number(document.getElementById('h').value),
+                Number(document.getElementById('s').value),
+                Number(document.getElementById('v').value),'slider'
+            )
+        }
+        function choosedNearlyColor(el) {
+            console.log(window.getComputedStyle(el, null).background)
+            var val = String(window.getComputedStyle(el, null).background).match(/\((.+?)\)/g)[0]
+            val = val.substring(1, val.length - 1).replace(/\%/g, '').replace(/\n/g, '')
+            val = val.split(',')
+            var hsv = rgbToHsv(val)
+            UpdateUI(hsv[0], hsv[1], hsv[2], null)
+        }
+        function UpdateUI(h, s, v, exclude) {
+            console.log(exclude)
+            var style = document.getElementById('aaa')
+            var hl = hd = h
+            var sl = sd = s
+            var vl = vd = v
+            var rgb = hsvToRgb(h, s, v)
+            var b
+            if ((v + 15) < 101) {
+                vl = v + 15
+            } else {
+                vl = 100
+                if ((h + 4) < 360) {
+                    hl = h + 4
+                } else {
+                    hl = h + 4 - 359
+                }
+            }
+            b = hsvToRgb(hl, sl, vl)
+            if ((vl + 15) < 101) {
+                vl = vl + 15
+            } else {
+                vl = 100
+                if ((hl + 4) < 360) {
+                    hl = hl + 4
+                } else {
+                    hl = hl + 4 - 359
+                }
+            }
+            c = hsvToRgb(hl, sl, vl)
+            if ((v - 20) > -1) {
+                vd = v - 20
+            } else {
+                hd = sd = vd = 0
+            }
+            d = hsvToRgb(hd, sd, vd)
+            if ((v - 20) > -1) {
+                vd = vd - 20
+            } else {
+                hd = sd = vd = 0
+            }
+            e = hsvToRgb(hd, sd, vd)
+            var hh = hsvToRgb(document.getElementById('h').value, 100, 100)
+            style.innerHTML = /* css */`
+                div.box>div:last-child>div.color input#s::-webkit-slider-runnable-track {
+                    background-image: linear-gradient(to right, rgb(255, 255, 255) 0, rgb(${hh[0]}, ${hh[1]}, ${hh[2]}));
+                }
+
+                div.box>div:last-child>div.color input#v::-webkit-slider-runnable-track {
+                    background-image: linear-gradient(to right, rgb(0, 0, 0) 0, rgb(${hh[0]}, ${hh[1]}, ${hh[2]}));
+                }
+                #a {
+                    background: rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})
+                }
+                #b {
+                    background: rgb(${b[0]}, ${b[1]}, ${b[2]})
+                }
+                #c {
+                    background: rgb(${c[0]}, ${c[1]}, ${c[2]})
+                }
+                #d {
+                    background: rgb(${d[0]}, ${d[1]}, ${d[2]})
+                }
+                #e {
+                    background: rgb(${e[0]}, ${e[1]}, ${e[2]})
+                }
+            `
+            let color = new Color({ "color": [rgb[0], rgb[1], rgb[2]], "type": "rgb" })
+            if (exclude != 'slider') {
+                document.getElementById('h').value = h
+                document.getElementById('s').value = s
+                document.getElementById('v').value = v
+}
+            if (exclude != 'rgb') {
+                document.getElementById('rgb').value = `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`
+            }
+            if (exclude != 'hsv') {
+                document.getElementById('hsv').value = `hsv(${h}, ${s}%, ${v}%)`
+            }
+            if (exclude != 'hex') {
+                document.getElementById('hex').value = color.hex
+            }
+            if (exclude != 'hsl') {
+                document.getElementById('hsl').value = `hsl(${parseInt(color.hsl[0])}, ${parseInt(color.hsl[1])}%, ${parseInt(color.hsl[2])}%)`
+            }
+            if (exclude != 'lab') {
+                document.getElementById('lab').value = `CIELab(${parseInt(color.lab[0])}, ${parseInt(color.lab[1])}, ${parseInt(color.lab[2])})`
+            }
+            if (exclude != 'xyz') {
+                document.getElementById('xyz').value = `XYZ(${parseInt(color.xyz[0])}, ${parseInt(color.xyz[1])}, ${parseInt(color.xyz[2])})`
+            }
+            if (exclude != 'luv') {
+                document.getElementById('luv').value = `luv(${parseInt(color.luv[0])}, ${parseInt(color.luv[1])}, ${parseInt(color.luv[2])})`
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div>
+            <ul>
+                <li>
+                    <div></div>
+                </li>
+                <li>
+                    <div></div>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="nearly-color">
+                <div class="a" id="c" onclick="choosedNearlyColor(this)"></div>
+                <div class="a" id="b" onclick="choosedNearlyColor(this)"></div>
+                <div class="b" id="a"></div>
+                <div class="a" id="d" onclick="choosedNearlyColor(this)"></div>
+                <div class="a" id="e" onclick="choosedNearlyColor(this)"></div>
+            </div>
+            <div class="color">
+                <div class="range">
+                    <input type="range" max="359" step="1" min="0" name="" id="h" value="0"
+                        oninput="SliderUpdateUI()" />
+                    <input type="range" max="100" step="1" min="0" name="" id="s" value="0"
+                        oninput="SliderUpdateUI()" />
+                    <input type="range" max="100" step="1" min="0" name="" id="v" value="0"
+                        oninput="SliderUpdateUI()" />
+                </div>
+                <div class="input">
+                    <div>
+                        <div>HEX</div>
+                        <input type="text" id="hex" oninput="inputUpdateUI(this, 'hex')">
+                    </div>
+                    <div>
+                        <div>RGB</div>
+                        <input type="text" id="rgb" oninput="inputUpdateUI(this, 'rgb')">
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div>HSV</div><input type="text" id="hsv" oninput="inputUpdateUI(this, 'hsv')">
+                </li>
+                <li>
+                    <div>HSL</div><input type="text" id="hsl" oninput="inputUpdateUI(this, 'hsl')">
+                </li>
+                <li>
+                    <div>CIELAB</div><input type="text" id="lab" oninput="inputUpdateUI(this, 'lab')"
+                        readonly="readonly">
+                </li>
+                <li>
+                    <div>CIEXYZ</div><input type="text" id="xyz" oninput="inputUpdateUI(this, 'xyz')"
+                        readonly="readonly">
+                </li>
+                <li>
+                    <div>LUV</div><input type="text" id="luv" oninput="inputUpdateUI(this, 'luv')" readonly="readonly">
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function rgbToHsv(arr) {
+            var h = 0, s = 0, v = 0;
+            var r = arr[0], g = arr[1], b = arr[2];
+            arr.sort(function (a, b) {
+                return a - b;
+            })
+            var max = arr[2]
+            var min = arr[0];
+            v = max / 255;
+            if (max === 0) {
+                s = 0;
+            } else {
+                s = 1 - (min / max);
+            }
+            if (max === min) {
+                h = 0;//事实上，max===min的时候，h无论为多少都无所谓
+            } else if (max === r && g >= b) {
+                h = 60 * ((g - b) / (max - min)) + 0;
+            } else if (max === r && g < b) {
+                h = 60 * ((g - b) / (max - min)) + 360
+            } else if (max === g) {
+                h = 60 * ((b - r) / (max - min)) + 120
+            } else if (max === b) {
+                h = 60 * ((r - g) / (max - min)) + 240
+            }
+            h = parseInt(h);
+            s = parseInt(s * 100);
+            v = parseInt(v * 100);
+            return [h, s, v]
+        }
+
+        function hsvToRgb(h, s, v) {
+            s = s / 100;
+            v = v / 100;
+            var r = 0, g = 0, b = 0;
+            var i = parseInt((h / 60) % 6);
+            var f = h / 60 - i;
+            var p = v * (1 - s);
+            var q = v * (1 - f * s);
+            var t = v * (1 - (1 - f) * s);
+            switch (i) {
+                case 0:
+                    r = v; g = t; b = p;
+                    break;
+                case 1:
+                    r = q; g = v; b = p;
+                    break;
+                case 2:
+                    r = p; g = v; b = t;
+                    break;
+                case 3:
+                    r = p; g = q; b = v;
+                    break;
+                case 4:
+                    r = t; g = p; b = v;
+                    break;
+                case 5:
+                    r = v; g = p; b = q;
+                    break;
+                default:
+                    break;
+            }
+            r = parseInt(r * 255.0)
+            g = parseInt(g * 255.0)
+            b = parseInt(b * 255.0)
+            return [r, g, b];
+        }
+    </script>
+</body>
+
 </html>

@@ -7,10 +7,12 @@ import inputColor from "../components/inputColor.js";
 import sidebarItem from "../components/sidebarItem.js";
 
 import downloadPage from "../components/page/downloadPage.js";
-import globleSetting from "../components/page/globleSetting.js";
-import launcherSetting from "../components/page/launcherSetting.js";
+import settings from "../components/page/Settings.js";
 
 import sidebar from "../components/sidebar.js";
+import colorChooser from "../components/window/colorChooser.js";
+import gameInstall from "../components/window/gameInstall.js";
+import msLogin from "../components/window/msLogin.js";
 
 export default zh_cn = {
     ui: {
@@ -109,7 +111,15 @@ Vue.createApp({
     data() {
         return zh_cn;
     },
-    components: { inputText, checkbox, cardHeader, loading, commandButton, inputColor, sidebarItem },
+    components: {
+        inputText,
+        checkbox,
+        cardHeader,
+        loading,
+        commandButton,
+        inputColor,
+        sidebarItem,
+    },
 }).mount("#win");
 Vue.createApp({
     template: /* html */ `
@@ -118,10 +128,21 @@ Vue.createApp({
     components: { sidebar },
 }).mount(".sidebar-links");
 Vue.createApp({
-        template: /* html */ `
+    template: /* html */ `
         <download-page></download-page>
-        <globle-setting></globle-setting>
-        <launcher-setting></launcher-setting>
+        <settings></settings>
         `,
-    components: { downloadPage, globleSetting, launcherSetting, loading, checkbox },
+    components: { downloadPage, settings },
 }).mount("#main");
+Vue.createApp({
+    template: /* html */ `
+<ms-login></ms-login>
+<game-install></game-install>
+<color-chooser></color-chooser>
+`,
+    components: {
+        msLogin,
+        gameInstall,
+        colorChooser,
+    },
+}).mount(".dont_display");

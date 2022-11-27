@@ -1,0 +1,110 @@
+Date : 2022-11-27 16:02:51
+Directory : y:\mc
+Total : 61 files,  52543 codes, 2309 comments, 868 blanks, all 55720 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         42 |     39,966 |      2,210 |        323 |     42,499 |
+| JSON       |          4 |      8,853 |          0 |          3 |      8,856 |
+| CSS        |         10 |      2,934 |         81 |        523 |      3,538 |
+| HTML       |          2 |        554 |         18 |         18 |        590 |
+| XML        |          2 |        236 |          0 |          0 |        236 |
+| Ignore     |          1 |          0 |          0 |          1 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                   |         61 |     52,543 |      2,309 |        868 |     55,720 |
+| app                                                 |         21 |     15,361 |        164 |        273 |     15,798 |
+| app\module                                          |          1 |        162 |         23 |         15 |        200 |
+| app\view                                            |         17 |     14,233 |        102 |        246 |     14,581 |
+| app\view\assets                                     |         15 |     13,753 |         92 |        228 |     14,073 |
+| app\view\assets\images                              |          1 |        118 |          0 |          0 |        118 |
+| app\view\assets\scripts                             |          9 |     12,415 |         56 |         31 |     12,502 |
+| app\view\assets\styles                              |          5 |      1,220 |         36 |        197 |      1,453 |
+| src                                                 |          4 |        687 |         80 |         44 |        811 |
+| src\Deprecated                                      |          1 |        212 |         27 |         15 |        254 |
+| src\game                                            |          1 |        213 |         16 |          8 |        237 |
+| src\http                                            |          1 |         94 |         18 |          9 |        121 |
+| src\installer                                       |          1 |        168 |         19 |         12 |        199 |
+| view                                                |         31 |     28,249 |      2,027 |        531 |     30,807 |
+| view\assets                                         |         28 |     28,015 |      2,017 |        514 |     30,546 |
+| view\assets\components                              |         12 |        398 |          1 |         19 |        418 |
+| view\assets\components\page                         |          4 |        276 |          1 |         10 |        287 |
+| view\assets\images                                  |          1 |        118 |          0 |          0 |        118 |
+| view\assets\scripts                                 |         10 |     25,785 |      1,971 |        169 |     27,925 |
+| view\assets\styles                                  |          5 |      1,714 |         45 |        326 |      2,085 |
+| view\i18n                                           |          1 |         67 |          0 |          4 |         71 |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                            | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| y:\mc\.prettierignore                               | Ignore     |          0 |          0 |          1 |          1 |
+| y:\mc\app\main.js                                   | JavaScript |        133 |         39 |         11 |        183 |
+| y:\mc\app\module\download.mjs                       | JavaScript |        162 |         23 |         15 |        200 |
+| y:\mc\app\package-lock.json                         | JSON       |        822 |          0 |          1 |        823 |
+| y:\mc\app\package.json                              | JSON       |         11 |          0 |          0 |         11 |
+| y:\mc\app\view\assets\images\loading.svg            | XML        |        118 |          0 |          0 |        118 |
+| y:\mc\app\view\assets\scripts\auth.js               | JavaScript |         11 |          0 |          1 |         12 |
+| y:\mc\app\view\assets\scripts\input.js              | JavaScript |         44 |          0 |          3 |         47 |
+| y:\mc\app\view\assets\scripts\installer.js          | JavaScript |         73 |          1 |          2 |         76 |
+| y:\mc\app\view\assets\scripts\jquery-ui.min.js      | JavaScript |      8,217 |          4 |          1 |      8,222 |
+| y:\mc\app\view\assets\scripts\jquery.js             | JavaScript |      3,703 |          1 |          0 |      3,704 |
+| y:\mc\app\view\assets\scripts\loadconfig.js         | JavaScript |          8 |          0 |          1 |          9 |
+| y:\mc\app\view\assets\scripts\page.js               | JavaScript |         63 |          4 |          7 |         74 |
+| y:\mc\app\view\assets\scripts\ui.js                 | JavaScript |        296 |         46 |         15 |        357 |
+| y:\mc\app\view\assets\scripts\window.js             | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\app\view\assets\styles\animation.css          | CSS        |        107 |          6 |         20 |        133 |
+| y:\mc\app\view\assets\styles\control.css            | CSS        |        229 |          6 |         43 |        278 |
+| y:\mc\app\view\assets\styles\font-icon.css          | CSS        |         74 |          0 |         16 |         90 |
+| y:\mc\app\view\assets\styles\font.css               | CSS        |         93 |          1 |         17 |        111 |
+| y:\mc\app\view\assets\styles\index.css              | CSS        |        717 |         23 |        101 |        841 |
+| y:\mc\app\view\index.html                           | HTML       |        448 |          9 |         13 |        470 |
+| y:\mc\app\view\renderer.js                          | JavaScript |         32 |          1 |          5 |         38 |
+| y:\mc\main.js                                       | JavaScript |        137 |         31 |          9 |        177 |
+| y:\mc\package-lock.json                             | JSON       |      7,963 |          0 |          1 |      7,964 |
+| y:\mc\package.json                                  | JSON       |         57 |          0 |          1 |         58 |
+| y:\mc\src\Deprecated\download.mjs                   | JavaScript |        212 |         27 |         15 |        254 |
+| y:\mc\src\game\launch.mjs                           | JavaScript |        213 |         16 |          8 |        237 |
+| y:\mc\src\http\download.mjs                         | JavaScript |         94 |         18 |          9 |        121 |
+| y:\mc\src\installer\minecraft.mjs                   | JavaScript |        168 |         19 |         12 |        199 |
+| y:\mc\test.mjs                                      | JavaScript |         89 |          7 |          8 |        104 |
+| y:\mc\view\assets\components\cardHeader.js          | JavaScript |         18 |          0 |          1 |         19 |
+| y:\mc\view\assets\components\checkbox.js            | JavaScript |         22 |          0 |          1 |         23 |
+| y:\mc\view\assets\components\commandButton.js       | JavaScript |         13 |          0 |          1 |         14 |
+| y:\mc\view\assets\components\inputColor.js          | JavaScript |         13 |          0 |          1 |         14 |
+| y:\mc\view\assets\components\inputText.js           | JavaScript |         14 |          0 |          1 |         15 |
+| y:\mc\view\assets\components\loading.js             | JavaScript |         13 |          0 |          1 |         14 |
+| y:\mc\view\assets\components\page\Settings.js       | JavaScript |         24 |          0 |          2 |         26 |
+| y:\mc\view\assets\components\page\downloadPage.js   | JavaScript |         41 |          0 |          2 |         43 |
+| y:\mc\view\assets\components\page\gameSetting.js    | JavaScript |        152 |          1 |          4 |        157 |
+| y:\mc\view\assets\components\page\generalSetting.js | JavaScript |         59 |          0 |          2 |         61 |
+| y:\mc\view\assets\components\sidebar.js             | JavaScript |         15 |          0 |          2 |         17 |
+| y:\mc\view\assets\components\sidebarItem.js         | JavaScript |         14 |          0 |          1 |         15 |
+| y:\mc\view\assets\images\loading.svg                | XML        |        118 |          0 |          0 |        118 |
+| y:\mc\view\assets\scripts\auth.js                   | JavaScript |        278 |         12 |         12 |        302 |
+| y:\mc\view\assets\scripts\input.js                  | JavaScript |         44 |          0 |          3 |         47 |
+| y:\mc\view\assets\scripts\installer.js              | JavaScript |         70 |          2 |          5 |         77 |
+| y:\mc\view\assets\scripts\jquery-ui.min.js          | JavaScript |      8,217 |          4 |          1 |      8,222 |
+| y:\mc\view\assets\scripts\jquery.js                 | JavaScript |      3,703 |          1 |          0 |      3,704 |
+| y:\mc\view\assets\scripts\loadconfig.js             | JavaScript |          8 |          0 |          1 |          9 |
+| y:\mc\view\assets\scripts\onload.js                 | JavaScript |        121 |          0 |          5 |        126 |
+| y:\mc\view\assets\scripts\ui.js                     | JavaScript |        241 |          2 |         21 |        264 |
+| y:\mc\view\assets\scripts\vue.js                    | JavaScript |     13,103 |      1,950 |        120 |     15,173 |
+| y:\mc\view\assets\scripts\window.js                 | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\view\assets\styles\animation.css              | CSS        |        206 |          9 |         43 |        258 |
+| y:\mc\view\assets\styles\control.css                | CSS        |        385 |          9 |         69 |        463 |
+| y:\mc\view\assets\styles\font-icon.css              | CSS        |        154 |          0 |         39 |        193 |
+| y:\mc\view\assets\styles\font.css                   | CSS        |         91 |          1 |         17 |        109 |
+| y:\mc\view\assets\styles\index.css                  | CSS        |        878 |         26 |        158 |      1,062 |
+| y:\mc\view\i18n\zh_cn.js                            | JavaScript |         67 |          0 |          4 |         71 |
+| y:\mc\view\index.html                               | HTML       |        106 |          9 |          5 |        120 |
+| y:\mc\view\renderer.js                              | JavaScript |         61 |          1 |          8 |         70 |
+| Total                                               |            |     52,543 |      2,309 |        868 |     55,720 |
++-----------------------------------------------------+------------+------------+------------+------------+------------+

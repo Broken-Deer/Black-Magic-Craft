@@ -1,0 +1,52 @@
+Date : 2022-11-27 16:02:51
+Directory : y:\mc
+Total : 16 files,  184 codes, -14 comments, 104 blanks, all 274 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| CSS        |          5 |        155 |        -18 |         94 |        231 |
+| JavaScript |          9 |        138 |          3 |          9 |        150 |
+| HTML       |          2 |       -109 |          1 |          1 |       -107 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                    |         16 |        184 |        -14 |        104 |        274 |
+| app                                                  |          2 |       -126 |          0 |          1 |       -125 |
+| app\view                                             |          2 |       -126 |          0 |          1 |       -125 |
+| app\view\assets                                      |          1 |        -16 |          0 |          0 |        -16 |
+| app\view\assets\scripts                              |          1 |        -16 |          0 |          0 |        -16 |
+| view                                                 |         14 |        310 |        -14 |        103 |        399 |
+| view\assets                                          |         13 |        309 |        -15 |        103 |        397 |
+| view\assets\components                               |          6 |          8 |          1 |          1 |         10 |
+| view\assets\components\page                          |          5 |          7 |          1 |          1 |          9 |
+| view\assets\scripts                                  |          2 |        146 |          2 |          8 |        156 |
+| view\assets\styles                                   |          5 |        155 |        -18 |         94 |        231 |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                             | language   | code       | comment    | blank      | total      |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| y:\mc\app\view\assets\scripts\page.js                | JavaScript |        -16 |          0 |          0 |        -16 |
+| y:\mc\app\view\index.html                            | HTML       |       -110 |          0 |          1 |       -109 |
+| y:\mc\view\assets\components\checkbox.js             | JavaScript |          1 |          0 |          0 |          1 |
+| y:\mc\view\assets\components\page\Settings.js        | JavaScript |         24 |          0 |          2 |         26 |
+| y:\mc\view\assets\components\page\gameSetting.js     | JavaScript |        152 |          1 |          4 |        157 |
+| y:\mc\view\assets\components\page\generalSetting.js  | JavaScript |         59 |          0 |          2 |         61 |
+| y:\mc\view\assets\components\page\globleSetting.js   | JavaScript |       -160 |          0 |         -4 |       -164 |
+| y:\mc\view\assets\components\page\launcherSetting.js | JavaScript |        -68 |          0 |         -3 |        -71 |
+| y:\mc\view\assets\scripts\onload.js                  | JavaScript |         -2 |          0 |          0 |         -2 |
+| y:\mc\view\assets\scripts\ui.js                      | JavaScript |        148 |          2 |          8 |        158 |
+| y:\mc\view\assets\styles\animation.css               | CSS        |          0 |          0 |         19 |         19 |
+| y:\mc\view\assets\styles\control.css                 | CSS        |        134 |          3 |         25 |        162 |
+| y:\mc\view\assets\styles\font-icon.css               | CSS        |          8 |          0 |         19 |         27 |
+| y:\mc\view\assets\styles\font.css                    | CSS        |         -3 |          0 |          0 |         -3 |
+| y:\mc\view\assets\styles\index.css                   | CSS        |         16 |        -21 |         31 |         26 |
+| y:\mc\view\index.html                                | HTML       |          1 |          1 |          0 |          2 |
+| Total                                                |            |        184 |        -14 |        104 |        274 |
++------------------------------------------------------+------------+------------+------------+------------+------------+

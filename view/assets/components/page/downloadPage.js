@@ -26,7 +26,7 @@ export default {
                     </ul>
                   </div>
                 </div>
-                <checkbox name="显示远古版、快照版" id="2B39A329" id2="5D4CBB91"></checkbox>
+                <checkbox name="显示远古版、快照版" id="2B39A329" id2="5D4CBB91" chek="checked"></checkbox>
               </div>
             </div>
             <div style="opacity: 1;" id="B9C498C7">

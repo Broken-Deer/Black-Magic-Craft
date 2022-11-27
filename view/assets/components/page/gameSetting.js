@@ -10,16 +10,8 @@ export default {
         return zh_cn;
     },
     template: /* html */ `
-         <div id="g_setting_pg" style="display: none">
-                   <div class="child-sidebar">
-            <ul>
-              <li class="active" onclick="sidebar_active(this)"><i class="rectangle-terminal"></i>自动安装</li>
-              <li onclick="sidebar_active(this)"><i class="screwdriver-wrench"></i>手动安装</li>
-              <li onclick="sidebar_active(this)"><i class="folders"></i>导入整合包</li>
-            </ul>
-          </div>
-          <div class="rua">
-                      <div class="card">
+  <div id="AF3BE70D" style="display: none">
+     <div class="card">
             <card-header :title="ui.global_settings.java_path_title"
               :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
             <div class="card-body">
@@ -157,7 +149,9 @@ export default {
               </div>
             </div>
           </div>
-          </div>
-        </div>`,
+  </div>
+   
+`,
     components: { inputText, checkbox, cardHeader, commandButton, inputColor },
 };
+/*                        */

@@ -4,7 +4,7 @@ export default {
         <span class="name">{{name}}</span>
         <div class="input-box">
             <label>
-                <input type="checkbox" :id="id" :onclick="click"/>
+                <input type="checkbox" :id="id" :onclick="click" :checked="chek"/>
                 <span>
                     <div class="button"></div>
                 </span>
@@ -17,5 +17,6 @@ export default {
         id2: String,
         id: String,
         click: String,
+        chek: String,
     },
 };

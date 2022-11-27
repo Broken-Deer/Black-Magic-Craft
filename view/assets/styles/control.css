@@ -57,11 +57,11 @@ button.command-button:hover,
     justify-items: end;
 }
 
-.input-data-list:active > div {
+.input-data-list:active>div {
     color: #00000094;
 }
 
-.input-data-list > div {
+.input-data-list>div {
     font-size: 0.8rem;
     width: 15rem;
     white-space: nowrap;
@@ -104,7 +104,7 @@ button.command-button:hover,
     transform: scale(0.98);
 }
 
-.input-list ul.option > div {
+.input-list ul.option>div {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -124,7 +124,7 @@ button.command-button:hover,
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.input-text input:focus ~ .underline {
+.input-text input:focus~.underline {
     transform: scale(1);
     opacity: 1;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -170,7 +170,7 @@ div.page-title {
     transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99);
 }
 
-.input-box label span > div {
+.input-box label span>div {
     width: 13.5px !important;
     height: 13.5px !important;
     border-radius: 200px !important;
@@ -179,20 +179,20 @@ div.page-title {
     transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99);
 }
 
-.input-box label input:checked ~ span {
+.input-box label input:checked~span {
     outline: 1px solid #7da8e9;
     background-color: #7da8e9;
 }
 
-.input-box:hover span > div {
+.input-box:hover span>div {
     transform: scale(1.1);
 }
 
-.input-box:active span > div {
+.input-box:active span>div {
     transform: scale(0.85);
 }
 
-.input-box label input:checked ~ span > div {
+.input-box label input:checked~span>div {
     background-color: #fff !important;
     margin-left: calc(100% - 20px);
 }
@@ -222,7 +222,7 @@ button.command-button:active,
 /* 文件选择 */
 
 .input-file .choose-file {
-    width: 62px;
+    width: 52px;
     height: 32px;
     margin-left: 6.5px;
     outline: 1px solid #0000001c;
@@ -231,8 +231,8 @@ button.command-button:active,
     transition: all 0.1s ease;
 }
 
-.input-file .choose-file > i {
-    width: 100%;
+.input-file .choose-file>i {
+    /* width: 100%; */
     height: 100%;
     display: flex;
     justify-content: center;
@@ -266,21 +266,22 @@ button.command-button:active,
     transition: all 0.2s ease;
 }
 
-.disable .slider_btn > div {
+.disable .slider_btn>div {
     background: #7da8e952 !important;
     transition: all 0.2s ease;
 }
 
-.disable .orbit > div {
+.disable .orbit>div {
     background: #7da8e952 !important;
     transition: all 0.2s ease;
 }
 
-.disable .input-box label input:checked ~ span {
+.disable .input-box label input:checked~span {
     outline: 1px solid #7da8e94f;
     background-color: #7da8e94f;
     transition: all 0.2s ease;
 }
+
 /* 其他设置 */
 
 input:focus::-webkit-input-placeholder {
@@ -298,4 +299,255 @@ input:focus::-webkit-input-placeholder {
     padding: 0 8px 2px 8px;
     font-size: 1rem;
     transition: all 0.2s ease;
+}
+
+/* 颜色选择器 */
+
+div#color_chooser {
+    width: 440px;
+    height: 328px;
+    padding-right: 1px;
+    background-color: #e5e5e5;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+}
+
+div#color_chooser *::-webkit-scrollbar {
+    width: 3.5px;
+}
+
+div#color_chooser *::-webkit-scrollbar-thumb {
+    background-color: #7a7a7a;
+    border-radius: 10px;
+}
+
+div#color_chooser *::-webkit-scrollbar-track {
+    background-color: #00000000;
+}
+
+div#color_chooser>div:first-child {
+    width: 75px;
+    height: 100%;
+    background-color: #ededed;
+    overflow: hidden overlay;
+}
+
+div#color_chooser>div:first-child ul {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    padding: 0;
+}
+
+div#color_chooser>div:first-child ul>li {
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div#color_chooser>div:first-child ul>li>div {
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 33%);
+    background-color: #27009e;
+}
+
+div#color_chooser>div:last-child {
+    width: 100%;
+    height: 100%;
+    padding: 16px 0 20px 0;
+    overflow: hidden overlay;
+}
+
+div#color_chooser>div:last-child>div.nearly-color {
+    width: calc(100% - 39px);
+    height: 50px;
+    margin: 0 auto;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+    overflow: hidden;
+    display: flex;
+}
+
+div#color_chooser>div:last-child>div.nearly-color .a,
+div#color_chooser>div:last-child>div.nearly-color .b {
+    height: 100%;
+    transition: transform .2s ease;
+}
+
+div#color_chooser>div:last-child>div.nearly-color .a:hover {
+    transform: scale(1.2);
+}
+
+div#color_chooser>div:last-child>div.nearly-color .a {
+    width: 15%;
+}
+
+div#color_chooser>div:last-child>div.nearly-color .b {
+    width: 50%;
+}
+
+div#color_chooser>div:last-child>div.color {
+    width: 335px;
+    height: 110px;
+    margin: 10px auto 5px auto;
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+}
+
+div#color_chooser>div:last-child>div.color input {
+    appearance: none;
+    width: 170px;
+    height: 30px;
+    background-color: #0000;
+    outline: none;
+    float: left;
+    display: flex;
+    align-items: center;
+}
+
+div#color_chooser>div:last-child>div.color input::-webkit-slider-thumb {
+    appearance: none;
+    border: 3.4px solid rgb(0, 0, 0);
+    height: 16.5px;
+    width: 16.5px;
+    margin-top: -3px;
+    border-radius: 80px;
+    background: #0000;
+    transition: all .15s ease;
+}
+
+div#color_chooser>div:last-child>div.color input:active::-webkit-slider-thumb {
+    border: 3.4px solid rgba(0, 0, 0, 0.445);
+}
+
+div#color_chooser>div:last-child>div.color input::-webkit-slider-runnable-track {
+    appearance: none;
+    height: 11px;
+    border-radius: 10px;
+}
+
+div#color_chooser>div:last-child>div.color input#h::-webkit-slider-runnable-track {
+    background-image: linear-gradient(to right, red 0, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, red 100%)
+}
+
+div#color_chooser>div:last-child>div.color input#s::-webkit-slider-runnable-track {
+    background-image: linear-gradient(to right, rgb(255, 255, 255) 0, red 100%);
+}
+
+div#color_chooser>div:last-child>div.color input#v::-webkit-slider-runnable-track {
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 0, red 100%);
+}
+
+div#color_chooser>div:last-child>div.color input::before {
+    margin-right: 10px;
+    font-weight: 800;
+    font-family: 'Harmony-re';
+    margin-left: 10px;
+}
+
+div#color_chooser>div:last-child>div.color input#h::before {
+    content: 'H';
+}
+
+div#color_chooser>div:last-child>div.color input#s::before {
+    content: 'S';
+}
+
+div#color_chooser>div:last-child>div.color input#v::before {
+    content: 'V';
+}
+
+div#color_chooser>div:last-child>div.color div.input {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+div#color_chooser>div:last-child>div.color div.input>div {
+    display: flex;
+    font-size: 12px;
+    margin-right: 13px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+div#color_chooser>div:last-child>div.color div.input>div>div {
+    margin-right: 10px;
+    font-weight: 800;
+    color: #666666;
+}
+
+div#color_chooser>div:last-child>div.color input[type="text"] {
+    width: 106px;
+    height: 27px;
+    padding: 5px 7px;
+    border: 1px solid #d0d7de82;
+    border-radius: 6px;
+    background-color: #00000000;
+    outline: none;
+    transition: all .2s ease;
+    font-family: consolas;
+}
+
+div#color_chooser>div:last-child>div.color input[type="text"]:focus-visible {
+    border: 1px solid #0080ff;
+    box-shadow: inset 0 0 0 1px #0969da;
+}
+
+
+div#color_chooser>div:last-child>ul {
+    width: calc(100% - 40px);
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
+}
+
+div#color_chooser>div:last-child>ul>li {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 15%);
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+}
+
+div#color_chooser>div:last-child>ul>li div {
+    width: 70px;
+    height: 100%;
+    color: #666666;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+div#color_chooser>div:last-child>ul>li input {
+    width: 256px;
+    height: 27px;
+    padding: 5px 12px;
+    border: 1px solid #d0d7de82;
+    border-radius: 6px;
+    background-color: #00000000;
+    outline: none;
+    transition: all .2s ease;
+    font-family: 'consolas';
+}
+
+div#color_chooser>div:last-child>ul>li input:focus-visible {
+    border: 1px solid #0080ff;
+    box-shadow: inset 0 0 0 1px #0969da;
 }
