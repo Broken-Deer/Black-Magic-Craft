@@ -6,7 +6,7 @@ import commandButton from "../components/commandButton.js";
 import inputColor from "../components/inputColor.js";
 import sidebarItem from "../components/sidebarItem.js";
 
-import downloadPage from "../components/page/downloadPage.js";
+import downloadPage from "../components/page/DownloadPage.js";
 import settings from "../components/page/Settings.js";
 
 import sidebar from "../components/sidebar.js";
@@ -104,7 +104,7 @@ window.onload = function () {
             }, 500);
         });
     });
-    slider("CA028F76", "memory_value", 128, 16384);
+
 };
 document.addEventListener("DOMContentLoaded", () => {});
 Vue.createApp({
@@ -118,7 +118,7 @@ Vue.createApp({
         loading,
         commandButton,
         inputColor,
-        sidebarItem,
+        sidebarItem
     },
 }).mount("#win");
 Vue.createApp({

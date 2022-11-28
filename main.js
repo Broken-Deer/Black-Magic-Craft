@@ -55,25 +55,6 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-    /*     session.defaultSession.cookies // 退出时清除cookie
-        .get({})
-        .then((cookies) => {
-            cookies.forEach((cookie) => {
-                let url = "";
-                // get prefix, like https://www.
-                url += cookie.secure ? "https://" : "http://";
-                url += cookie.domain.charAt(0) === "." ? "www" : "";
-                // append domain and path
-                url += cookie.domain;
-                url += cookie.path;
-                session.defaultSession.cookies.remove(url, cookie.name, (error) => {
-                    if (error) console.log(`error removing cookie ${cookie.name}`, error);
-                });
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-        }); */
     if (process.platform !== "darwin") app.quit();
 });
 

@@ -354,9 +354,9 @@ function expanded_card(eventobj, value) {
     var heightt = value;
     $(eventobj).addClass("btn-disable"); /* 禁用按钮防止连点 */
     setTimeout(() => {
-        /* 400ms后恢复按钮 */
+        /* 动画完成后恢复按钮 */
         $(eventobj).removeClass("btn-disable");
-    }, 200);
+    }, 250);
     if ($(card).hasClass("not-expanded")) {
         /* 如果已经处于折叠状态 */
         $(body).attr("style", "height: 0;overflow: hidden;"); /* 设置元素溢出隐藏，高度0 */
@@ -370,7 +370,7 @@ function expanded_card(eventobj, value) {
         setTimeout(() => {
             /* 动画播放完成后移除“溢出隐藏” */
             $(body).attr("style", "");
-        }, 200);
+        }, 250);
     } else {
         /* 如果没有处于折叠状态 */
         $(card).addClass("not-expanded");
@@ -380,3 +380,6 @@ function expanded_card(eventobj, value) {
         }, 10);
     }
 }
+slider("CA028F76", "memory_value", 128, 16384);
+slider('D3FCE504','1CFC2233', 1, 256)
+slider('42B168E1','B51A8693', 1, 50)

@@ -125,11 +125,11 @@ body {
 }
 
 .slider>div.slider_btn:hover>div {
-    transform: scale(1.15);
+    transform: scale(1.25);
 }
 
 .slider>div.slider_btn:active>div {
-    transform: scale(0.85);
+    transform: scale(0.8);
 }
 
 /* 从谷歌那偷来的加载动画 */

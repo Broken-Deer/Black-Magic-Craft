@@ -203,3 +203,20 @@ i.pen-to-square::before {
 i.triangle-exclamation::before {
     content: '\f071';
 }
+
+i.brush::before {
+    content: '\f55d';
+}
+
+i.window-flip::before {
+    content: '\f40f';
+    font-family: 'fa-pro';
+}
+
+i.arrows-spin::before {
+    content: '\e4bb';
+}
+
+i.hand::before {
+    content: '\f256';
+}

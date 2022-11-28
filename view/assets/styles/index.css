@@ -1005,8 +1005,9 @@ div.child-sidebar li:hover {
 }
 
 div.child-sidebar li.active {
-    background-color: rgb(255 255 255 / 39%);
+    background-color: #60008117;
     pointer-events: none;
+    color: #600081;
 }
 
 div.child-sidebar li::before {
