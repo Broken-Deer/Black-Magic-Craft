@@ -3,7 +3,7 @@ import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import commandButton from "../commandButton.js";
 import inputColor from "../inputColor.js";
-import zh_cn from "../../scripts/onload.js";
+import zh_cn from "../../onload.js";
 
 export default {
     data() {

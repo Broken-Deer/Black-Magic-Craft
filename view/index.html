@@ -12,23 +12,26 @@
   <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css" />
   <link rel="stylesheet" type="text/css" href="./assets/styles/control.css" />
   <!-- 加载脚本 -->
-  <script src="./assets/scripts/jquery.js"></script>
+  <script src="./vendor/jquery.js"></script>
   <script>
     if (typeof module === "object") {
       window.jQuery = window.$ = module.exports;
     }
   </script>
-  <script src="./assets/scripts/jquery-ui.min.js"></script>
-  <script src="./assets/scripts/ac-colors.min.js"></script>
-  <script src="./assets/scripts/vue.js"></script>
-  <script src="./assets/scripts/window.js"></script>
-  <script src="./assets/scripts/input.js"></script>
-  <script src="./assets/scripts/ui.js"></script>
-  <script src="./assets/scripts/auth.js"></script>
-  <script src="./assets/scripts/loadconfig.js"></script>
-  <script src="./assets/scripts/installer.js"></script>
-  <script src="./i18n/zh_cn.js"></script>
-  <script src="./renderer.js"></script>
+  <script src="./vendor/ac-colors.min.js"></script>
+  <script src="./vendor/hsvToRgb.js"></script>
+  <script src="./vendor/jquery-ui.min.js"></script>
+  <script src="./vendor/vue.js"></script>
+  <script src="./app/core/auth.js"></script>
+  <script src="./app/core/installer.js"></script>
+  <script src="./app/core/loadconfig.js"></script>
+  <script src="./app/view/Button.js"></script>
+  <script src="./app/view/Card.js"></script>
+  <script src="./app/view/Control.js"></script>
+  <script src="./app/view/Page.js"></script>
+  <script src="./app/view/PopupWindow.js"></script>
+  <script src="./app/view/Sidebar.js"></script>
+  <script src="./app/onload.js" type="module"></script>
   <script type="module" src="./assets/scripts/onload.js"></script>
   <!-- 由脚本控制的样式表 -->
   <style id="style"></style>

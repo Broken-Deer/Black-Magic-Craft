@@ -1,19 +1,20 @@
-import inputText from "../components/inputText.js";
-import checkbox from "../components/checkbox.js";
-import cardHeader from "../components/cardHeader.js";
-import loading from "../components/loading.js";
-import commandButton from "../components/commandButton.js";
-import inputColor from "../components/inputColor.js";
-import sidebarItem from "../components/sidebarItem.js";
+import inputText from "./components/inputText.js";
+import checkbox from "./components/checkbox.js";
+import cardHeader from "./components/cardHeader.js";
+import loading from "./components/loading.js";
+import commandButton from "./components/commandButton.js";
+import inputColor from "./components/inputColor.js";
+import sidebarItem from "./components/sidebarItem.js";
 
-import downloadPage from "../components/page/DownloadPage.js";
-import settings from "../components/page/Settings.js";
+import downloadPage from "./components/page/DownloadPage.js";
+import settings from "./components/page/Settings.js";
 
-import sidebar from "../components/sidebar.js";
-import colorChooser from "../components/window/colorChooser.js";
-import gameInstall from "../components/window/gameInstall.js";
-import msLogin from "../components/window/msLogin.js";
+import sidebar from "./components/sidebar.js";
+import colorChooser from "./components/window/colorChooser.js";
+import gameInstall from "./components/window/gameInstall.js";
+import msLogin from "./components/window/msLogin.js";
 
+var zh_cn
 export default zh_cn = {
     ui: {
         global_settings: {
@@ -146,3 +147,10 @@ Vue.createApp({
         colorChooser,
     },
 }).mount(".dont_display");
+
+
+slider("CA028F76", "memory_value", 128, 16384);
+slider('D3FCE504','1CFC2233', 1, 256)
+slider('42B168E1', 'B51A8693', 1, 50)
+
+

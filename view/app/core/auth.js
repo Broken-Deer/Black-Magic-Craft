@@ -21,7 +21,7 @@ async function show_login_window() {
         /* 缩放比例 */
         webview.setZoomFactor(0.9);
         /* 覆盖巨硬登录页某些元素的样式：移除背景，并让中间用来登录的东西撑满 */
-        webview.insertCSS(`
+        webview.insertCSS(/* css */`
           *::-webkit-scrollbar {
               width: 0px;
               }

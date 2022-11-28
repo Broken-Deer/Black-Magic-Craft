@@ -1,6 +1,5 @@
 function version_list(type) {
     setTimeout(() => {
-        // 页面切换动画完了之后再操作
         switch (type) {
             case "vanilla":
                 $.get("https://piston-meta.mojang.com/mc/game/version_manifest.json", function (data, textStatus, jqXHR) {
@@ -73,4 +72,4 @@ function updateUI(arg) {
     $(`#${arg[2]}`).html(`${arg[0]} / ${arg[1]}`);
 }
 
-function taskControler(type) {}
+
