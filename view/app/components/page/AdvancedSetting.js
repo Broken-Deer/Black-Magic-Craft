@@ -5,7 +5,7 @@ import commandButton from "../commandButton.js";
 
 export default {
     template: /* html */ `
-    <div id="489C5E28">
+    <div id="489C5E28" style="display:none">
     <div class="card">
         <div class="card-body">
         <div>
@@ -21,7 +21,7 @@ export default {
             <div class="input input-list" id="version_isolation">
             <!-- Inspired by BakaXL -->
                 <span class="name">自定义 Java 垃圾回收器</span>
-                <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                <div class="input-data input-data-list" onclick="input_list(this,'158px')">
                     <div></div>
                     <ul class="option" style="display: none">
                         <li class="option" onclick="set_input_list(this)">默认(自动选择)</li>

@@ -3,7 +3,6 @@ const ipc = require("electron").ipcRenderer;
 function execute(command) {
     ipc.send(command);
 }
-
 function choose_java(eventobj) {
     ipc.send("choose_java");
 
@@ -43,7 +42,7 @@ ipc.on("updateUI", (event, message) => {
 });
 
 ipc.on("taskdone", (event, message) => {
-    console.log(message)
+    console.log(message);
     switch (message[0]) {
         case "task1":
         case "task2":
@@ -63,8 +62,7 @@ ipc.on("taskdone", (event, message) => {
     }
 });
 
-
 function start() {
-    console.log('114514')
-    ipc.send("launchGame", ['1.19.2']);
+    console.log("114514");
+    ipc.send("launchGame", ["1.19.2"]);
 }

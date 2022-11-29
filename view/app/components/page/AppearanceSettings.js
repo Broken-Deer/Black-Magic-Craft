@@ -2,7 +2,6 @@ import inputText from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import commandButton from "../commandButton.js";
-import inputColor from "../inputColor.js";
 import zh_cn from "../../onload.js";
 
 export default {
@@ -17,7 +16,7 @@ export default {
     <div>
       <div class="input input-list" id="version_isolation">
         <span class="name">更改主题</span>
-        <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+        <div class="input-data input-data-list" onclick="input_list(this,'158px')">
           <div></div>
           <ul class="option" style="display: none">
             <li class="option" onclick="set_input_list(this)">默认</li>
@@ -58,5 +57,5 @@ export default {
   </div>
    
 `,
-    components: { inputText, checkbox, cardHeader, commandButton, inputColor },
+    components: { inputText, checkbox, cardHeader, commandButton },
 };

@@ -175,6 +175,9 @@ function input_list(input_list, height) {
         setTimeout(() => {
             options.setAttribute("style", "height: " + height + ";");
         }, 0);
+        setTimeout(() => {
+            options.setAttribute("style", "height: " + height + ";overflow: hidden overlay;");
+        }, 200);
     } else {
         options.setAttribute("style", "height: 2rem;");
         setTimeout(() => {

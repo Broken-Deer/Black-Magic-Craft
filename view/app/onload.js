@@ -3,7 +3,6 @@ import checkbox from "./components/checkbox.js";
 import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
 import commandButton from "./components/commandButton.js";
-import inputColor from "./components/inputColor.js";
 import sidebarItem from "./components/sidebarItem.js";
 
 import downloadPage from "./components/page/DownloadPage.js";
@@ -14,8 +13,7 @@ import colorChooser from "./components/window/colorChooser.js";
 import gameInstall from "./components/window/gameInstall.js";
 import msLogin from "./components/window/msLogin.js";
 
-var zh_cn
-export default zh_cn = {
+var zh_cn = {
     ui: {
         global_settings: {
             title: "全局游戏设置",
@@ -76,6 +74,7 @@ export default zh_cn = {
         },
     },
 };
+export default zh_cn
 
 window.onload = function () {
     $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
@@ -118,7 +117,6 @@ Vue.createApp({
         cardHeader,
         loading,
         commandButton,
-        inputColor,
         sidebarItem
     },
 }).mount("#win");

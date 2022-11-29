@@ -18,5 +18,5 @@ export default {
             type: String,
             default: "expanded_card(this)",
         },
-    },
+    }
 };

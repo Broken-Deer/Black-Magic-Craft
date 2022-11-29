@@ -2,7 +2,6 @@ import inputText from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import commandButton from "../commandButton.js";
-import inputColor from "../inputColor.js";
 import zh_cn from "../../onload.js";
 
 export default {
@@ -16,7 +15,7 @@ export default {
               :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands"></card-header>
             <div class="card-body">
               <div>
-                <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"></checkbox>
+                <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"  config="globle.game.autojv"></checkbox>
                 <div class="input input-text input-file" id="E16616C6">
                   <span class="name">{{ ui.global_settings.java_path }}</span>
                   <div class="input-data input-data-file">
@@ -36,14 +35,14 @@ export default {
             <div class="card-body">
               <div>
                 <input-text :name="ui.global_settings.game_window_title"
-                  :placeholder="ui.global_settings.game_window_title_placeholder"></input-text>
+                  :placeholder="ui.global_settings.game_window_title_placeholder"  config="globle.game.gmwintitle"></input-text>
                 <input-text :name="ui.global_settings.customize_launcher_info"
-                  :placeholder="ui.global_settings.customize_launcher_info_placeholder"></input-text>
+                  :placeholder="ui.global_settings.customize_launcher_info_placeholder" config="globle.game.lauchermsg"></input-text>
                 <input-text :name="ui.global_settings.server_address"
-                  :placeholder="ui.global_settings.server_address_placeholder"></input-text>
+                  :placeholder="ui.global_settings.server_address_placeholder" config="globle.game.serverIP"></input-text>
                 <div class="input input-list" id="version_isolation">
                   <span class="name">{{ui.global_settings.process_priority}}</span>
-                  <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+                  <div class="input-data input-data-list" onclick="input_list(this,'158px')">
                     <div></div>
                     <ul class="option" style="display: none">
                       <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_highest}}
@@ -78,7 +77,7 @@ export default {
                   </div>
                 </div>
 
-                <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')">
+                <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')" config="globle.game.autojv">
                 </checkbox>
                 <div class="input input-text" id="D3E268A7">
                   <span class="name">{{ui.global_settings.game_memory}}</span>
@@ -108,18 +107,18 @@ export default {
             <div class="card-body" style="overflow: hidden; height: 0">
               <div>
                 <input-text :name="ui.global_settings.game_parameters"
-                  :placeholder="ui.global_settings.game_parameters_placeholder"></input-text>
+                  :placeholder="ui.global_settings.game_parameters_placeholder" config="globle.game.gmarg"></input-text>
                 <input-text :name="ui.global_settings.exec_before_starting"
-                  :placeholder="ui.global_settings.exec_before_starting_placeholder"></input-text>
+                  :placeholder="ui.global_settings.exec_before_starting_placeholder" config="globle.game.beforeExec"></input-text>
                 <input-text :name="ui.global_settings.wrap_command"
                   :placeholder="ui.global_settings.wrap_command_placeholder">
                 </input-text>
                 <input-text :name="ui.global_settings.exec_after_starting"
-                  :placeholder="ui.global_settings.exec_after_starting_placeholder"></input-text>
+                  :placeholder="ui.global_settings.exec_after_starting_placeholder" config="globle.game.afterExec"></input-text>
                 <input-text :name="ui.global_settings.jvm_parameters"
-                  :placeholder="ui.global_settings.jvm_parameters_placeholder"></input-text>
+                  :placeholder="ui.global_settings.jvm_parameters_placeholder" config="globle.game.jvmarg"></input-text>
                 <input-text :name="ui.global_settings.memory_persistence_area"
-                  :placeholder="ui.global_settings.memory_persistence_area_placeholder"></input-text>
+                  :placeholder="ui.global_settings.memory_persistence_area_placeholder" config="globle.game.memPersistenceArea"></input-text>
               </div>
             </div>
           </div>
@@ -136,22 +135,18 @@ export default {
             </div>
             <div class="card-body" style="overflow: hidden; height: 0">
               <div>
-                <input-text :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder">
+                <input-text :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder" config="globle.game.nativesDir">
                 </input-text>
-                <checkbox :name="ui.global_settings.dont_check_jvm_parameters"></checkbox>
-                <checkbox :name="ui.global_settings.dont_check_assets_files"></checkbox>
-                <checkbox :name="ui.global_settings.dont_check_JVM_compatibility"></checkbox>
-                <checkbox :name="ui.global_settings.use_system_GLFW"></checkbox>
-                <checkbox :name="ui.global_settings.use_system_OpenAL"></checkbox>
-                <command-button :name="ui.global_settings.dev_tools" :text="ui.global_settings.dev_tools_btn"
-                  click="execute('OpenDevTools')">
-                </command-button>
+                <checkbox :name="ui.global_settings.dont_check_jvm_parameters" config="globle.game.noJVMArgs"></checkbox>
+                <checkbox :name="ui.global_settings.dont_check_assets_files" config="globle.game.notCheckGame"></checkbox>
+                <checkbox :name="ui.global_settings.dont_check_JVM_compatibility" config="globle.game.notCheckJVM"></checkbox>
+                <checkbox :name="ui.global_settings.use_system_GLFW" config="globle.game.sysGLFW"></checkbox>
+                <checkbox :name="ui.global_settings.use_system_OpenAL" config="globle.game.sysOpenAL"></checkbox>
               </div>
             </div>
           </div>
   </div>
    
 `,
-    components: { inputText, checkbox, cardHeader, commandButton, inputColor },
+    components: { inputText, checkbox, cardHeader, commandButton },
 };
-/*                        */

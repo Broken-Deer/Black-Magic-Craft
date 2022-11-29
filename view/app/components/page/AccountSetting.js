@@ -2,7 +2,6 @@ import inputText from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import commandButton from "../commandButton.js";
-import inputColor from "../inputColor.js";
 
 export default {
     template: /* html */ `
@@ -55,5 +54,5 @@ export default {
       </div>
     </div>
     </div>`,
-    components: { inputText, checkbox, cardHeader, commandButton, inputColor },
+    components: { inputText, checkbox, cardHeader, commandButton },
 };

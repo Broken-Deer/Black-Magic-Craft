@@ -4,6 +4,8 @@ const f = require("fs");
 const os = require("os");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
+
+process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 (async () => {
     await import("./src/installer/minecraft.mjs");
     await import("./src/game/launch.mjs");
@@ -48,9 +50,6 @@ app.whenReady().then(() => {
     createWindow();
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
-    win.once("ready-to-show", () => {
-        win.show();
     });
 });
 
@@ -119,9 +118,9 @@ ipcMain.on("choose_java", (event) => {
             });
     }
 });
-
 function path_handle() {
     var exePath = process.cwd();
+
     if (os.type() === "Windows_NT") {
         /* 给温斗士擦屁股 */
         exePath = exePath.replace(/\\/g, "/");
@@ -140,6 +139,7 @@ function path_handle() {
         gamePath: Path + ".minecraft/",
     };
 }
+
 async function removeDir(dir) {
     let files = f.readdirSync(dir);
     for (var i = 0; i < files.length; i++) {

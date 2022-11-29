@@ -132,4 +132,4 @@ dist
 # .vscode
 .vscode/*
 # test
-test/
+/test

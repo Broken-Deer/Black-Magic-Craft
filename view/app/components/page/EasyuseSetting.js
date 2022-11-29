@@ -3,7 +3,7 @@ import cardHeader from "../cardHeader.js";
 
 export default {
     template: /* html */ `
-    <div id="6783F38B">
+    <div id="6783F38B" style="display:none">
     <div class="card">
     <card-header title="辅助功能" description="使你的启动器更易于使用" icon="hand"></card-header>
     <div class="card-body">
@@ -13,7 +13,7 @@ export default {
         <checkbox name="默认设置为系统语言"></checkbox>
         <div class="input input-list" id="version_isolation">
           <span class="name">动画速度</span>
-          <div class="input-data input-data-list" onclick="input_list(this,'156px')">
+          <div class="input-data input-data-list" onclick="input_list(this,'158px')">
             <div>正常</div>
             <ul class="option" style="display: none">
               <li class="option" onclick="set_input_list(this)">特别快</li>
@@ -29,7 +29,7 @@ export default {
     </div>
   </div>
   <div class="card">
-    <card-header title="无障碍" description="使你的启动器更易于使用" icon="wheelchair"></card-header>
+    <card-header title="无障碍" description="无障碍功能优化" icon="wheelchair"></card-header>
     <div class="card-body">
       <div>
         <checkbox name="禁用所有动画"></checkbox>

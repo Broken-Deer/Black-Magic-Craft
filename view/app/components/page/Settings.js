@@ -1,5 +1,5 @@
 import gameSetting from "./GameSetting.js";
-import generalSetting from "./generalSetting.js";
+import generalSetting from "./GeneralSetting.js";
 import accountSetting from "./AccountSetting.js";
 import advancedSetting from "./AdvancedSetting.js";
 import appearanceSettings from "./AppearanceSettings.js";

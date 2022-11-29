@@ -173,7 +173,7 @@ i.user::before {
 }
 
 i.house::before {
-    content: '\f015';
+    content: '\f013';
 }
 
 i.palette::before {
