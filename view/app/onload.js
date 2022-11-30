@@ -4,6 +4,7 @@ import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
 import commandButton from "./components/commandButton.js";
 import sidebarItem from "./components/sidebarItem.js";
+import sliderBar from "./components/sliderBar.js";
 
 import downloadPage from "./components/page/DownloadPage.js";
 import settings from "./components/page/Settings.js";
@@ -117,7 +118,7 @@ Vue.createApp({
         cardHeader,
         loading,
         commandButton,
-        sidebarItem
+        sidebarItem,sliderBar
     },
 }).mount("#win");
 Vue.createApp({

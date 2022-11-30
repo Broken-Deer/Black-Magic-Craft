@@ -75,63 +75,6 @@ body {
     }
 }
 
-/* 滑块 */
-
-.slider {
-    width: 200px;
-    display: flex;
-    align-items: center;
-    /* overflow: hidden; */
-}
-
-.slider>div.orbit {
-    width: inherit;
-    height: 3px;
-    position: absolute;
-    background: #00000045;
-    border-radius: 10px;
-    /* z-index: -1; */
-}
-
-.slider>div.orbit>div {
-    background: #600081;
-    height: 100%;
-    width: 4px;
-    min-width: 4px;
-    border-radius: 10px;
-}
-
-.slider>div.slider_btn {
-    width: 20px;
-    /* left: 0; */
-    /* top: 0; */
-    height: 20px;
-    border-radius: 10px;
-    border: 1px solid #00000014;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-    /* position: fixed !important; */
-}
-
-.slider>div.slider_btn>div {
-    width: 53%;
-    height: 53%;
-    background: #600081;
-    border-radius: 100%;
-    transition: all 0.2s ease;
-}
-
-.slider>div.slider_btn:hover>div {
-    transform: scale(1.25);
-}
-
-.slider>div.slider_btn:active>div {
-    transform: scale(0.8);
-}
-
 /* 从谷歌那偷来的加载动画 */
 .mspin-medium {
     width: 36px;

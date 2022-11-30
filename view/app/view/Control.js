@@ -1,18 +1,3 @@
-function slider(id, text_box_id, minimum, maximum) {
-    setTimeout(() => {
-        $("#" + id).draggable({
-            axis: "x",
-            containment: "parent",
-            drag: function () {
-                left = parseInt($("#" + id).css("left"));
-                orbit = document.getElementById(id).previousElementSibling;
-                $(orbit.firstElementChild).attr("style", "width:" + (left + 3) + "px");
-                $("#" + text_box_id).attr("placeholder", ((left / (parseInt($(orbit).css("width")) - 20)) * (maximum - minimum) + minimum).toFixed());
-            },
-        });
-    }, 100);
-}
-
 function disable(event, id) {
     if ($(event).prop("checked")) {
         $(`#${id}`).addClass("disable");

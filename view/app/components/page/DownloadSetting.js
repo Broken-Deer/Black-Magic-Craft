@@ -1,5 +1,6 @@
 import cardHeader from "../cardHeader.js";
 import checkbox from "../checkbox.js";
+import sliderBar from "../sliderBar.js";
 
 export default {
     template: /* html */ `
@@ -20,46 +21,12 @@ export default {
       </div>
     </div>
     <checkbox name="节流模式"></checkbox>
-    <div class="input input-text">
-      <span class="name">最大线程数</span>
-      <div style="display: flex; line-height: 1.7">
-        <div class="slider">
-          <div class="orbit">
-            <div></div>
-          </div>
-          <div class="slider_btn" id="D3FCE504">
-            <div></div>
-          </div>
-        </div>
-        <div class="input-data mini">
-          <input type="text" id="1CFC2233" title="最大线程数" placeholder=""
-            required />
-          <div class="underline"></div>
-        </div>
-      </div>
-    </div>
-    <div class="input input-text">
-      <span class="name">最大下载速度</span>
-      <div style="display: flex; line-height: 1.7">
-        <div class="slider">
-          <div class="orbit">
-            <div></div>
-          </div>
-          <div class="slider_btn" id="42B168E1">
-            <div></div>
-          </div>
-        </div>
-        <div class="input-data mini">
-          <input type="text" id="B51A8693" title="最大下载速度" placeholder=""
-            required />
-          <div class="underline"></div>
-        </div>
-      </div>
-    </div>
+    <slider-bar name="最大线程数" max="256" min="1" step="1"></slider-bar>
+    <slider-bar name="最大下载速度(MB/s)" max="50" min="1" step="1"></slider-bar>
   </div>
 </div>
 </div>
 </div>
     `,
-    components: { cardHeader, checkbox },
+    components: { cardHeader, checkbox, sliderBar },
 };

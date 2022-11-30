@@ -2,6 +2,7 @@ import inputText from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import commandButton from "../commandButton.js";
+import sliderBar from "../sliderBar.js";
 import zh_cn from "../../onload.js";
 
 export default {
@@ -79,25 +80,7 @@ export default {
 
                 <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')" config="globle.game.autojv">
                 </checkbox>
-                <div class="input input-text" id="D3E268A7">
-                  <span class="name">{{ui.global_settings.game_memory}}</span>
-                  <div style="display: flex; line-height: 1.7">
-                    <div class="slider">
-                      <div class="orbit">
-                        <div></div>
-                      </div>
-                      <div class="slider_btn" id="CA028F76">
-                        <div></div>
-                      </div>
-                    </div>
-                    <div class="input-data mini">
-                      <input type="text" id="memory_value" title="{{ui.global_settings.game_memory}}" placeholder=""
-                        required />
-                      <div class="underline"></div>
-                    </div>
-                    <span class="text">MB</span>
-                  </div>
-                </div>
+                <slider-bar :name="ui.global_settings.game_memory" max="16384" min="128" step="1" u="MB" AllowExceeding="allow"></slider-bar>
               </div>
             </div>
           </div>
@@ -148,5 +131,5 @@ export default {
   </div>
    
 `,
-    components: { inputText, checkbox, cardHeader, commandButton },
+    components: { inputText, checkbox, cardHeader, commandButton, sliderBar },
 };

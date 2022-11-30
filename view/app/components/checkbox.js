@@ -27,7 +27,6 @@ export default {
     methods: {
         updateData() {
             update(this.config, !this.check)
-            console.log(load(this.config))
         },
     },
 };
