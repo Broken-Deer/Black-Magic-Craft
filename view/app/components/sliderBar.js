@@ -7,7 +7,7 @@ export default {
         if (typeof conf == "number") {
             value = conf;
         } else {
-            value = 0;
+            value = this.min;
         }
         return {
             value: value,
@@ -36,7 +36,6 @@ export default {
         max: String,
         min: String,
         step: String,
-        config: String,
         u: String,
         AllowExceeding: String,
     },
@@ -45,17 +44,16 @@ export default {
             if (!/^\d+$/.test(this.value)) {
                 this.value = this.min;
             }
+            if (this.value - 1 - this.min < 0) {
+                this.value = this.min;
+            }
         },
         updateData() {
-            update(this.config, this.value);
+            update(this.config, Number(this.value));
         },
     },
     computed: {
         orbit() {
-            /*             if (Number(this.value) == '1') {
-                this.value = this.min
-            } */
-
             if (this.value > this.max - this.min) {
                 if (this.AllowExceeding != "allow") {
                     this.value = this.max;

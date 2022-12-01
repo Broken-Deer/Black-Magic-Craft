@@ -80,7 +80,7 @@ export default {
 
                 <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')" config="globle.game.autojv">
                 </checkbox>
-                <slider-bar :name="ui.global_settings.game_memory" max="16384" min="128" step="1" u="MB" AllowExceeding="allow"></slider-bar>
+                <slider-bar :name="ui.global_settings.game_memory" max="16384" min="128" step="1" u="MB" AllowExceeding="allow" config="globle.game.mem"></slider-bar>
               </div>
             </div>
           </div>

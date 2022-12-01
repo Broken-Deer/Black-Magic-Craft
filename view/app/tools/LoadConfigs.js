@@ -1,5 +1,5 @@
-/* const Store = require('electron-store')
-const store = new Store() */
+const Store = require('electron-store')
+const store = new Store()
 
 /**
  * 加载一项设置
@@ -9,7 +9,7 @@ const store = new Store() */
  * @return 这项设置的内容
  */
 export function load(key) {
-    /* return store.get(key) */
+    return store.get(key)
 }
 
 /**
@@ -19,15 +19,14 @@ export function load(key) {
  * @return 这些设置的内容
  */
 export function loadClass(class_) {
-    /* return store.get(class_) */
-    return 0
+    return store.get(class_)
 }
 
 /**
  * 修改一项设置
  */
 export function update(key, value) {
-    /* store.set(key, value) */
+    store.set(key, value)
 }
 
 /**

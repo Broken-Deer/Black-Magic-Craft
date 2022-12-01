@@ -24,6 +24,7 @@ const createWindow = () => {
         frame: false,
         webviewTag: true,
         webPreferences: {
+            spellcheck: false,
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,

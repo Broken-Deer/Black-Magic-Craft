@@ -109,7 +109,7 @@ div.title-bar>div.button #max svg {
 
 div.sidebar {
     font-size: 16px;
-    position: absolute;
+    /* position: absolute; */
     z-index: 10;
     margin: 0;
     top: 0px;
@@ -131,7 +131,7 @@ div.sidebar ul.sidebar-links {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100% - 44px);
+    height: calc(100% - 64px);
 }
 
 div.sidebar ul.sidebar-links>div {
@@ -142,18 +142,21 @@ main.page {
     padding-left: 60px;
     box-sizing: border-box;
     padding-bottom: 2rem;
-    display: block;
+    display: inline-block;
     /* padding-left: 230px; */
     overflow-y: overlay;
     overflow-x: hidden;
     height: 100%;
     transition: all 0.3s ease;
     background: #ffffff78;
+    /* position: absolute; */
+    float: right;
+    width: 100%;
 }
 
 div.page {
     margin: 0 auto;
-    padding: 0rem 1.2rem 0rem 1.2rem;
+    padding: 0rem 0rem 0rem 1.2rem;
     display: block;
     margin-top: 0;
     opacity: 1;
@@ -203,10 +206,11 @@ div.sidebar a.sidebar {
     padding: 0.4rem 0.7rem;
     transition: all 0.15s ease;
     font-size: 1rem;
-    max-height: 38px;
     padding-left: 10px;
     overflow: hidden;
     max-height: 36.75px;
+    font-size: 14px;
+    line-height: 24.55px;
 }
 
 div.sidebar li.active {
@@ -224,7 +228,6 @@ button {
 }
 
 div.sidebar {
-    width: 230px;
 }
 
 div.sidebar .sidebar-item span.sidebar:hover,
@@ -306,17 +309,18 @@ i.nav-icon {
     color: #000;
     font-family: "fa-pro";
     font-style: normal;
-    line-height: 1.5;
     width: 1.35em;
     display: inline-block;
-    margin-right: 0.8rem;
+    margin-right: 0.7rem;
     text-align: center;
 }
 
 span.sidebar p,
 a.sidebar p {
-    display: inline;
+    display: inline-block;
     white-space: nowrap;
+    /* font-size: 14px; */
+    /* height: 100%; */
     transition: all 0.2s ease;
 }
 
@@ -596,13 +600,16 @@ button#version_list_button {
 
 div.sidebar {
     background-color: #ffffffcf;
-    margin: 50px 0 0 0px;
-    border-bottom-left-radius: 8px;
+    /* margin: 50px 0 0 0px; */
+    /* border-bottom-left-radius: 8px; */
     width: 230px;
+    margin-right: -230px;
+    height: calc(100% - 50px);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    display: flex;
-    flex-direction: column;
+    display: inline-block;
+    position: relative;
+    z-index: 10000;
 }
 
 .dont_display * {
@@ -648,7 +655,7 @@ div.page>iframe>* {
 
 .popup_window_display {
     opacity: 1;
-    z-index: 2000;
+    z-index: 20000;
     pointer-events: all;
 }
 
@@ -731,6 +738,7 @@ ul.list>li {
     background-color: #fffffffa;
     box-shadow: 0 0 10px #0000;
     margin-top: 6px;
+    margin-right: 16px;
     border-radius: 10px;
 }
 
@@ -819,7 +827,8 @@ ul.list hr {
 
 #download_pg .card {
     margin-top: 0;
-    width: 100%;
+    width: -webkit-fill-available;
+    margin-right: 16px;
 }
 
 #download_pg .card-body>div {
@@ -952,6 +961,7 @@ ul.task-list>li:hover {
 
 .sidebar-close {
     width: 60px !important;
+    margin-right: -60px !important;
 }
 
 .sidebar-close p {
@@ -1016,7 +1026,7 @@ div.child-sidebar li::before {
     height: 22px;
     width: 5px;
     position: relative;
-    left: -18px;
+    left: -17px;
     border-radius: 3px;
     transition: background-color 0.15s ease;
 }

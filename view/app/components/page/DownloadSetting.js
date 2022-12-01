@@ -21,8 +21,8 @@ export default {
       </div>
     </div>
     <checkbox name="节流模式"></checkbox>
-    <slider-bar name="最大线程数" max="256" min="1" step="1"></slider-bar>
-    <slider-bar name="最大下载速度(MB/s)" max="50" min="1" step="1"></slider-bar>
+    <slider-bar name="最大线程数" max="256" min="1" step="1" config="globle.download.maxThreadNum"></slider-bar>
+    <slider-bar name="最大下载速度(MB/s)" max="50" min="1" step="1" config="globle.download.maxDownloadSpeed"></slider-bar>
   </div>
 </div>
 </div>

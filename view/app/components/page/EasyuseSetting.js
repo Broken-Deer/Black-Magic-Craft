@@ -1,7 +1,28 @@
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
+import { load, update } from "../../tools/LoadConfigs.js";
 
 export default {
+    data() {
+        var confA = [
+            { id: 1, text: "特别慢" },
+            { id: 2, text: "慢" },
+            { id: 3, text: "正常" },
+            { id: 4, text: "快" },
+            { id: 5, text: "特别快" },
+        ];
+        if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
+            return {
+                configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
+                configItemsA: confA,
+            };
+        } else {
+            return {
+                configA: confA[3 - 1]["text"],
+                configItemsA: confA,
+            };
+        }
+    },
     template: /* html */ `
     <div id="6783F38B" style="display:none">
     <div class="card">
@@ -14,13 +35,9 @@ export default {
         <div class="input input-list" id="version_isolation">
           <span class="name">动画速度</span>
           <div class="input-data input-data-list" onclick="input_list(this,'158px')">
-            <div>正常</div>
+            <div>{{configA}}</div>
             <ul class="option" style="display: none">
-              <li class="option" onclick="set_input_list(this)">特别快</li>
-              <li class="option" onclick="set_input_list(this)">快</li>
-              <li class="option" onclick="set_input_list(this)">正常</li>
-              <li class="option" onclick="set_input_list(this)">慢</li>
-              <li class="option" onclick="set_input_list(this)">特别慢</li>
+              <li v-for="(item,index) in configItemsA" class="option" onclick="set_input_list(this);" @click="updateData('globle.accessibility.AnimationSpeed', item.id)">{{item.text}}</li>
               <div></div>
             </ul>
           </div>
@@ -42,4 +59,10 @@ export default {
  
     `,
     components: { checkbox, cardHeader },
+    computed: {},
+    methods: {
+        updateData(key, val) {
+            update(key, val);
+        },
+    },
 };
