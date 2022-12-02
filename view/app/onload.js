@@ -1,8 +1,8 @@
-import inputText from "./components/inputText.js";
+import { inputText } from "./components/inputText.js";
 import checkbox from "./components/checkbox.js";
 import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
-import commandButton from "./components/commandButton.js";
+import { commandButton } from "./components/commandButton.js";
 import sidebarItem from "./components/sidebarItem.js";
 import sliderBar from "./components/sliderBar.js";
 
@@ -75,7 +75,7 @@ var zh_cn = {
         },
     },
 };
-export default zh_cn
+export default zh_cn;
 
 window.onload = function () {
     $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
@@ -105,7 +105,6 @@ window.onload = function () {
             }, 500);
         });
     });
-
 };
 document.addEventListener("DOMContentLoaded", () => {});
 Vue.createApp({
@@ -118,7 +117,8 @@ Vue.createApp({
         cardHeader,
         loading,
         commandButton,
-        sidebarItem,sliderBar
+        sidebarItem,
+        sliderBar,
     },
 }).mount("#win");
 Vue.createApp({
@@ -146,10 +146,3 @@ Vue.createApp({
         colorChooser,
     },
 }).mount(".dont_display");
-
-
-slider("CA028F76", "memory_value", 128, 16384);
-slider('D3FCE504','1CFC2233', 1, 256)
-slider('42B168E1', 'B51A8693', 1, 50)
-
-

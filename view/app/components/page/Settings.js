@@ -18,7 +18,7 @@ export default {
             <li onclick="sidebar_active(this, '7277F10D')"><i class="download"></i>下载</li>
             <li onclick="sidebar_active(this, '6783F38B')"><i class="arrows-spin"></i>辅助功能</li>
             </ul>
-            <li onclick="backtoHome()" style="margin-bottom: 8px;"><i class="arrow-left"></i>返回</li>
+            <li onclick="backtoHome()" style="margin-bottom: 8px;" class="backtoHome"><i class="arrow-left"></i>返回</li>
         </div>
         <div class="rua">
             <game-setting></game-setting>

@@ -1,7 +1,7 @@
-import inputText from "../inputText.js";
+import { inputText } from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
-import commandButton from "../commandButton.js";
+import { commandButton } from "../commandButton.js";
 
 export default {
     template: /* html */ `

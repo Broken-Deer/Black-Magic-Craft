@@ -1,5 +1,6 @@
 import loading from "../loading.js";
 import checkbox from "../checkbox.js";
+import { commandButton,commandButtonMini } from "../commandButton.js";
 
 export default {
     template: /* html */ `
@@ -14,19 +15,8 @@ export default {
           <div class="rua">
             <div class="card">
               <div class="card-body">
-                <div class="input input-list" id="version_isolation">
-                  <span class="name">下载源</span>
-                  <div class="input-data input-data-list" onclick="input_list(this,'104px')">
-                    <div></div>
-                    <ul class="option" style="display: none">
-                      <li class="option" onclick="set_input_list(this)">官方源</li>
-                      <li class="option" onclick="set_input_list(this)">BMCLAPI</li>
-                      <li class="option" onclick="set_input_list(this)">MCBBS</li>
-                      <div></div>
-                    </ul>
-                  </div>
-                </div>
                 <checkbox name="显示远古版、快照版" id="2B39A329" id2="5D4CBB91" chek="checked"></checkbox>
+                <command-button-mini text="切换下载源"></command-button-mini>
               </div>
             </div>
             <div style="opacity: 1;" id="B9C498C7">
@@ -38,5 +28,5 @@ export default {
           </div>
         </div>
 `,
-    components: { loading, checkbox },
+    components: { loading, checkbox, commandButton, commandButtonMini },
 };

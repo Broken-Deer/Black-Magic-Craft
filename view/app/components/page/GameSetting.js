@@ -1,13 +1,42 @@
-import inputText from "../inputText.js";
+import { inputText, inputTextMini } from "../inputText.js";
 import checkbox from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
-import commandButton from "../commandButton.js";
+import { commandButton } from "../commandButton.js";
 import sliderBar from "../sliderBar.js";
 import zh_cn from "../../onload.js";
+import { load, update } from "../../tools/LoadConfigs.js";
 
 export default {
     data() {
-        return zh_cn;
+        var confA = [
+            { id: 1, text: "最高" },
+            { id: 2, text: "较高" },
+            { id: 3, text: "中" },
+            { id: 4, text: "较低" },
+            { id: 5, text: "最低" },
+        ];
+        var jvpathConf = load("globle.game.jvpath");
+        var jvpath;
+        if (typeof jvpathConf == "string") {
+            jvpath = jvpathConf;
+        } else {
+            jvpath = "";
+        }
+        if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
+            return {
+                configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
+                configItemsA: confA,
+                ui: zh_cn["ui"],
+                jvpath: jvpath,
+            };
+        } else {
+            return {
+                configA: confA[0]["text"],
+                configItemsA: confA,
+                ui: zh_cn["ui"],
+                jvpath: jvpath,
+            };
+        }
     },
     template: /* html */ `
   <div id="AF3BE70D" style="display: none">
@@ -20,7 +49,7 @@ export default {
                 <div class="input input-text input-file" id="E16616C6">
                   <span class="name">{{ ui.global_settings.java_path }}</span>
                   <div class="input-data input-data-file">
-                    <input type="text" id="input_a" title="{{ ui.global_settings.java_path }}" required />
+                    <input type="text" title="{{ ui.global_settings.java_path }}" @input="updateData('globle.game.jvpath', jvpath)" required v-model="jvpath" />
                     <div class="underline"></div>
                   </div>
                   <div class="choose-file">
@@ -44,18 +73,9 @@ export default {
                 <div class="input input-list" id="version_isolation">
                   <span class="name">{{ui.global_settings.process_priority}}</span>
                   <div class="input-data input-data-list" onclick="input_list(this,'158px')">
-                    <div></div>
+                    <div>{{configA}}</div>
                     <ul class="option" style="display: none">
-                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_highest}}
-                      </li>
-                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_higher}}
-                      </li>
-                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_medium}}
-                      </li>
-                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_lower}}
-                      </li>
-                      <li class="option" onclick="set_input_list(this)">{{ui.global_settings.process_priority_minimum}}
-                      </li>
+                    <li v-for="(item,index) in configItemsA" class="option" onclick="set_input_list(this);" @click="updateData('globle.game.process', item.id)">{{item.text}}</li>
                       <div></div>
                     </ul>
                   </div>
@@ -64,23 +84,15 @@ export default {
                 <div class="input input-text">
                   <span class="name">{{ui.global_settings.window_size}}</span>
                   <div style="display: flex; line-height: 1.7">
-                    <div class="input-data mini">
-                      <input type="text" id="input_a" title="{{ui.global_settings.window_width}}" placeholder="800"
-                        required />
-                      <div class="underline"></div>
-                    </div>
+                    <input-text-mini :name="ui.global_settings.window_width" placeholder="自动" config="globle.game.width"></input-text-mini>
                     ×
-                    <div class="input-data mini">
-                      <input type="text" id="input_a" title="{{ui.global_settings.window_height}}" placeholder="600"
-                        required />
-                      <div class="underline"></div>
-                    </div>
+                    <input-text-mini :name="ui.global_settings.window_height" placeholder="自动" config="globle.game.height"></input-text-mini>
                   </div>
                 </div>
 
-                <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')" config="globle.game.autojv">
+                <checkbox :name="ui.global_settings.automatic_memory_allocation" click="disable(this,'D3E268A7')" config="globle.game.mem">
                 </checkbox>
-                <slider-bar :name="ui.global_settings.game_memory" max="16384" min="128" step="1" u="MB" AllowExceeding="allow" config="globle.game.mem"></slider-bar>
+                <slider-bar :name="ui.global_settings.game_memory" max="16384" min="128" step="1" u="MB" config="globle.game.mem"></slider-bar>
               </div>
             </div>
           </div>
@@ -94,7 +106,7 @@ export default {
                 <input-text :name="ui.global_settings.exec_before_starting"
                   :placeholder="ui.global_settings.exec_before_starting_placeholder" config="globle.game.beforeExec"></input-text>
                 <input-text :name="ui.global_settings.wrap_command"
-                  :placeholder="ui.global_settings.wrap_command_placeholder">
+                  :placeholder="ui.global_settings.wrap_command_placeholder" config="globle.game.wrapcomm">
                 </input-text>
                 <input-text :name="ui.global_settings.exec_after_starting"
                   :placeholder="ui.global_settings.exec_after_starting_placeholder" config="globle.game.afterExec"></input-text>
@@ -106,16 +118,8 @@ export default {
             </div>
           </div>
           <div class="card not-expanded">
-            <div class="card-header">
-              <div class="card-title">
-                <div class="card-icon"><i class="debug-settings"></i></div>
-                <div>
-                  <h4>{{ui.global_settings.debugging_options}}</h4>
-                  <p>{{ui.global_settings.debugging_options_description}}</p>
-                </div>
-              </div>
-              <div class="card-button" onclick="expanded_card(this)"><i></i></div>
-            </div>
+          <card-header :title="ui.global_settings.debugging_options"
+              :description="ui.global_settings.debugging_options_description" icon="debug-settings"></card-header>
             <div class="card-body" style="overflow: hidden; height: 0">
               <div>
                 <input-text :name="ui.global_settings.lwjgl" :placeholder="ui.global_settings.lwjgl_placeholder" config="globle.game.nativesDir">
@@ -131,5 +135,10 @@ export default {
   </div>
    
 `,
-    components: { inputText, checkbox, cardHeader, commandButton, sliderBar },
+    components: { inputText, checkbox, cardHeader, commandButton, sliderBar, inputTextMini },
+    methods: {
+        updateData(key, val) {
+            update(key, val);
+        },
+    },
 };

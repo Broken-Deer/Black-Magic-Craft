@@ -1,6 +1,6 @@
 const Store = require('electron-store')
 const store = new Store()
-
+store.clear()
 /**
  * 加载一项设置
  * 
@@ -27,6 +27,7 @@ export function loadClass(class_) {
  */
 export function update(key, value) {
     store.set(key, value)
+    console.log(store.get())
 }
 
 /**

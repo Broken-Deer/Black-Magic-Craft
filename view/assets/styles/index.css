@@ -168,11 +168,11 @@ div.sidebar li {
     line-height: 1.6;
     width: 100%;
     margin: 0.2rem 0;
-    transition: transform 0.07s ease;
+    transition: transform 0.17s ease;
 }
 
 div.sidebar li:active {
-    transform: scale(0.95);
+    transform: scale(0.94);
 }
 
 div.sidebar .sidebar-active {
@@ -225,9 +225,6 @@ span,
 button {
     text-decoration: none;
     user-select: none;
-}
-
-div.sidebar {
 }
 
 div.sidebar .sidebar-item span.sidebar:hover,
@@ -1008,10 +1005,15 @@ div.child-sidebar li {
     padding: 7px 10px;
     display: flex;
     align-items: center;
+    transition: all .15s ease;
 }
 
 div.child-sidebar li:hover {
     background-color: #aeaeae45;
+}
+
+div.child-sidebar li:active {
+    transform: scale(1);
 }
 
 div.child-sidebar li.active {
@@ -1087,7 +1089,7 @@ div.user-data>div:first-child>img {
     pointer-events: none;
     width: 70px;
     height: 70px;
-    border-radius: 100px;
+    border-radius: 50%;
     box-shadow: 0 0 11px #0000004a;
 }
 
@@ -1103,4 +1105,18 @@ div.user-data>div:first-child>div>p {
     font-size: 13px;
 }
 
-div.user-data>div:last-child {width: 100px;height: 68px;display: flex;flex-direction: column;justify-content: space-between;}
+div.user-data>div:last-child {
+    width: 100px;
+    height: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.backtoHome i {
+    transition: all .2s ease;
+}
+
+.backtoHome:hover i {
+    transform: translate(-2px, 0);
+}
