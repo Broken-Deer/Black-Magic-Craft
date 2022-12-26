@@ -2,7 +2,7 @@ function version_list(type) {
     setTimeout(() => {
         switch (type) {
             case "vanilla":
-                $.get("https://piston-meta.mojang.com/mc/game/version_manifest.json", function (data, textStatus, jqXHR) {
+                $.get("https://piston-meta.mojang.com/mc/game/version_manifest.json", (data, textStatus, jqXHR) => {
                     if (jqXHR.status == 200) {
                         var _version_list = data["versions"];
                         for (let i = 0; i < _version_list.length; i++) {
@@ -52,10 +52,10 @@ function version_list(type) {
 function install_game(url, id) {
     popup_window("game_install");
     $("#5E79266D").html(`正在安装${id}`);
-    $('#lib').html('');
-    $("#assets_file").html('');
+    $("#lib").html("");
+    $("#assets_file").html("");
     setTimeout(() => {
-        console.log('发送安装命令')
+        console.log("发送安装命令");
         ipc.send("install_game", [url, id]);
         var i = setInterval(() => {
             if ($("#task1").hasClass("circle-check") && $("#task2").hasClass("circle-check") && $("#task3").hasClass("circle-check") && $("#task4").hasClass("circle-check")) {
@@ -71,5 +71,3 @@ async function install_progress() {}
 function updateUI(arg) {
     $(`#${arg[2]}`).html(`${arg[0]} / ${arg[1]}`);
 }
-
-

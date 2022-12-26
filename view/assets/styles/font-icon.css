@@ -116,7 +116,7 @@ i#nav-6:before {
 }
 
 i#nav-7:before {
-    content: '\f625';
+    content: '\f015';
 }
 
 button#start::before {
@@ -173,7 +173,7 @@ i.user::before {
 }
 
 i.house::before {
-    content: '\f013';
+    content: '\f015';
 }
 
 i.palette::before {

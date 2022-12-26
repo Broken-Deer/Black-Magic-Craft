@@ -1,4 +1,4 @@
-# Black Magic Craft
+# Black Magic Launcher
 
 这个启动器还没有写完，敬请期待.......
 

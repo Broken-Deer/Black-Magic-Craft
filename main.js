@@ -1,15 +1,14 @@
-const { app, BrowserWindow, dialog, session } = require("electron");
-const execSync = require("child_process").exec;
+const { app, BrowserWindow, dialog } = require("electron");
 const f = require("fs");
 const os = require("os");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
-
+const ElectronStore = require("electron-store");
+ElectronStore.initRenderer();
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 (async () => {
-    await import("./src/installer/minecraft.mjs");
-    await import("./src/game/launch.mjs");
-})();
+    await import("./src/game/LaunchOptions.mjs");
+})(); // 执行.mjs文件
 
 var win;
 const createWindow = () => {
@@ -32,11 +31,6 @@ const createWindow = () => {
             webviewTag: true,
             experimentalFeatures: true,
         },
-        vibrancy: {
-            theme: "light", // (default) or 'dark' or '#rrggbbaa'
-            effect: "acrylic", // (default) or 'blur'
-            disableOnBlur: true, // (default)
-        },
         icon: path.join(__dirname, "./logo.ico"),
     });
 
@@ -45,7 +39,8 @@ const createWindow = () => {
         win.webContents.openDevTools();
     }
 };
-
+//触摸屏上禁用双指缩放
+app.commandLine.appendSwitch("disable-pinch", true);
 app.whenReady().then(() => {
     console.log(path_handle());
     createWindow();
@@ -60,13 +55,15 @@ app.on("window-all-closed", () => {
 
 /* ipc命令监听器 */
 
-ipcMain.on("window-min", function () {
+ipcMain.on("window-min", () => {
     win.minimize();
 });
-ipcMain.on("window-close", function () {
+
+ipcMain.on("window-close", () => {
     win.close();
 });
-ipcMain.on("OpenDevTools", function () {
+
+ipcMain.on("OpenDevTools", () => {
     win.webContents.openDevTools();
 });
 
@@ -119,6 +116,11 @@ ipcMain.on("choose_java", (event) => {
             });
     }
 });
+
+ipcMain.on("getGamelist", (event) => {
+    event.reply("Gamelist", getGamelist());
+});
+
 function path_handle() {
     var exePath = process.cwd();
 
@@ -139,6 +141,26 @@ function path_handle() {
         workPath: Path,
         gamePath: Path + ".minecraft/",
     };
+}
+
+function getGamelist() {
+    let gamePath = path_handle()["gamePath"] + "version/";
+    let versionDirs = f.readdirSync(gamePath);
+    let versions = [];
+    for (let index = 0; index < versionDirs.length; index++) {
+        const versionPath = `${gamePath + versionDirs[index]}/`;
+        if (!f.existsSync(`${versionPath + versionDirs[index]}.json`) || !f.existsSync(`${versionPath + versionDirs[index]}.jar`)) {
+            continue;
+        }
+        let versionData;
+        try {
+            versionData = JSON.parse(f.readFileSync(`${versionPath + versionDirs[index]}.json`));
+        } catch (err) {
+            continue;
+        }
+        versions.push(versionDirs[index]);
+    }
+    return versions;
 }
 
 async function removeDir(dir) {

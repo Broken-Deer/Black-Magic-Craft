@@ -116,17 +116,15 @@ export async function launchGame(versionName, event, options) {
         }
     }
     command = addOption(command, "--width 2048 --height 1152");
-    await complete_assets(versionData, event); // 等待补充资源文件
+    await complete_assets(versionData, event);
     exe.exec(command);
 }
 
 function path_handle() {
     var exePath = process.cwd();
     if (os.type() === "Windows_NT") {
-        /* 给温斗士擦屁股 */
         exePath = exePath.replace(/\\/g, "/");
     }
-    // 从最后一个斜杠匹配到行尾 /(?=(\/)(?!.*\1)).*?$/g
     var Path = exePath.replace(/(?=(\/)(?!.*\1)).*?$/g, "/");
     if (!app.isPackaged) {
         Path = app.getAppPath() + "/";
@@ -167,7 +165,6 @@ function getClasspathOption(versionData) {
     let os_arch = os.arch();
     let os_version = os.release();
     for (let i = 0; i < lib.length; i++) {
-        // 检查 rules 键
         let allow = false;
         if (typeof lib[i]["rules"] == "undefined") {
             allow = true;

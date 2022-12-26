@@ -9,8 +9,8 @@ export default {
       <div class="card">
         <div class="card-body">
           <div>
-            <p>Black Magic Craft 是一个优雅、开源、可扩展的 Minecraft 启动器，由 Broken_Deer 用 ❤️ 制作，您的赞助将帮助 Black Magic Craft 获得更好的发展</p>
-            <p>Black Magic Craft <strong>本体</strong>的所有内容都是免费的，插件则按照插件作者的要求。插件作者收取的费用与 Black Magic Craft 无关</p>
+            <p>Black Magic Launcher 是一个优雅、开源、可扩展的 Minecraft 启动器，由 Broken_Deer 用 ❤️ 制作，您的赞助将帮助 Black Magic Launcher 获得更好的发展</p>
+            <p>Black Magic Launcher <strong>本体</strong>的所有内容都是免费的，插件则按照插件作者的要求。插件作者收取的费用与 Black Magic Launcher 无关</p>
           </div>
         </div>
       </div>

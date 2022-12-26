@@ -2,10 +2,12 @@ import { inputText } from "./components/inputText.js";
 import checkbox from "./components/checkbox.js";
 import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
-import { commandButton } from "./components/commandButton.js";
+import { commandButton, commandButtonMini } from "./components/commandButton.js";
 import sidebarItem from "./components/sidebarItem.js";
 import sliderBar from "./components/sliderBar.js";
+import card from "./components/card.js";
 
+import HomePage from "./components/page/HomePage.js";
 import downloadPage from "./components/page/DownloadPage.js";
 import settings from "./components/page/Settings.js";
 
@@ -78,7 +80,6 @@ var zh_cn = {
 export default zh_cn;
 
 window.onload = function () {
-    $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
         const b = document.querySelectorAll(".ancient_debris");
@@ -90,21 +91,12 @@ window.onload = function () {
             $(b).addClass("dispnone");
         }
     });
-    const btns = document.querySelectorAll(".btn_");
-    btns.forEach((btn) => {
-        btn.addEventListener("mousedown", (e) => {
-            var a = btn.getAttribute("style");
-            btn.setAttribute("style", "pointer-events:none; cursor: default;");
-            let span = document.createElement("span");
-            span.style.left = e.offsetX + "px";
-            span.style.top = e.offsetY + "px";
-            btn.appendChild(span);
-            setTimeout(() => {
-                span.remove();
-                btn.setAttribute("style", a);
-            }, 500);
-        });
-    });
+    try {
+        updateGamelist();
+    } catch (e) {}
+    setTimeout(() => {
+        $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
+    }, 100);
 };
 document.addEventListener("DOMContentLoaded", () => {});
 Vue.createApp({
@@ -112,6 +104,7 @@ Vue.createApp({
         return zh_cn;
     },
     components: {
+        card,
         inputText,
         checkbox,
         cardHeader,
@@ -119,23 +112,25 @@ Vue.createApp({
         commandButton,
         sidebarItem,
         sliderBar,
+        commandButtonMini,
     },
 }).mount("#win");
 Vue.createApp({
-    template: /* html */ `
+    template: /* template */ `
     <sidebar></sidebar>
     `,
     components: { sidebar },
 }).mount(".sidebar-links");
 Vue.createApp({
-    template: `
+    template: /* template */ `
+    <home-page>   </home-page>
         <download-page></download-page>
         <settings></settings>
         `,
-    components: { downloadPage, settings },
+    components: { downloadPage, settings, HomePage },
 }).mount("#main");
 Vue.createApp({
-    template: /* html */ `
+    template: /* template */ `
 <ms-login></ms-login>
 <game-install></game-install>
 <color-chooser></color-chooser>

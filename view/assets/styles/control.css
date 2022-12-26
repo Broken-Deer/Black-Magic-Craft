@@ -220,6 +220,7 @@ button.command-button {
     outline: 1px solid #0000001c;
     border: none;
     border-radius: 4px;
+    transition: all .1s ease;
 }
 
 button.command-button:active,

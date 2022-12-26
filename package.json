@@ -1,12 +1,12 @@
 {
-    "name": "Black Magic Craft",
+    "name": "Black Magic Launcher",
     "version": "1.0.0",
-    "description": "Black Magic Craft 启动器",
+    "description": "Black Magic Launcher 启动器",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
         "build": "electron-builder -w --x64",
-        "package": "electron-packager . black_magic_craft --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
+        "package": "electron-packager . black_magic_launcher --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
     },
     "author": "Broken_Deer",
     "license": "GPL-3.0",
@@ -17,8 +17,8 @@
         "path": "0.12.7"
     },
     "build": {
-        "productName": "Black Magic Craft",
-        "appId": "black_magic_craft",
+        "productName": "Black Magic Launcher",
+        "appId": "black_magic_launcher",
         "copyright": "Broken_Deer",
         "win": {
             "target": [
@@ -34,7 +34,7 @@
         },
         "nsis": {
             "oneClick": false,
-            "guid": "BMC",
+            "guid": "BML",
             "perMachine": true,
             "allowElevation": true,
             "allowToChangeInstallationDirectory": true,
@@ -43,7 +43,7 @@
             "installerHeaderIcon": "./logo.ico",
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
-            "shortcutName": "Black Magic Craft"
+            "shortcutName": "Black Magic Launcher"
         }
     },
     "dependencies": {

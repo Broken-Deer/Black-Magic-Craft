@@ -18,6 +18,5 @@ export var commandButtonMini = {
         `,
     props: {
         text: String,
-        click: String,
     },
 };
