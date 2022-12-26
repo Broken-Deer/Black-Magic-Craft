@@ -65,28 +65,28 @@ ipc.on("taskdone", (event, message) => {
 function start() {
     ipc.send("launchGame", ["1.19.2"]);
 }
+var Gamelist;
 function updateGamelist() {
     ipc.send("getGamelist");
     ipc.once("Gamelist", (event, data) => {
-        console.log(data);
-        $("#gamelist").empty();
-        if (data == 0) {
-            $("#gamelist").append(`<p style="
-            margin: auto;
-            font-size: 13px;
-            color: #000000b5;
-            font-style: italic;
-        ">还没有安装游戏</p>`);
-        }
-        for (let index = 0; index < data.length; index++) {
-            const versionName = data[index];
-            $("#gamelist").append(`<li><img src="./assets/images/Grass_Block.webp">${versionName}</li>`);
+        if (JSON.stringify(Gamelist) != JSON.stringify(data)) {
+            Gamelist = data;
+            $("#gamelist").empty();
+            if (data == 0) {
+                $("#gamelist").append(/* html */ `<p style="margin: auto;font-size: 13px;color: #000000b5;font-style: italic;">还没有安装游戏</p>`);
+            }
+            for (let index = 0; index < data.length; index++) {
+                const versionName = data[index];
+                $("#gamelist").append(
+                    /* html */ `<li><label><input type="radio" name="gamelist" oninput="sidebar_active(this.parentNode.parentNode, '4AA85CFD')"><img src="./assets/images/Grass_Block.webp">${versionName}</label></li>`
+                );
+            }
         }
     });
 }
 function test() {
-    ipc.send("getJavalist");
-    ipc.once("Javalist", (event, args) => {
+    ipc.send("GetLaunchOption", ["Javalist"]);
+    ipc.once("LaunchOption", (event, args) => {
         console.log(args);
     });
 }

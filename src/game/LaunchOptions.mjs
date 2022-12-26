@@ -1,14 +1,45 @@
+/*
+ * Black Magic Launcher
+ * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 import ElectronStore from "electron-store";
 import { ipcMain } from "electron";
 import f from "fs";
 import exe from "child_process";
+import { path_handle } from "./LauncherHelper.mjs";
 const store = new ElectronStore();
 /**
- * ipc测试
+ * IPC命令
  */
-ipcMain.on("getJavalist", (event) => {
+ipcMain.on("GetLaunchOption", (event, args) => {
     (async () => {
-        await getJavalist(event);
+        switch (args[0]) {
+            case "Javalist":
+                await getJavalist(event);
+                getVersionInfo('1.18.2')
+                break;
+
+            case "isGloble":
+                event.reply("LaunchOption", isGloble());
+                break;
+
+            case "getJava":
+                event.reply("LaunchOption", getJava(args[1]));
+                break;
+        }
     })();
 });
 
@@ -45,8 +76,11 @@ export async function getJavalist(event) {
                 });
             }
         }
-        event.reply("Javalist", Javalist);
-        console.log(Javalist);
+        if (typeof event != "undefined") {
+            event.reply("LaunchOption", Javalist);
+        }
+        // 更新配置文件
+        store.set("javalist", Javalist);
     });
 }
 
@@ -72,21 +106,34 @@ function isGloble(versionName) {
 }
 
 /**
+ * 获取版本信息
+ */
+export function getVersionInfo(versionName, event) {
+    const root = `${path_handle().gamePath}versions/${versionName}/`;
+    let versionJSON;
+    try {
+        versionJSON = JSON.parse(f.readFileSync(`${root}${versionName}.json`));
+    } catch (e) {
+        if (typeof event === "undefined") {
+            return false;
+        } else {
+            event.reply("error", "版本JSON读取失败，此游戏可能已损坏");
+            console.error("版本JSON读取失败");
+        }
+    }
+    console.log(versionJSON);
+}
+
+/**
  * 运行 Minecraft 的 Java 环境
  */
 export function getJava(versionName) {
     if (isGloble()) {
-        if (store.has("globle.game.jvpath")) {
-            return store.get("globle.game.jvpath");
+        if (!store.has("globle.game.autojv") || store.get("globle.game.autojv") === true) {
         } else {
             store.set("globle.game.jvpath", "114514");
         }
     } else {
-        try {
-            usesGlobal = JSON.parse(f.readFileSync(`${getGameDir() + versionName}/bml.json`))["usesGlobal"];
-        } catch (err) {
-            return true;
-        }
     }
 }
 

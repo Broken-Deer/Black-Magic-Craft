@@ -17,9 +17,12 @@ function sidebar_show() {
     $("#sidebar").attr("style", "");
 }
 
-function sidebar_active(el, pgid) {
+function sidebar_active(el, pgid, id2) {
     $(el.parentNode.parentNode.parentNode.lastElementChild).children("*").fadeOut(150);
     $(el).siblings().removeClass("active");
+    if (typeof id2 != "undefined") {
+        $(document.getElementById(id2).firstElementChild).siblings().removeClass('active')
+    }
     setTimeout(() => {
         $(`.rua>#${pgid}`).fadeIn(150);
         $(el).addClass("active");

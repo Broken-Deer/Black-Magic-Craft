@@ -19,15 +19,15 @@ export async function Installer(event, args) {
     const event_ = event;
     console.log(`创建安装任务, 版本名称：${args[1]}`);
     var Path = path_handle()["gamePath"];
-    if (!f.existsSync(`${Path}version`)) {
-        f.mkdirSync(`${Path}version`);
+    if (!f.existsSync(`${Path}versions`)) {
+        f.mkdirSync(`${Path}versions`);
     }
-    if (f.existsSync(`${Path}version/${args[1]}`)) {
-        await removeDir(`${Path}version/${args[1]}`);
+    if (f.existsSync(`${Path}versions/${args[1]}`)) {
+        await removeDir(`${Path}versions/${args[1]}`);
     }
-    f.mkdirSync(`${Path}version/${args[1]}`);
+    f.mkdirSync(`${Path}versions/${args[1]}`);
     console.log("下载版本json");
-    var download_to = `${Path}version/${args[1]}/${args[1]}.json`;
+    var download_to = `${Path}versions/${args[1]}/${args[1]}.json`;
     await downloadFile(args[0], download_to);
     event_.reply("taskdone", ["task1"]);
 
@@ -115,7 +115,7 @@ export async function Installer(event, args) {
     /* 下载主文件 */
     (async () => {
         console.log("开始下载主文件");
-        await downloadFile(version_data["downloads"]["client"]["url"], `${Path}version/${args[1]}/${args[1]}.jar`, event_, "main");
+        await downloadFile(version_data["downloads"]["client"]["url"], `${Path}versions/${args[1]}/${args[1]}.jar`, event_, "main");
         console.log("主文件下载完成");
         event_.reply("taskdone", ["task2"]);
     })();

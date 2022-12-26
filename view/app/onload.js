@@ -7,7 +7,7 @@ import sidebarItem from "./components/sidebarItem.js";
 import sliderBar from "./components/sliderBar.js";
 import card from "./components/card.js";
 
-import HomePage from "./components/page/HomePage.js";
+import WareHouse from "./components/page/WareHouse.js";
 import downloadPage from "./components/page/DownloadPage.js";
 import settings from "./components/page/Settings.js";
 
@@ -91,13 +91,16 @@ window.onload = function () {
             $(b).addClass("dispnone");
         }
     });
-    try {
-        updateGamelist();
-    } catch (e) {}
     setTimeout(() => {
         $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
     }, 100);
 };
+updateGamelist();
+setInterval(() => {
+    try {
+        updateGamelist();
+    } catch (e) {}
+}, 500);
 document.addEventListener("DOMContentLoaded", () => {});
 Vue.createApp({
     data() {
@@ -123,11 +126,11 @@ Vue.createApp({
 }).mount(".sidebar-links");
 Vue.createApp({
     template: /* template */ `
-    <home-page>   </home-page>
+    <ware-house>   </ware-house>
         <download-page></download-page>
         <settings></settings>
         `,
-    components: { downloadPage, settings, HomePage },
+    components: { downloadPage, settings, WareHouse },
 }).mount("#main");
 Vue.createApp({
     template: /* template */ `

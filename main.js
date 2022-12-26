@@ -4,10 +4,12 @@ const os = require("os");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
 const ElectronStore = require("electron-store");
+ 
 ElectronStore.initRenderer();
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 (async () => {
     await import("./src/game/LaunchOptions.mjs");
+    await import('./src/installer/minecraft.mjs')
 })(); // 执行.mjs文件
 
 var win;
@@ -42,7 +44,6 @@ const createWindow = () => {
 //触摸屏上禁用双指缩放
 app.commandLine.appendSwitch("disable-pinch", true);
 app.whenReady().then(() => {
-    console.log(path_handle());
     createWindow();
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -117,51 +118,7 @@ ipcMain.on("choose_java", (event) => {
     }
 });
 
-ipcMain.on("getGamelist", (event) => {
-    event.reply("Gamelist", getGamelist());
-});
 
-function path_handle() {
-    var exePath = process.cwd();
-
-    if (os.type() === "Windows_NT") {
-        /* 给温斗士擦屁股 */
-        exePath = exePath.replace(/\\/g, "/");
-    }
-    // 从最后一个斜杠匹配到行尾 /(?=(\/)(?!.*\1)).*?$/g
-    var Path = exePath.replace(/(?=(\/)(?!.*\1)).*?$/g, "/");
-    if (!app.isPackaged) {
-        Path = app.getAppPath() + "/";
-        Path = Path + "test/";
-    }
-    if (!f.existsSync(Path + ".minecraft")) {
-        f.mkdirSync(Path + ".minecraft");
-    }
-    return {
-        workPath: Path,
-        gamePath: Path + ".minecraft/",
-    };
-}
-
-function getGamelist() {
-    let gamePath = path_handle()["gamePath"] + "version/";
-    let versionDirs = f.readdirSync(gamePath);
-    let versions = [];
-    for (let index = 0; index < versionDirs.length; index++) {
-        const versionPath = `${gamePath + versionDirs[index]}/`;
-        if (!f.existsSync(`${versionPath + versionDirs[index]}.json`) || !f.existsSync(`${versionPath + versionDirs[index]}.jar`)) {
-            continue;
-        }
-        let versionData;
-        try {
-            versionData = JSON.parse(f.readFileSync(`${versionPath + versionDirs[index]}.json`));
-        } catch (err) {
-            continue;
-        }
-        versions.push(versionDirs[index]);
-    }
-    return versions;
-}
 
 async function removeDir(dir) {
     let files = f.readdirSync(dir);

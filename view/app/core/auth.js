@@ -1,41 +1,26 @@
 var status_code;
 
 async function show_login_window() {
-    console.log("1. 等待用户登录完成");
-    let new_webview = document.createElement("webview");
-    new_webview.id = "ms_login_webview";
-    new_webview.src =
-        "https://login.live.com/oauth20_authorize.srf" +
-        "?client_id=00000000402b5328" +
-        "&response_type=code" +
-        "&prompt=select_account" +
-        "&scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL" +
-        "&redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf";
-    new_webview.style = "display: inline-flex;width: 100%;height: 308px;";
-    new_webview.preload = "./scripts/preload-ms.js";
-    await $(new_webview).appendTo(document.getElementById("ms_login_body").firstElementChild);
-    var a = true;
-    const webview = document.querySelector("webview");
-
-    webview.addEventListener("dom-ready", (e) => {
-        /* 缩放比例 */
-        webview.setZoomFactor(0.9);
-        /* 覆盖巨硬登录页某些元素的样式：移除背景，并让中间用来登录的东西撑满 */
-        webview.insertCSS(/* css */`
-          *::-webkit-scrollbar {
-              width: 0px;
-              }
-          *:hover::-webkit-scrollbar {
-              width: 4px;
-              }
-              *::-webkit-scrollbar-thumb {
-                background-color: #a8a8a829;
-                border-radius: 10px;
-              }
-
-              *::-webkit-scrollbar-track {
-                background-color: #fafbfc00;
-              }
+    setTimeout(async () => {
+        console.log("1. 等待用户登录完成");
+        const new_webview = document.createElement("webview");
+        new_webview.id = "ms_login_webview";
+        new_webview.src =
+            "https://login.live.com/oauth20_authorize.srf" +
+            "?client_id=00000000402b5328" +
+            "&response_type=code" +
+            "&prompt=select_account" +
+            "&scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL" +
+            "&redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf";
+        new_webview.style = "display: inline-flex;width: 100%;height: 308px;";
+        await $(new_webview).appendTo(document.getElementById("ms_login_body").firstElementChild);
+        var a = true;
+        const webview = document.querySelector("webview");
+        webview.addEventListener("dom-ready", (e) => {
+            /* 缩放比例 */
+            webview.setZoomFactor(1);
+            /* 覆盖巨硬登录页某些元素的样式：移除背景，并让中间用来登录的东西撑满 */
+            webview.insertCSS(/* css */ `
             html {
               overflow-y: overlay !important;
             }
@@ -72,44 +57,45 @@ async function show_login_window() {
                 overflow: hidden !important;
             }
         `);
-    });
-    /* 添加事件侦测器，用来检测重定向事件 */
-    webview.addEventListener("did-redirect-navigation", async (r) => {
-        var url = r["url"];
-        const pref = "https://login.live.com/oauth20_desktop.srf?";
-        /* 如果重定向地址以https://login.live.com/oauth20_desktop.srf?code= 开头，从中截取code的值，并丢给验证程序进行验证 */
-        if (url.startsWith(pref + "code=")) {
-            a = false;
-            console.log("第一步完成");
-            $("webview").remove();
-            var code = url.substring(pref.length).split("&")[0].split("=")[1];
-            /* 把code丢给登录程序，检查返回值 */
-            await ms_oauth(code);
-            switch (status_code) {
-                case 0:
-                    popup_window_close("ms_login");
-                    break;
-                case 2:
-                    login_fail_alert("ms_login", "获取 Microsoft 授权令牌失败，请检查你的 Microsoft 帐户");
-                    break;
-                case 3:
-                    login_fail_alert("ms_login", "Xbox 身份验证失败，请检查你的 Xbox 帐户");
-                    break;
-                case 4:
-                    login_fail_alert("ms_login", "XSTS 身份验证失败，请检查你的 Xbox 帐户");
-                    break;
-                case 5:
-                    login_fail_alert("ms_login", "Minecraft 验证失败，请检查你的帐户");
-                    break;
-                case 6:
-                case 7:
-                    login_fail_alert("ms_login", "UUID 获取失败，你可能没有购买 Minecraft");
-                    break;
+        });
+        /* 添加事件侦测器，用来检测重定向事件 */
+        webview.addEventListener("did-redirect-navigation", async (r) => {
+            var url = r["url"];
+            const pref = "https://login.live.com/oauth20_desktop.srf?";
+            /* 如果重定向地址以https://login.live.com/oauth20_desktop.srf?code= 开头，从中截取code的值，并丢给验证程序进行验证 */
+            if (url.startsWith(pref + "code=")) {
+                a = false;
+                console.log("第一步完成");
+                $("webview").remove();
+                var code = url.substring(pref.length).split("&")[0].split("=")[1];
+                /* 把code丢给登录程序，检查返回值 */
+                await ms_oauth(code);
+                switch (status_code) {
+                    case 0:
+                        popup_window_close("ms_login");
+                        break;
+                    case 2:
+                        login_fail_alert("ms_login", "获取 Microsoft 授权令牌失败，请检查你的 Microsoft 帐户");
+                        break;
+                    case 3:
+                        login_fail_alert("ms_login", "Xbox 身份验证失败，请检查你的 Xbox 帐户");
+                        break;
+                    case 4:
+                        login_fail_alert("ms_login", "XSTS 身份验证失败，请检查你的 Xbox 帐户");
+                        break;
+                    case 5:
+                        login_fail_alert("ms_login", "Minecraft 验证失败，请检查你的帐户");
+                        break;
+                    case 6:
+                    case 7:
+                        login_fail_alert("ms_login", "UUID 获取失败，你可能没有购买 Minecraft");
+                        break;
+                }
+            } else if (url.startsWith(pref + "error=")) {
+                popup_window_close("ms_login");
             }
-        } else if (url.startsWith(pref + "error=")) {
-            popup_window_close("ms_login");
-        }
-    });
+        });
+    }, 1000);
 }
 
 async function ms_oauth(code) {
