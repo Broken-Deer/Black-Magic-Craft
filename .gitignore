@@ -129,7 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# .vscode
-.vscode/*
+
 # test
 /test
+/test.js
+/vendor

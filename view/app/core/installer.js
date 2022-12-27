@@ -50,19 +50,23 @@ function version_list(type) {
 }
 
 function install_game(url, id) {
-    popup_window("game_install");
+    /*     popup_window("game_install");
     $("#5E79266D").html(`正在安装${id}`);
     $("#lib").html("");
-    $("#assets_file").html("");
+    $("#assets_file").html(""); */
     setTimeout(() => {
-        console.log("发送安装命令");
-        ipc.send("install_game", [url, id]);
-        var i = setInterval(() => {
+        console.log("获取路径");
+        ipc.send("getPath");
+        ipc.once("Path", (event, path) => {
+            // 获取路径，以后改成检查安装条件
+            installGame(url, id, path);
+        });
+        /*         var i = setInterval(() => {
             if ($("#task1").hasClass("circle-check") && $("#task2").hasClass("circle-check") && $("#task3").hasClass("circle-check") && $("#task4").hasClass("circle-check")) {
                 popup_window_close("game_install");
                 clearInterval(i);
             }
-        }, 50); // 循环检查这几个元素有没有打勾
+        }, 50); // 循环检查这几个元素有没有打勾 */
     }, 500);
 }
 
@@ -70,4 +74,95 @@ async function install_progress() {}
 
 function updateUI(arg) {
     $(`#${arg[2]}`).html(`${arg[0]} / ${arg[1]}`);
+}
+
+async function installGame(url, id, path) {
+    console.log(`创建安装任务：版本${id}`);
+    const Path = path.gamePath;
+    console.log("1.获取并解析版本信息");
+    var versionInfo;
+    await $.get(url, function (data, textStatus, jqXHR) {
+        console.log(data);
+        versionInfo = data;
+    });
+    addToDownloadQueue(url, `${Path}versions/${id}/${id}.json`);
+    console.log("2.获取系统信息");
+    let os_type;
+    switch (os.type()) {
+        case "Windows_NT":
+            os_type = "windows";
+            break;
+        case "Linux":
+            os_type = "linux";
+            break;
+        case "Darwin":
+            os_type = "osx";
+            break;
+        default:
+            return;
+    }
+    let os_arch = os.arch();
+    let os_version = os.release();
+    console.log(os_type, os_arch, os_version);
+    console.log("3.生成依赖库下载队列");
+    const Libraries = versionInfo.libraries;
+    const LibrariesPath = `${Path}libraries/`;
+    for (let i = 0; i < Libraries.length; i++) {
+        // 检查 rules 键
+        let allow = false;
+        if (typeof Libraries[i].rules == "undefined") {
+            allow = true;
+        } else {
+            const rules = Libraries[i].rules;
+            for (let index = 0; index < rules.length; index++) {
+                if (typeof rules[index].os != "undefined") {
+                    if (
+                        rules[index]["action"] === "allow" &&
+                        (typeof rules[index].os.name == "undefined" || os_type === rules[index].os.name) &&
+                        (typeof rules[index].os.arch == "undefined" || os_arch === rules[index].os.arch) &&
+                        (typeof rules[index].os.version == "undefined" || os_version.search(rules[index].os.version) !== -1)
+                    ) {
+                        allow = true;
+                    } else if (rules[index]["action"] === "disallow" && os_type != rules[index].os.name && os_arch != rules[index].os.arch && os_version.search(rules[index].os.version) == -1) {
+                        allow = true;
+                    }
+                }
+            }
+        }
+        if (allow === true) {
+            // 检查依赖库类型并加入下载列表
+            let downloadInfo;
+            if (typeof Libraries[i]["downloads"]["classifiers"] == "undefined") {
+                downloadInfo = Libraries[i]["downloads"]["artifact"];
+            } else {
+                if (typeof Libraries[i]["downloads"]["classifiers"][`native-${os_type}`] != "undefined") {
+                    downloadInfo = Libraries[i]["downloads"]["classifiers"][`native-${os_type}`];
+                    console.log("有一个native库");
+                } else if (typeof Libraries[i]["downloads"]["artifact"] != "undefined") {
+                    downloadInfo = Libraries[i]["downloads"]["artifact"];
+                }
+            }
+            if (typeof downloadInfo != "undefined") {
+                addToDownloadQueue(downloadInfo["url"], LibrariesPath + downloadInfo["path"]);
+            }
+        }
+    }
+    console.log("4.获取并解析资源索引");
+    const AccessIndexFileURL = versionInfo.assetIndex.url;
+    let AccessIndex;
+    await $.get(AccessIndexFileURL, function (data, textStatus, jqXHR) {
+        console.log(data);
+        AccessIndex = data;
+    });
+    addToDownloadQueue(AccessIndexFileURL, `${Path}assets/indexes/${versionInfo.assetIndex.id}.json`);
+    console.log("5.生成资源文件下载队列");
+    const Access = AccessIndex.objects;
+    Object.keys(Access).forEach((i) => {
+        let hash = Access[i].hash;
+        let hash_ = hash.substring(0, 2);
+        addToDownloadQueue(`http://resources.download.minecraft.net/${hash_}/${hash}`, `${Path}assets/objects/${hash_}/${hash}`);
+    });
+    console.log("6.启动队列")
+    console.log(tasklist)
+    startDownloadQueue()
 }

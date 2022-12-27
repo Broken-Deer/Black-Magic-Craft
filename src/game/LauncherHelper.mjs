@@ -18,10 +18,14 @@
 import { app, ipcMain } from "electron";
 import os from "os";
 import f from "fs";
+import path from "path";
 
 ipcMain.on("getGamelist", (event) => {
     event.reply("Gamelist", getGamelist());
 });
+ipcMain.on('getPath', (event) => {
+    event.reply("Path", path_handle())
+})
 
 export function path_handle() {
     var exePath = process.cwd();
@@ -47,6 +51,7 @@ export function path_handle() {
 
 export function getGamelist() {
     let gamePath = path_handle()["gamePath"] + "versions/";
+    makeDir(gamePath)
     let versionDirs = f.readdirSync(gamePath);
     let versions = [];
     for (let index = 0; index < versionDirs.length; index++) {
@@ -63,4 +68,14 @@ export function getGamelist() {
         versions.push(versionDirs[index]);
     }
     return versions;
+}
+function makeDir(dirname) {
+    if (f.existsSync(dirname)) {
+        return true;
+    } else {
+        if (makeDir(path.dirname(dirname))) {
+            f.mkdirSync(dirname);
+            return true;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 const ipc = require("electron").ipcRenderer;
-
+const os = require("os");
 function execute(command) {
     ipc.send(command);
 }
@@ -34,9 +34,11 @@ function win_close() {
         ipc.send("window-close");
     }, 360);
 }
+
 function win_min() {
     ipc.send("window-min");
 }
+
 ipc.on("updateUI", (event, message) => {
     updateUI(message);
 });
@@ -65,6 +67,7 @@ ipc.on("taskdone", (event, message) => {
 function start() {
     ipc.send("launchGame", ["1.19.2"]);
 }
+
 var Gamelist;
 function updateGamelist() {
     ipc.send("getGamelist");
@@ -73,7 +76,7 @@ function updateGamelist() {
             Gamelist = data;
             $("#gamelist").empty();
             if (data == 0) {
-                $("#gamelist").append(/* html */ `<p style="margin: auto;font-size: 13px;color: #000000b5;font-style: italic;">还没有安装游戏</p>`);
+                $("#gamelist").append(/* html */ `<p style="margin: auto;font-size: 13px;color: #000000b5;font-style: italic;">此视图筛选条件</p>`);
             }
             for (let index = 0; index < data.length; index++) {
                 const versionName = data[index];
@@ -84,9 +87,25 @@ function updateGamelist() {
         }
     });
 }
+
 function test() {
     ipc.send("GetLaunchOption", ["Javalist"]);
     ipc.once("LaunchOption", (event, args) => {
         console.log(args);
     });
 }
+
+ipc.on("DownloadInfo", (event, args) => {
+    console.log(args);
+});
+ipc.on("DownloadResults", (event, args) => {
+    downloading = downloading.filter((value, index, arr) => {
+        if (arr[index][0] === args.id) {
+            return false
+        } else {
+            return true
+        }
+    })
+    startDownloadQueue()
+    console.log(`队列剩余${tasklist.length}个文件`)
+});

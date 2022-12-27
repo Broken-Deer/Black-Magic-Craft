@@ -4,6 +4,7 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    
         {
             "name": "black_magic_craft",
             "request": "launch",
@@ -15,7 +16,7 @@
         {
             "name": "test",
             "request": "launch",
-            "runtimeArgs": ["test.mjs"],
+            "runtimeArgs": ["test.js"],
             "runtimeExecutable": "node",
             "skipFiles": ["<node_internals>/**"],
             "type": "node"

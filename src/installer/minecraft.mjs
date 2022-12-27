@@ -4,7 +4,7 @@ import os from "os";
 import { join } from "path";
 import { ipcMain } from "electron";
 import path from "path";
-import { downloadFile, parallelDownload } from "../http/download.mjs";
+import { useGotToDownloadFile, parallelDownload } from "../http/download.mjs";
 
 ipcMain.on("install_game", async (event, args) => {
     Installer(event, args);
@@ -28,7 +28,7 @@ export async function Installer(event, args) {
     f.mkdirSync(`${Path}versions/${args[1]}`);
     console.log("下载版本json");
     var download_to = `${Path}versions/${args[1]}/${args[1]}.json`;
-    await downloadFile(args[0], download_to);
+    await useGotToDownloadFile(args[0], download_to);
     event_.reply("taskdone", ["task1"]);
 
     var version_data = JSON.parse(f.readFileSync(download_to));
@@ -107,7 +107,7 @@ export async function Installer(event, args) {
     }
 
     (async () => {
-        await parallelDownload(from, to, 64, event_, "lib");
+        await parallelDownload(from, to, 1, event_, "lib");
         console.log("依赖库已补完");
     })();
     complete_assets(version_data, event_); // 补全资源文件（可能补不全）
@@ -115,7 +115,7 @@ export async function Installer(event, args) {
     /* 下载主文件 */
     (async () => {
         console.log("开始下载主文件");
-        await downloadFile(version_data["downloads"]["client"]["url"], `${Path}versions/${args[1]}/${args[1]}.jar`, event_, "main");
+        await useGotToDownloadFile(version_data["downloads"]["client"]["url"], `${Path}versions/${args[1]}/${args[1]}.jar`, event_, "main");
         console.log("主文件下载完成");
         event_.reply("taskdone", ["task2"]);
     })();
@@ -131,7 +131,7 @@ export async function complete_assets(version_data, event) {
     /* 下载资源索引，解析后调用函数补完资源文件 */
     var Path = path_handle()["gamePath"];
     var assets_index_file = `${Path}assets/indexes/${version_data["assetIndex"]["id"]}.json`;
-    await downloadFile(version_data["assetIndex"]["url"], assets_index_file);
+    await useGotToDownloadFile(version_data["assetIndex"]["url"], assets_index_file);
     console.log("资源索引下载完成");
     var assets_index = JSON.parse(f.readFileSync(assets_index_file, "utf-8"));
     var assets_list = assets_index["objects"];
@@ -145,7 +145,7 @@ export async function complete_assets(version_data, event) {
         from.push(`http://resources.download.minecraft.net/${hash_}/${hash}`);
         to.push(`${Path}assets/objects/${hash_}/${hash}`);
     });
-    await parallelDownload(from, to, 64, event_, "assets_file");
+    await parallelDownload(from, to, 1, event_, "assets_file");
     console.log("资源文件补完");
 }
 

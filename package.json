@@ -6,7 +6,8 @@
     "scripts": {
         "start": "electron .",
         "build": "electron-builder -w --x64",
-        "package": "electron-packager . black_magic_launcher --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules"
+        "package": "electron-packager . black_magic_launcher --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules",
+        "test": "node test.js"
     },
     "author": "Broken_Deer",
     "license": "GPL-3.0",
