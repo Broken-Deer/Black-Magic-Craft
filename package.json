@@ -1,5 +1,5 @@
 {
-    "name": "Black Magic Launcher",
+    "name": "black-lagic-launcher",
     "version": "1.0.0",
     "description": "Black Magic Launcher 启动器",
     "main": "main.js",
@@ -48,6 +48,8 @@
         }
     },
     "dependencies": {
+        "@xmcl/installer": "^4.4.0",
+        "compressing": "^1.6.3",
         "electron-store": "8.1.0",
         "got": "12.5.2",
         "graceful-fs": "4.2.10",

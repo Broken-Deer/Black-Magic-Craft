@@ -133,4 +133,5 @@ dist
 # test
 /test
 /test.js
+/test.mjs
 /vendor

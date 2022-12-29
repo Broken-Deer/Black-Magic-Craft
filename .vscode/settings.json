@@ -1,3 +1,4 @@
 {
-    "editor.cursorSmoothCaretAnimation": "on"
+    "editor.cursorSmoothCaretAnimation": "on",
+    "C_Cpp.errorSquiggles": "enabled"
 }

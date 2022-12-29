@@ -31,10 +31,8 @@ export function path_handle() {
     var exePath = process.cwd();
 
     if (os.type() === "Windows_NT") {
-        /* 给温斗士擦屁股 */
         exePath = exePath.replace(/\\/g, "/");
     }
-    // 从最后一个斜杠匹配到行尾 /(?=(\/)(?!.*\1)).*?$/g
     var Path = exePath.replace(/(?=(\/)(?!.*\1)).*?$/g, "/");
     if (!app.isPackaged) {
         Path = app.getAppPath() + "/";
