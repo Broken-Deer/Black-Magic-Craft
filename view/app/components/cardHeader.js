@@ -1,7 +1,7 @@
 export default {
     data() {
         return {
-            cardButton: !this.canSwap ? "display: none" : "",
+            cardButton: !this.canSwap ? `display: none;` : "",
         };
     },
     template: /* html */ `

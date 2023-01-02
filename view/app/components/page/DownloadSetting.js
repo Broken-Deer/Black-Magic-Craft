@@ -1,5 +1,5 @@
 import cardHeader from "../cardHeader.js";
-import checkbox from "../checkbox.js";
+import { checkbox } from "../checkbox.js";
 import sliderBar from "../sliderBar.js";
 import { load, update } from "../../tools/LoadConfigs.js";
 

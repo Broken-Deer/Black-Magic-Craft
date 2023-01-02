@@ -50,10 +50,10 @@ function version_list(type) {
 }
 
 function install_game(url, id) {
-    /*     popup_window("game_install");
+       popup_window("game_install");
     $("#5E79266D").html(`正在安装${id}`);
     $("#lib").html("");
-    $("#assets_file").html(""); */
+    $("#assets_file").html(""); 
     setTimeout(() => {
         console.log("获取路径");
         ipc.send("getPath");

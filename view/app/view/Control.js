@@ -13,7 +13,6 @@ function inputUpdateUI(el, type) {
 
     if (type == "hex") {
         color = new Color({ color: String(val), type: "hex" });
-        console.log(color);
         var hsv = rgbToHsv(color.rgb);
         UpdateUI(hsv[0], hsv[1], hsv[2], type);
         return;
@@ -25,9 +24,7 @@ function inputUpdateUI(el, type) {
             .substring(1, val.length - 1)
             .replace(/\%/g, "")
             .replace(/\n/g, "");
-        console.log(val);
         val = val.split(",");
-        console.log([Number(val[0]), Number(val[1]), Number(val[2])]);
         if (type == "hsv") {
             UpdateUI(Number(val[0]), Number(val[1]), Number(val[2]), type);
             return;
@@ -46,7 +43,6 @@ function SliderUpdateUI() {
 }
 
 function choosedNearlyColor(el) {
-    console.log(window.getComputedStyle(el, null).background);
     var val = String(window.getComputedStyle(el, null).background).match(/\((.+?)\)/g)[0];
     val = val
         .substring(1, val.length - 1)
@@ -58,7 +54,6 @@ function choosedNearlyColor(el) {
 }
 
 function UpdateUI(h, s, v, exclude) {
-    console.log(exclude);
     var hl = (hd = h);
     var sl = (sd = s);
     var vl = (vd = v);
@@ -92,8 +87,8 @@ function UpdateUI(h, s, v, exclude) {
         hd = sd = vd = 0;
     }
     d = hsvToRgb(hd, sd, vd);
-    if (v - 20 > -1) {
-        vd = vd - 20;
+    if (v - 10 > -1) {
+        vd = vd - 10;
     } else {
         hd = sd = vd = 0;
     }

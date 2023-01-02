@@ -9,6 +9,7 @@ export default {
             bodyStyle: `width: ${this.width}px;height: ${this.height}px;${
                 this.isSwaped ? "height: 0;overflow: hidden;" : ""
             }`,
+            contentPadding: `margin: ${this.padding[0]}px ${this.padding[1]}px ${this.padding[2]}px ${this.padding[3]}px`,
             cardClass: this.isSwaped ? "card not-expanded" : "card",
             headStyle: this.cardHeader ? "" : "display: none",
         };
@@ -17,7 +18,7 @@ export default {
     <div :class="cardClass" :style="cardStyle">
     <card-header :title="title" :description="description" :icon="icon" :canSwap="canSwap" :style="headStyle"></card-header>
         <div class="card-body" :style="bodyStyle">
-            <div>
+            <div :style="contentPadding">
             <slot></slot>
             </div>
         </div>
@@ -36,6 +37,10 @@ export default {
         cardHeader: {
             type: Boolean,
             default: true,
+        },
+        padding: {
+            type: Array,
+            default: [23, 33, 23, 33],
         },
     },
     components: { cardHeader },

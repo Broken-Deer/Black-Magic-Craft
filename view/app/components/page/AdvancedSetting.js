@@ -1,8 +1,8 @@
 import { inputText } from "../inputText.js";
-import checkbox from "../checkbox.js";
+import { checkbox } from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
-import {load,update} from "../../tools/LoadConfigs.js"
+import { load, update } from "../../tools/LoadConfigs.js";
 import card from "../card.js";
 
 export default {
@@ -35,7 +35,7 @@ export default {
     <checkbox name="检查游戏库文件完整性" config="globle.advanced.checklib"></checkbox>
     <div class="input input-list" id="version_isolation">
         <!-- Inspired by BakaXL -->
-        <span class="name">自定义 Java 垃圾回收器</span>
+        <span class="name">Java 垃圾回收器</span>
         <div class="input-data input-data-list" onclick="input_list(this,'158px')">
             <div></div>
             <ul class="option" style="display: none">

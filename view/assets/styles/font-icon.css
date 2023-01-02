@@ -249,3 +249,11 @@ i.puzzle-piece::before {
 i.lightbulb-on::before {
     content: "\f672";
 }
+
+i.arrow-up-right-from-square::before {
+    content: '\f08e';
+}
+
+i.trash-can::before {
+    content: '\f2ed';
+}

@@ -1,12 +1,12 @@
 import { inputText } from "./components/inputText.js";
-import checkbox from "./components/checkbox.js";
+import { checkbox } from "./components/checkbox.js";
 import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
 import { commandButton, commandButtonMini } from "./components/commandButton.js";
 import sidebarItem from "./components/sidebarItem.js";
 import sliderBar from "./components/sliderBar.js";
 import card from "./components/card.js";
-import listItem from "./components/listItem.js";
+import { listItem, listItemButton } from "./components/listItem.js";
 
 import WareHouse from "./components/page/WareHouse.js";
 import downloadPage from "./components/page/DownloadPage.js";
@@ -81,7 +81,7 @@ var zh_cn = {
 export default zh_cn;
 
 window.onload = () => {
-    $("#2B39A329").click(function () {
+    /*     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
         const b = document.querySelectorAll(".ancient_debris");
         if ($("#2B39A329").prop("checked")) {
@@ -91,8 +91,11 @@ window.onload = () => {
             $(a).addClass("dispnone");
             $(b).addClass("dispnone");
         }
-    });
-    $("body").attr("style", "transform: scale(1); opacity: 1; transition: all 250ms cubic-bezier(0.04, 0.47, 0.47, 0.98)");
+    }); */
+    $("body").attr(
+        "style",
+        "transform: scale(1); opacity: 1; transition: all 250ms cubic-bezier(0.04, 0.47, 0.47, 0.98)"
+    );
 };
 /* updateGamelist();
 setInterval(() => {
@@ -100,7 +103,7 @@ setInterval(() => {
         updateGamelist();
     } catch (e) {}
 }, 500); */
-document.addEventListener("DOMContentLoaded", () => {});
+
 Vue.createApp({
     data() {
         return zh_cn;
@@ -116,6 +119,7 @@ Vue.createApp({
         sliderBar,
         commandButtonMini,
         listItem,
+        listItemButton,
     },
 }).mount("#win");
 Vue.createApp({

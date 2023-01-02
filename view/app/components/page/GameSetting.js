@@ -1,5 +1,5 @@
 import { inputText, inputTextMini } from "../inputText.js";
-import checkbox from "../checkbox.js";
+import { checkbox } from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
 import sliderBar from "../sliderBar.js";

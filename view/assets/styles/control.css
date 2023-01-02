@@ -152,6 +152,7 @@ div.page-title {
     height: 20px;
     display: flex;
     justify-content: space-between;
+    margin: 0 6px;
 }
 
 .input-box label {
@@ -180,7 +181,7 @@ div.page-title {
     border-radius: 200px !important;
     position: absolute;
     background-color: #5a5a5a !important;
-    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99);
+    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99) !important;
 }
 
 .input-box label input:checked~span {

@@ -1,4 +1,4 @@
-export var commandButton = {
+export const commandButton = {
     template: /* html */ `
         <div class="input">
             <span class="name">{{name}}</span>
@@ -11,7 +11,7 @@ export var commandButton = {
         click: String,
     },
 };
-export var commandButtonMini = {
+export const commandButtonMini = {
     template: /* html */ `
             <button class="command-button"
             :onclick="click">{{text}}</button>

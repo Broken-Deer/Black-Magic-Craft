@@ -13,7 +13,7 @@ function expanded_card(eventobj, value) {
         $(body).attr("style", "height: 0;overflow: hidden;"); /* 设置元素溢出隐藏，高度0 */
         $(card).removeClass("not-expanded"); /* 移除标记 */
         if (typeof value != "number") {
-            height = $(body.firstElementChild).height() + 23 * 2;
+            height = $(body.firstElementChild).outerHeight(true);
         } else {
             height = value;
         }
@@ -21,7 +21,7 @@ function expanded_card(eventobj, value) {
         setTimeout(() => {
             /* 动画播放完成后移除“溢出隐藏” */
             $(body).attr("style", "");
-        }, 250);
+        }, 280);
     } else {
         /* 如果没有处于折叠状态 */
         $(card).addClass("not-expanded");
