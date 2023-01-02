@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import { installLibrariesTask, installAssetsTask, getVersionList } from "@xmcl/i
 import path from "path";
 import f from "fs";
 import { GetTaskStatus, GetPath, removeDir } from "./InstallerHelper.mjs";
-import { useGotToDownloadFile, useAria2ToDownloadFile } from "./FileDownloader.mjs";
+import { downloadFileByGot, downloadFileByAria2 } from "./FileDownloader.mjs";
 
 /**
  * 使用version.json安装游戏，需确保version.json名称与文件夹名相同
@@ -28,7 +28,7 @@ import { useGotToDownloadFile, useAria2ToDownloadFile } from "./FileDownloader.m
 export async function InstallGameByJSON(versionName, completeFile) {
     const VersionDir = path.join(GetPath().gamePath, "versions", versionName);
     const VersionJSON = JSON.parse(f.readFileSync(path.join(VersionDir, `${versionName}.json`)));
-    useAria2ToDownloadFile(
+    downloadFileByAria2(
         VersionJSON.downloads.client.url,
         path.join(VersionDir, `${versionName}.jar`),
         undefined,
@@ -56,7 +56,7 @@ export async function InstallVanillaGame(versionName, minecraftVersion, onlySave
         } else return false;
     })[0];
     const VersionJsonPath = `${MinecraftLocation}versions/${versionName}/${versionName}.json`;
-    await useGotToDownloadFile(VersionInfo.url, VersionJsonPath);
+    await downloadFileByGot(VersionInfo.url, VersionJsonPath);
     if (!onlySaveJSON) {
         await InstallGameByJSON(versionName, completeFile);
     }

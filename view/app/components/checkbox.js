@@ -3,7 +3,7 @@ import { load, update } from "../tools/LoadConfigs.js";
 export default {
     data() {
         return {
-            "check": load(this.config)
+            checked: load(this.config)
         }
     },
     template: /* html */ `            
@@ -11,7 +11,7 @@ export default {
         <span class="name">{{name}}</span>
         <div class="input-box">
             <label>
-                <input type="checkbox" :onclick="click" @input="updateData" v-model="check"/>
+                <input type="checkbox" :onclick="click" @input="updateData" v-model="checked"/>
                 <span>
                     <div class="button"></div>
                 </span>

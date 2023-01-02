@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@ import os from "os";
 import f from "fs";
 import path from "path";
 
-ipcMain.on("getGamelist", (event) => {
+ipcMain.on("getGamelist", event => {
     event.reply("Gamelist", getGamelist());
 });
-ipcMain.on('getPath', (event) => {
-    event.reply("Path", path_handle())
-})
+ipcMain.on("getPath", event => {
+    event.reply("Path", path_handle());
+});
 
 export function path_handle() {
     var exePath = process.cwd();
@@ -49,12 +49,15 @@ export function path_handle() {
 
 export function getGamelist() {
     let gamePath = path_handle()["gamePath"] + "versions/";
-    makeDir(gamePath)
+    makeDir(gamePath);
     let versionDirs = f.readdirSync(gamePath);
     let versions = [];
     for (let index = 0; index < versionDirs.length; index++) {
         const versionPath = `${gamePath + versionDirs[index]}/`;
-        if (!f.existsSync(`${versionPath + versionDirs[index]}.json`) || !f.existsSync(`${versionPath + versionDirs[index]}.jar`)) {
+        if (
+            !f.existsSync(`${versionPath + versionDirs[index]}.json`) ||
+            !f.existsSync(`${versionPath + versionDirs[index]}.jar`)
+        ) {
             continue;
         }
         let versionData;

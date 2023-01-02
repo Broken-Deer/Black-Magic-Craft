@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ export async function parallelDownload(tasklist, plimit, event, taskname) {
  * @param {array} from 下载来源
  * @param {array} to 保存路径，需要和from参数一一对应
  */
-export async function useGotToDownloadFile(from, to) {
+export async function downloadFileByGot(from, to) {
     makeDir(to.replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
     const pipeline = util.promisify(stream.pipeline);
     const downloadStream = got.stream(from, { timeout: {} });
@@ -126,7 +126,7 @@ export async function useGotToDownloadFile(from, to) {
 /**
  * 使用Aria2下载单个文件
  */
-export async function useAria2ToDownloadFile(from, to, callbackA, callbackB) {
+export async function downloadFileByAria2(from, to, callbackA, callbackB) {
     if (f.existsSync(to)) {
         return;
     }
@@ -182,7 +182,7 @@ export async function useAria2ToDownloadFile(from, to, callbackA, callbackB) {
                 path: data[3].trim(),
             });
             if (data[1].trim() !== "OK" && typeof callbackA === "undefined" && typeof callbackB === "undefined") {
-                useAria2ToDownloadFile(from, to);
+                downloadFileByAria2(from, to);
             }
         }
     });

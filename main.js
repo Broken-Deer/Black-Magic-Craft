@@ -1,28 +1,25 @@
 const { app, BrowserWindow, dialog } = require("electron");
-const f = require("fs");
-const os = require("os");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
 const ElectronStore = require("electron-store");
- 
+
 ElectronStore.initRenderer();
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 (async () => {
-    await import("./src/game/LaunchOptions.mjs");
-    await import('./src/installer/minecraft.mjs')
-})(); // 执行.mjs文件
-
+    /* await import("./src/game/LaunchOptions.mjs");
+    await import("./src/installer/minecraft.mjs"); */
+})();
 var win;
-const createWindow = () => {
+const createWindow = show => {
     win = new BrowserWindow({
-        width: 920,
-        height: 509,
-        minWidth: 900,
-        minHeight: 500,
+        width: 870,
+        height: 500,
+        resizable: false,
         transparent: true,
         titleBarStyle: "hidden",
         backgroundColor: "#00000000",
         frame: false,
+        show: show,
         webviewTag: true,
         webPreferences: {
             spellcheck: false,
@@ -35,40 +32,44 @@ const createWindow = () => {
         },
         icon: path.join(__dirname, "./logo.ico"),
     });
-
     win.loadFile("./view/index.html");
-    if (!app.isPackaged) {
-        win.webContents.openDevTools();
-    }
-};
-//触摸屏上禁用双指缩放
-app.commandLine.appendSwitch("disable-pinch", true);
-app.whenReady().then(() => {
-    createWindow();
-    app.on("activate", () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (!app.isPackaged && show) win.webContents.openDevTools();
+    win.webContents.on("before-input-event", (event, input) => {
+        if (input.code == "F4" && input.alt) {
+            event.preventDefault();
+            closeWindow.reply("close-window");
+        }
     });
+};
+var closeWindow;
+ipcMain.on("main-get-event-obj", event => {
+    closeWindow = event;
 });
 
+app.commandLine.appendSwitch("disable-pinch", true);
+app.whenReady().then(() => {
+    createWindow(false);
+    setTimeout(() => {
+        createWindow(true);
+    }, 3000);
+});
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
 });
-
-/* ipc命令监听器 */
 
 ipcMain.on("window-min", () => {
     win.minimize();
 });
 
 ipcMain.on("window-close", () => {
-    win.close();
+    app.quit();
 });
 
 ipcMain.on("OpenDevTools", () => {
     win.webContents.openDevTools();
 });
 
-ipcMain.on("choose_java", (event) => {
+ipcMain.on("choose_java", event => {
     win.focus();
     // 如果平台是“win32”或“Linux”
     if (process.platform !== "darwin") {
@@ -79,7 +80,7 @@ ipcMain.on("choose_java", (event) => {
                 // 指定文件选择器属性
                 properties: ["openFile"],
             })
-            .then((file) => {
+            .then(file => {
                 // 说明对话框操作是否已取消。
                 console.log(file.canceled);
                 if (!file.canceled) {
@@ -90,7 +91,7 @@ ipcMain.on("choose_java", (event) => {
                     event.reply("file", "error");
                 }
             })
-            .catch((err) => {
+            .catch(err => {
                 console.log(err);
             });
     } else {
@@ -102,7 +103,7 @@ ipcMain.on("choose_java", (event) => {
                 // macOS 中的选择器属性
                 properties: ["openFile"],
             })
-            .then((file) => {
+            .then(file => {
                 console.log(file.canceled);
                 if (!file.canceled) {
                     const filepath = file.filePaths[0].toString();
@@ -112,11 +113,8 @@ ipcMain.on("choose_java", (event) => {
                     event.reply("file", "error");
                 }
             })
-            .catch((err) => {
+            .catch(err => {
                 console.log(err);
             });
     }
 });
-
-
-

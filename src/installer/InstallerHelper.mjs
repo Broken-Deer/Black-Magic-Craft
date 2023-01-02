@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import f from "fs";
 import path from "path";
 import got from "got";
 import { getVersionList } from "@xmcl/installer";
+
 export function getOSInfomation() {
     let os_type;
     switch (os.type()) {
@@ -100,7 +101,7 @@ export function GetTaskStatus(task, lastProgress) {
     };
 }
 
-export function renameGame(OldVersionName, NewVersionName, callback) {
+export function renameGame(OldVersionName, NewVersionName) {
     const OldVersionDir = path.join(GetPath().gamePath, "versions", OldVersionName);
     const NewVersionDir = path.join(GetPath().gamePath, "versions", NewVersionName);
     try {
@@ -118,19 +119,23 @@ export function renameGame(OldVersionName, NewVersionName, callback) {
             path.join(NewVersionDir, `${NewVersionName}.json`)
         );
     } catch (error) {}
-    if (typeof callback === "function") {
-        callback();
-    }
 }
 
 /**
  * 将不完整的version.json与对应的原版json合并
- * @param { String } path 不完整的JSON所在的位置
+ * @param { String } filePath 不完整的JSON所在的位置
  * @param { Boolean } deleteOriginal 是否删除原来的version.json
  */
-export async function MargeVersionJSON(path, deleteOriginal) {
-    const OriginalVersionJSON = JSON.parse(f.readFileSync(path));
-    let VersionJSON = await getVersionJSON(OriginalVersionJSON.inheritsFrom);
+export async function MargeVersionJSON(filePath, deleteOriginal, inheritsFrom) {
+    const OriginalVersionJSON = JSON.parse(f.readFileSync(filePath));
+    let VersionJSON;
+    if (typeof inheritsFrom === "string") {
+        VersionJSON = JSON.parse(
+            f.readFileSync(path.join(path.dirname(filePath), "..", inheritsFrom, `${inheritsFrom}.json`))
+        );
+    } else {
+        VersionJSON = await getVersionJSON(OriginalVersionJSON.inheritsFrom);
+    }
     try {
         VersionJSON.arguments.jvm = [...VersionJSON.arguments.jvm, ...OriginalVersionJSON.arguments.jvm];
     } catch (error) {}
@@ -147,7 +152,7 @@ export async function MargeVersionJSON(path, deleteOriginal) {
         VersionJSON.mainClass = OriginalVersionJSON.mainClass;
     } catch (error) {}
     if (deleteOriginal) {
-        f.unlink(path, () => {});
+        f.unlink(filePath, () => {});
     }
     console.log(VersionJSON);
     return VersionJSON;

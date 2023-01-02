@@ -2,18 +2,14 @@ import { load, update } from "../tools/LoadConfigs.js";
 
 export default {
     data() {
-        var conf = load(this.config);
+        const config = load(this.config);
         var value;
-        if (typeof conf == "number") {
-            value = conf;
-        } else {
-            value = this.min;
-        }
+        typeof config === "number" ? (value = config) : (value = this.min);
         return {
             value: value,
         };
     },
-    template: /* html */ `
+    template: /* template */ `
     <div class="input input-text input-slider">
     <span class="name">{{name}}</span>
     <div style="display: flex; line-height: 1.7;width: 100%;justify-content: flex-end;">
@@ -26,7 +22,7 @@ export default {
           required v-model="value" placeholder="默认" @Blur="onBlur"/>
         <div class="underline"></div>
       </div>
-      <span class="text">{{u}}</span>
+      <span class="text">{{text}}</span>
     </div>
   </div>`,
     props: {
@@ -36,7 +32,7 @@ export default {
         max: String,
         min: String,
         step: String,
-        u: String,
+        text: String,
         AllowExceeding: String,
     },
     methods: {

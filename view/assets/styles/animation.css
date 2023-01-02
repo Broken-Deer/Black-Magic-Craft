@@ -4,9 +4,10 @@
 }
 
 body {
-    transition: transform .3s cubic-bezier(0.6, -0.58, 0.74, 0.05), opacity .3s cubic-bezier(0.6, -0.58, 0.74, 0.05);
+    transition: all 0.25s ease-in;
     width: calc(100vw - 10px);
     height: calc(99.8vh - 10px);
+    display: flex;
 }
 
 .btn_ {

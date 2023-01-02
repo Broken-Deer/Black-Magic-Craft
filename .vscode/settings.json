@@ -1,4 +1,5 @@
 {
     "editor.cursorSmoothCaretAnimation": "on",
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "commentTranslate.hover.enabled": true
 }

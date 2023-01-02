@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@ import { GetPath, GetTaskStatus, MargeVersionJSON, renameGame } from "./Installe
 import path from "path";
 import f from "fs";
 
+/**
+ * 安装游戏然后安装forge
+ */
 export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeVersion) {
     const MinecraftLocation = GetPath().gamePath;
     await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false);
@@ -46,13 +49,12 @@ export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeV
         },
     };
     await ForgeInstallTask.startAndWait(onFaild);
-    renameGame(`${MinecraftVersion}-forge-${ForgeVersion}`, versionName, async () => {
-        f.writeFileSync(
-            path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`),
-            JSON.stringify(
-                await MargeVersionJSON(path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`))
-            )
-        );
-        await InstallGameByJSON(versionName, true);
-    });
+    renameGame(`${MinecraftVersion}-forge-${ForgeVersion}`, versionName);
+    f.writeFileSync(
+        path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`),
+        JSON.stringify(
+            await MargeVersionJSON(path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`))
+        )
+    );
+    await InstallGameByJSON(versionName, true);
 }

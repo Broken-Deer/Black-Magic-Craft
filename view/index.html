@@ -1,6 +1,6 @@
 <!-- Copyright (c) Broken Deer. All rights reserved -->
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
   <meta charset="UTF-8" />
@@ -12,32 +12,33 @@
   <link rel="stylesheet" type="text/css" href="./assets/styles/font-icon.css" />
   <link rel="stylesheet" type="text/css" href="./assets/styles/control.css" />
   <!-- 加载脚本 -->
-  <script src="./vendor/jquery.js"></script>
+  <script async src="./vendor/jquery.js"></script>
   <script>
     if (typeof module === "object") {
       window.jQuery = window.$ = module.exports;
     }
   </script>
-  <script src="./vendor/ac-colors.min.js"></script>
-  <script src="./vendor/hsvToRgb.js"></script>
-  <script src="./vendor/jquery-ui.min.js"></script>
-  <script src="./vendor/vue.js"></script>
-  <script src="./app/core/auth.js"></script>
-  <script src="./app/core/download.js"></script>
-  <script src="./app/core/installer.js"></script>
-  <script src="./app/view/Button.js"></script>
-  <script src="./app/view/Card.js"></script>
-  <script src="./app/view/Control.js"></script>
-  <script src="./app/view/Page.js"></script>
-  <script src="./app/view/PopupWindow.js"></script>
-  <script src="./app/view/Sidebar.js"></script>
-  <script src="./renderer.js"></script>
-  <script src="./app/onload.js" type="module"></script>
+  <script async src="./vendor/ac-colors.min.js"></script>
+  <!-- <script src="./vendor/hsvToRgb.js"></script> -->
+  <!-- <script src="./vendor/jquery-ui.min.js"></script> -->
+  <script async src="./vendor/vue.js"></script>
+  <script async src="./vendor/vanilla-tilt.js"></script>
+  <script async src="./app/core/auth.js"></script>
+  <script async src="./app/core/download.js"></script>
+  <script async src="./app/core/installer.js"></script>
+  <script async src="./app/view/Button.js"></script>
+  <script async src="./app/view/Card.js"></script>
+  <script async src="./app/view/Control.js"></script>
+  <script async src="./app/view/Page.js"></script>
+  <script async src="./app/view/PopupWindow.js"></script>
+  <script async src="./app/view/Sidebar.js"></script>
+  <script async src="./renderer.js"></script>
+  <script async src="./app/onload.js" type="module"></script>
   <!-- 由脚本控制的样式表 -->
   <style id="style"></style>
 </head>
 
-<body style="transform: scale(0.95, 0.95); opacity: 0">
+<body style="transform: scale(0.92); opacity: 0;">
   <!-- 窗口主体 -->
   <div id="win">
     <div class="popup_window" id="pop_up_window_shadow"></div>
@@ -67,13 +68,57 @@
     <main class="page" onclick="$('#sidebar').addClass('sidebar-close');">
       <div class="page" id="main">
         <!-- 在这里挂载主要页面内容 -->
+        <div class="home-page" id="home_pg">
+          <div>
+            <div class="child-sidebar">
+              <li class="active" onclick="sidebar_active(this, '597CE489')"><i class="house"></i>主页</li>
+
+              <p>游戏</p>
+              <ul class="gamelist" id="gamelist" onclick="sidebar_active(this, '4AA85CFD')">
+                <li>
+                  <label>
+                    <input type="radio" name="gamelist">
+                    <img src="./assets/images/Grass_Block.webp">1.19.2-forge
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div id="597CE489" style="display: none;">
+              <card title="新情报速递" :can-swap="true" :is-swaped="false" width="100%" height="100px"></card>
+              <card title="最近游戏" :can-swap="true" :is-swaped="false" width="100%" height="100px"></card>
+              <card title="所有游戏" :can-swap="true" :is-swaped="false" width="100%" height="100px"></card>
+            </div>
+            <div id="4AA85CFD">
+              <div class="version-info card">
+                <div>
+                  <div><img src="./assets/images/Grass_Block_JE2.webp">Minecraft 1.19.2</div>
+                </div>
+                <div>
+                  <p class="version-name">Minecraft 1.19.2</p>
+                  <div style="display: flex;flex-direction: row-reverse;align-items: center;">
+                    <div class="start-game"><i class="play"
+                        style="font-family: 'fa-pro'; font-style: normal; margin-right: 5px; font-weight: 100;"></i>开始游戏
+                    </div>
+                    <i class="button gear"></i>
+                    <i class="button circle-info"></i>
+                    <i class="button star"></i>
+                  </div>
+                </div>
+              </div>
+              <card margin="10,0,0,0" title="地图存档" description="创建了0个世界" icon="map" :is-swaped=true>
+                <list-item></list-item>
+              </card>
+              <card margin="10,0,0,0" title="模组" description="启用了0个模组" icon="puzzle-piece" :is-swaped=true></card>
+              <card margin="10,0,0,0" title="资源包" description="启用了0个资源包" icon="palette" :is-swaped=true></card>
+              <card margin="10,0,20,0" title="光影包" description="启用了0个光影包" icon="map" :is-swaped=true></card>
+            </div>
+          </div>
+        </div>
       </div>
-
     </main>
- 
   </div>
-
-  <!-- 不显示 -->
   <div class="dont_display">
     <!-- 在这里挂载弹窗内容 -->
   </div>

@@ -6,6 +6,7 @@ import { commandButton, commandButtonMini } from "./components/commandButton.js"
 import sidebarItem from "./components/sidebarItem.js";
 import sliderBar from "./components/sliderBar.js";
 import card from "./components/card.js";
+import listItem from "./components/listItem.js";
 
 import WareHouse from "./components/page/WareHouse.js";
 import downloadPage from "./components/page/DownloadPage.js";
@@ -79,7 +80,7 @@ var zh_cn = {
 };
 export default zh_cn;
 
-window.onload = function () {
+window.onload = () => {
     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
         const b = document.querySelectorAll(".ancient_debris");
@@ -91,16 +92,14 @@ window.onload = function () {
             $(b).addClass("dispnone");
         }
     });
-    setTimeout(() => {
-        $("body").attr("style", "transform: scale(1); opacity: 1; transition: transform .4s ease, opacity .4s ease");
-    }, 100);
+    $("body").attr("style", "transform: scale(1); opacity: 1; transition: all 250ms cubic-bezier(0.04, 0.47, 0.47, 0.98)");
 };
-updateGamelist();
+/* updateGamelist();
 setInterval(() => {
     try {
         updateGamelist();
     } catch (e) {}
-}, 500);
+}, 500); */
 document.addEventListener("DOMContentLoaded", () => {});
 Vue.createApp({
     data() {
@@ -116,6 +115,7 @@ Vue.createApp({
         sidebarItem,
         sliderBar,
         commandButtonMini,
+        listItem,
     },
 }).mount("#win");
 Vue.createApp({
@@ -125,7 +125,7 @@ Vue.createApp({
     components: { sidebar },
 }).mount(".sidebar-links");
 Vue.createApp({
-    template: /* template */ `
+    template: `
     <ware-house>   </ware-house>
         <download-page></download-page>
         <settings></settings>
@@ -144,3 +144,10 @@ Vue.createApp({
         colorChooser,
     },
 }).mount(".dont_display");
+
+VanillaTilt.init(document.querySelectorAll(".start-game"), {
+    max: 0, //最大倾斜度数
+    speed: 500, //倾斜转换的速度
+    glare: true, //是否开启眩光效果
+    "max-glare": 0.5, //最大眩光的不透明度
+});

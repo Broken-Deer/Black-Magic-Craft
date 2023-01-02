@@ -16,7 +16,6 @@ export default {
             <div class="card">
               <div class="card-body">
                 <checkbox name="显示远古版、快照版" id="2B39A329" id2="5D4CBB91" chek="checked"></checkbox>
-                <command-button-mini text="切换下载源"></command-button-mini>
               </div>
             </div>
             <div style="opacity: 1;" id="B9C498C7">

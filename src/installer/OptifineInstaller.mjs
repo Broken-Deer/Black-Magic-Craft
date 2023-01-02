@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@ import { installOptifine } from "@xmcl/installer";
 import f from "fs";
 import got from "got";
 import path from "path";
-import { useAria2ToDownloadFile } from "./FileDownloader.mjs";
+import { downloadFileByAria2 } from "./FileDownloader.mjs";
 
 export async function InstallGameWithOptifine(VersionName, MinecraftVersion, type, patch) {
     const MinecraftLocation = "Y:/mc/test/.minecraft/";
     const VersionDir = path.join(MinecraftLocation, `versions/${VersionName}`);
-    useAria2ToDownloadFile(
+    downloadFileByAria2(
         `https://bmclapi2.bangbang93.com/optifine/${MinecraftVersion}/${type}/${patch}`,
         path.join(MinecraftLocation, ".cache/optifine.jar"),
         undefined,
@@ -48,7 +48,7 @@ export async function InstallGameWithOptifine(VersionName, MinecraftVersion, typ
             const OptifineVersionJSON = JSON.parse(f.readFileSync(path.join(VersionDir, `${VersionName}.json`)));
             VersionJSON.libraries = [...VersionJSON.libraries, ...OptifineVersionJSON.libraries];
             f.writeFileSync(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-            useAria2ToDownloadFile(VersionJSON.downloads.client.url, path.join(VersionDir, `${VersionName}.jar`));
+            downloadFileByAria2(VersionJSON.downloads.client.url, path.join(VersionDir, `${VersionName}.jar`));
             await InstallAssetsAndLibraries(VersionName);
         }
     );
@@ -56,7 +56,7 @@ export async function InstallGameWithOptifine(VersionName, MinecraftVersion, typ
 
 export function InstallOptifineAsMod(VersionName, mcversion, type, patch) {
     const MinecraftLocation = "Y:/mc/test/.minecraft/";
-    useAria2ToDownloadFile(
+    downloadFileByAria2(
         `https://bmclapi2.bangbang93.com/optifine/${mcversion}/${type}/${patch}`,
         path.join(MinecraftLocation, `versions/mods/${VersionName}.jar`)
     );

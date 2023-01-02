@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import { installQuiltVersion } from "@xmcl/installer";
 import f from "fs";
 import path from "path";
 import { InstallGameByJSON, InstallVanillaGame } from "./DefaultGameInstaller.mjs";
-import { useAria2ToDownloadFile } from "./FileDownloader.mjs";
+import { downloadFileByAria2 } from "./FileDownloader.mjs";
 import { GetPath, MargeVersionJSON } from "./InstallerHelper.mjs";
 
 /**
@@ -48,7 +48,7 @@ export async function InstallGameWithQuilt(MinecraftVersion, QuiltVersion, Versi
                 true
             );
             f.writeFileSync(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-            InstallGameByJSON(VersionName, true)
+            InstallGameByJSON(VersionName, true);
         }
     );
 }

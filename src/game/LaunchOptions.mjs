@@ -1,6 +1,6 @@
 /*
  * Black Magic Launcher
- * Copyright (C) 2020 Broken-Deer <old_driver__@outlook.com> and contributors
+ * Copyright (C) 2022-2023 Broken_Deer <old_driver__@outlook.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ ipcMain.on("GetLaunchOption", (event, args) => {
         switch (args[0]) {
             case "Javalist":
                 await getJavalist(event);
-                getVersionInfo('1.18.2')
+                getVersionInfo("1.18.2");
                 break;
 
             case "isGloble":
@@ -47,41 +47,44 @@ ipcMain.on("GetLaunchOption", (event, args) => {
  * 获取已安装的所有java，并发送给渲染进程
  */
 export async function getJavalist(event) {
-    exe.exec('PowerShell -Command "Get-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object InstallLocation"', (err, stdout) => {
-        let Paths = stdout.toString().split("\r\n");
-        let Javalist = [];
-        for (let index = 0; index < Paths.length; index++) {
-            Paths[index] = Paths[index].trim();
-        }
-        for (let index = 0; index < Paths.length; index++) {
-            if (index < 3) {
-                continue;
+    exe.exec(
+        'PowerShell -Command "Get-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object InstallLocation"',
+        (err, stdout) => {
+            let Paths = stdout.toString().split("\r\n");
+            let Javalist = [];
+            for (let index = 0; index < Paths.length; index++) {
+                Paths[index] = Paths[index].trim();
             }
-            const Path = Paths[index].trim();
-            if (Path == 0) {
-                continue;
-            }
-            if (!f.existsSync(`${Path}release`)) {
-                continue;
-            }
-            let javaInfo = f.readFileSync(`${Path}release`, "utf-8").split("\n");
-            for (let o = 0; o < javaInfo.length; o++) {
-                let javaInfoItem = javaInfo[o].split("=");
-                if (javaInfoItem[0] != "JAVA_VERSION") {
+            for (let index = 0; index < Paths.length; index++) {
+                if (index < 3) {
                     continue;
                 }
-                Javalist.push({
-                    path: `${Path}bin\\java.exe`,
-                    version: javaInfoItem[1].replace(/\"/g, "").replace(/\s/g, ""),
-                });
+                const Path = Paths[index].trim();
+                if (Path == 0) {
+                    continue;
+                }
+                if (!f.existsSync(`${Path}release`)) {
+                    continue;
+                }
+                let javaInfo = f.readFileSync(`${Path}release`, "utf-8").split("\n");
+                for (let o = 0; o < javaInfo.length; o++) {
+                    let javaInfoItem = javaInfo[o].split("=");
+                    if (javaInfoItem[0] != "JAVA_VERSION") {
+                        continue;
+                    }
+                    Javalist.push({
+                        path: `${Path}bin\\java.exe`,
+                        version: javaInfoItem[1].replace(/\"/g, "").replace(/\s/g, ""),
+                    });
+                }
             }
+            if (typeof event != "undefined") {
+                event.reply("LaunchOption", Javalist);
+            }
+            // 更新配置文件
+            store.set("javalist", Javalist);
         }
-        if (typeof event != "undefined") {
-            event.reply("LaunchOption", Javalist);
-        }
-        // 更新配置文件
-        store.set("javalist", Javalist);
-    });
+    );
 }
 
 /**

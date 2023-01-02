@@ -1,5 +1,6 @@
 const ipc = require("electron").ipcRenderer;
 const os = require("os");
+
 function execute(command) {
     ipc.send(command);
 }
@@ -27,9 +28,13 @@ function choose_java(eventobj) {
         }
     });
 }
+ipc.send("main-get-event-obj");
 
+ipc.on("close-window", () => {
+    win_close();
+});
 function win_close() {
-    $("body").attr("style", "transform: scale(0.95, 0.95); ; opacity: 0;");
+    $("body").attr("style", "transform: scale(0.93);  opacity: 0;");
     setTimeout(() => {
         ipc.send("window-close");
     }, 360);
@@ -76,7 +81,9 @@ function updateGamelist() {
             Gamelist = data;
             $("#gamelist").empty();
             if (data == 0) {
-                $("#gamelist").append(/* html */ `<p style="margin: auto;font-size: 13px;color: #000000b5;font-style: italic;">此视图筛选条件</p>`);
+                $("#gamelist").append(
+                    /* html */ `<p style="margin: auto;font-size: 13px;color: #000000b5;font-style: italic;">此视图筛选条件无匹配结果</p>`
+                );
             }
             for (let index = 0; index < data.length; index++) {
                 const versionName = data[index];
@@ -101,11 +108,16 @@ ipc.on("DownloadInfo", (event, args) => {
 ipc.on("DownloadResults", (event, args) => {
     downloading = downloading.filter((value, index, arr) => {
         if (arr[index][0] === args.id) {
-            return false
+            return false;
         } else {
-            return true
+            return true;
         }
-    })
-    startDownloadQueue()
-    console.log(`队列剩余${tasklist.length}个文件`)
+    });
+    startDownloadQueue();
+    console.log(`队列剩余${tasklist.length}个文件`);
 });
+function a() {
+    while (1 > 0) {
+        console.log("1");
+    }
+}
