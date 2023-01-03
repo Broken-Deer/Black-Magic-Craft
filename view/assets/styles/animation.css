@@ -4,10 +4,9 @@
 }
 
 body {
-    transition: all 0.25s ease-in;
-    width: calc(100vw - 10px);
-    height: calc(99.8vh - 10px);
-    display: flex;
+    width: 100vw;
+    height: 100vh;
+    padding: 5px;
 }
 
 .btn_ {
@@ -199,4 +198,23 @@ body {
 i.spinner-third {
     animation: mspin-rotate 600ms linear infinite;
     margin-left: -1px;
+}
+
+/* vue动画 */
+.list-item-move,
+/* 对移动中的元素应用的过渡 */
+.list-item-enter-active,
+.list-item-leave-active {
+    transition: all 50s ease;
+}
+
+.list-item-enter-from,
+.list-item-leave-to {
+    opacity: 0;
+}
+
+/* 确保将离开的元素从布局流中删除
+  以便能够正确地计算移动的动画。 */
+.list-item-leave-active {
+    /* display: none; */
 }

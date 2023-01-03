@@ -48,12 +48,12 @@
         }
     },
     "dependencies": {
-        "@xmcl/installer": "^4.4.0",
-        "compressing": "^1.6.3",
+        "@xmcl/installer": "4.4.0",
         "electron-store": "8.1.0",
         "got": "12.5.2",
         "graceful-fs": "4.2.10",
         "p-limit": "4.0.0",
-        "p-queue": "7.3.0"
+        "p-queue": "7.3.0",
+        "prismarine-nbt": "2.2.1"
     }
 }

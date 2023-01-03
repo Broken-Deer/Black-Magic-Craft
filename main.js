@@ -12,7 +12,7 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 var win;
 const createWindow = show => {
     win = new BrowserWindow({
-        width: 870,
+        width: 900,
         height: 500,
         resizable: false,
         transparent: true,
@@ -40,6 +40,10 @@ const createWindow = show => {
             closeWindow.reply("close-window");
         }
     });
+    win.on('close', () => {
+        app.exit()
+    })
+    win.focus();
 };
 var closeWindow;
 ipcMain.on("main-get-event-obj", event => {
@@ -62,7 +66,7 @@ ipcMain.on("window-min", () => {
 });
 
 ipcMain.on("window-close", () => {
-    app.quit();
+    app.exit();
 });
 
 ipcMain.on("OpenDevTools", () => {
@@ -75,10 +79,11 @@ ipcMain.on("choose_java", event => {
     if (process.platform !== "darwin") {
         // Resolves to a Promise<Object>
         dialog
-            .showOpenDialog({
+            .showOpenDialog(win, {
                 title: "选择Java",
                 // 指定文件选择器属性
                 properties: ["openFile"],
+                filters: [{ name: "可执行文件", extensions: ["exe"] }],
             })
             .then(file => {
                 // 说明对话框操作是否已取消。

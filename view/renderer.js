@@ -1,5 +1,9 @@
 const ipc = require("electron").ipcRenderer;
-const os = require("os");
+
+async function a() {
+    ipc.invoke().then((result) => { })
+    console.log(1)
+}
 
 function execute(command) {
     ipc.send(command);
@@ -34,7 +38,7 @@ ipc.on("close-window", () => {
     win_close();
 });
 function win_close() {
-    $("body").attr("style", "transform: scale(0.93);  opacity: 0;");
+    $("#win").attr("style", "transform: scale(0.93);  opacity: 0;");
     setTimeout(() => {
         ipc.send("window-close");
     }, 360);
@@ -116,8 +120,3 @@ ipc.on("DownloadResults", (event, args) => {
     startDownloadQueue();
     console.log(`队列剩余${tasklist.length}个文件`);
 });
-function a() {
-    while (1 > 0) {
-        console.log("1");
-    }
-}

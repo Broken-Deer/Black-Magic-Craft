@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Black Magic Launcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 加载样式表 -->
   <link rel="stylesheet" href="./assets/styles/index.css" />
   <link rel="stylesheet" href="./assets/styles/font.css" />
@@ -14,14 +15,12 @@
   <!-- 加载脚本 -->
   <script async src="./vendor/jquery.js"></script>
   <script>
-    if (typeof module === "object") {
-      window.jQuery = window.$ = module.exports;
-    }
+
   </script>
   <script async src="./vendor/ac-colors.min.js"></script>
   <script async src="./vendor/hsvToRgb.js"></script>
   <!-- <script src="./vendor/jquery-ui.min.js"></script> -->
-  <script src="./vendor/vue.js"></script>
+  <script async src="./vendor/vue.js"></script>
   <script async src="./vendor/vanilla-tilt.js"></script>
   <script async src="./app/core/auth.js"></script>
   <script async src="./app/core/download.js"></script>
@@ -38,9 +37,9 @@
   <style id="style"></style>
 </head>
 
-<body style="transform: scale(0.92); opacity: 0;">
+<body>
   <!-- 窗口主体 -->
-  <div id="win">
+  <div id="win" style="transform: scale(0.92); opacity: 0;">
     <div class="popup_window" id="pop_up_window_shadow"></div>
     <div class="title-bar">
       <div class="title">
@@ -67,7 +66,8 @@
       </div>
     </main>
   </div>
-  <div class="dont_display">
+  <!-- 隐藏内容 -->
+  <div class="dont_display dialogs">
     <!-- 在这里挂载弹窗内容 -->
   </div>
 </body>

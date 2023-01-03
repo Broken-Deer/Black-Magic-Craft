@@ -10,6 +10,7 @@ function expanded_card(eventobj, value) {
     }, 250);
     if ($(card).hasClass("not-expanded")) {
         /* 如果已经处于折叠状态 */
+        $(body.firstElementChild).removeClass('dont_display')
         $(body).attr("style", "height: 0;overflow: hidden;"); /* 设置元素溢出隐藏，高度0 */
         $(card).removeClass("not-expanded"); /* 移除标记 */
         if (typeof value != "number") {
@@ -33,5 +34,9 @@ function expanded_card(eventobj, value) {
         setTimeout(() => {
             $(head).attr("style", "");
         }, 200);
+        /* 折叠后给子元素设置displaynone提高性能 */
+        setTimeout(() => {
+            $(body.firstElementChild).addClass('dont_display')
+        }, 300);
     }
 }

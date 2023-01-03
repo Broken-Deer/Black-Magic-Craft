@@ -6,7 +6,7 @@ export const listItem = {
         };
     },
     template: /* template */ `
-    <div class="list-item" style="listItemStyle">
+    <li class="list-item" style="listItemStyle">
         <div>
             <div class="logo" :style="logoStyle"></div>
             <div>
@@ -17,7 +17,7 @@ export const listItem = {
         <div>
             <slot></slot>
         </div>
-    </div>
+    </li>
     `,
     props: {
         logo: String,
