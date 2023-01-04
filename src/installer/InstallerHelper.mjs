@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import os, { version } from "os";
+
+import os from "os";
 import f from "fs/promises";
-/* import { app } from "electron"; */
 import path from "path";
 import got from "got";
 import { getVersionList } from "@xmcl/installer";

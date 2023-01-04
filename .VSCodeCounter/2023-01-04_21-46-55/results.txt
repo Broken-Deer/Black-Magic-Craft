@@ -1,0 +1,132 @@
+Date : 2023-01-04 21:46:55
+Directory : y:\mc
+Total : 83 files,  36325 codes, 2489 comments, 776 blanks, all 39590 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         71 |     25,002 |      2,367 |        348 |     27,717 |
+| JSON       |          2 |      8,978 |          0 |          2 |      8,980 |
+| CSS        |          5 |      2,137 |         87 |        416 |      2,640 |
+| XML        |          1 |        118 |          0 |          0 |        118 |
+| HTML       |          2 |         89 |         11 |          9 |        109 |
+| Markdown   |          1 |          1 |         24 |          0 |         25 |
+| Ignore     |          1 |          0 |          0 |          1 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                    |         83 |     36,325 |      2,489 |        776 |     39,590 |
+| src                                                  |         24 |      1,320 |        336 |        107 |      1,763 |
+| src\game                                             |          5 |        424 |         95 |         35 |        554 |
+| src\installer                                        |          9 |        545 |        237 |         39 |        821 |
+| src\instance                                         |          5 |        245 |          0 |         25 |        270 |
+| src\launch                                           |          1 |         83 |          0 |          2 |         85 |
+| src\settings                                         |          1 |          0 |          0 |          1 |          1 |
+| src\utils                                            |          2 |         23 |          4 |          4 |         31 |
+| view                                                 |         53 |     25,876 |      2,126 |        657 |     28,659 |
+| view\app                                             |         38 |      2,045 |         73 |        102 |      2,220 |
+| view\app\components                                  |         25 |      1,120 |          0 |         44 |      1,164 |
+| view\app\components\page                             |         11 |        630 |          0 |         24 |        654 |
+| view\app\components\window                           |          3 |        115 |          0 |          4 |        119 |
+| view\app\core                                        |          3 |        418 |         26 |         18 |        462 |
+| view\app\i18n                                        |          2 |         65 |          0 |          3 |         68 |
+| view\app\view                                        |          6 |        292 |          5 |         24 |        321 |
+| view\assets                                          |          6 |      2,255 |         87 |        416 |      2,758 |
+| view\assets\images                                   |          1 |        118 |          0 |          0 |        118 |
+| view\assets\styles                                   |          5 |      2,137 |         87 |        416 |      2,640 |
+| view\vendor                                          |          7 |     21,405 |      1,954 |        122 |     23,481 |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                             | language   | code       | comment    | blank      | total      |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| y:\mc\.prettierignore                                | Ignore     |          0 |          0 |          1 |          1 |
+| y:\mc\README.md                                      | Markdown   |          1 |         24 |          0 |         25 |
+| y:\mc\a.html                                         | HTML       |         29 |          0 |          5 |         34 |
+| y:\mc\main.js                                        | JavaScript |        121 |          3 |          4 |        128 |
+| y:\mc\package-lock.json                              | JSON       |      8,915 |          0 |          1 |      8,916 |
+| y:\mc\package.json                                   | JSON       |         63 |          0 |          1 |         64 |
+| y:\mc\src\game\GameManager.mjs                       | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\game\GetGameInfo.mjs                       | JavaScript |         24 |          0 |          4 |         28 |
+| y:\mc\src\game\LaunchOptions.mjs                     | JavaScript |        126 |         65 |         17 |        208 |
+| y:\mc\src\game\LauncherHelper.mjs                    | JavaScript |         61 |         17 |          5 |         83 |
+| y:\mc\src\game\launch.mjs                            | JavaScript |        213 |         13 |          8 |        234 |
+| y:\mc\src\index.mjs                                  | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\DefaultGameInstaller.mjs         | JavaScript |         80 |         31 |          5 |        116 |
+| y:\mc\src\installer\FabricInstaller.mjs              | JavaScript |         20 |         17 |          2 |         39 |
+| y:\mc\src\installer\FileDownloader.mjs               | JavaScript |        158 |         40 |          7 |        205 |
+| y:\mc\src\installer\ForgeInstaller.mjs               | JavaScript |         39 |         20 |          2 |         61 |
+| y:\mc\src\installer\InstallerHelper.mjs              | JavaScript |        120 |         47 |          9 |        176 |
+| y:\mc\src\installer\LiteloaderInstaller.mjs          | JavaScript |         37 |         25 |          3 |         65 |
+| y:\mc\src\installer\ModInstaller.mjs                 | JavaScript |         18 |         17 |          5 |         40 |
+| y:\mc\src\installer\OptifineInstaller.mjs            | JavaScript |         43 |         17 |          4 |         64 |
+| y:\mc\src\installer\QuiltInstaller.mjs               | JavaScript |         30 |         23 |          2 |         55 |
+| y:\mc\src\instance\Mod.mjs                           | JavaScript |         89 |          0 |         11 |        100 |
+| y:\mc\src\instance\Resourcepack.mjs                  | JavaScript |         59 |          0 |          4 |         63 |
+| y:\mc\src\instance\Shaderpack.mjs                    | JavaScript |         53 |          0 |          5 |         58 |
+| y:\mc\src\instance\Worlds.mjs                        | JavaScript |         31 |          0 |          4 |         35 |
+| y:\mc\src\instance\index.js                          | JavaScript |         13 |          0 |          1 |         14 |
+| y:\mc\src\launch\Launcher.mjs                        | JavaScript |         83 |          0 |          2 |         85 |
+| y:\mc\src\settings\GameInstallerSettings.mjs         | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\utils\FileSystem.mjs                       | JavaScript |         14 |          4 |          2 |         20 |
+| y:\mc\src\utils\Promisify.mjs                        | JavaScript |          9 |          0 |          2 |         11 |
+| y:\mc\view\app\LoadConfigs.js                        | JavaScript |          7 |         25 |          4 |         36 |
+| y:\mc\view\app\components\card.js                    | JavaScript |         47 |          0 |          2 |         49 |
+| y:\mc\view\app\components\cardHeader.js              | JavaScript |         29 |          0 |          1 |         30 |
+| y:\mc\view\app\components\checkbox.js                | JavaScript |         56 |          0 |          2 |         58 |
+| y:\mc\view\app\components\commandButton.js           | JavaScript |         22 |          0 |          1 |         23 |
+| y:\mc\view\app\components\inputText.js               | JavaScript |         65 |          0 |          2 |         67 |
+| y:\mc\view\app\components\listItem.js                | JavaScript |         41 |          0 |          1 |         42 |
+| y:\mc\view\app\components\loading.js                 | JavaScript |         13 |          0 |          1 |         14 |
+| y:\mc\view\app\components\page\AccountSetting.js     | JavaScript |         44 |          0 |          2 |         46 |
+| y:\mc\view\app\components\page\AdvancedSetting.js    | JavaScript |         61 |          0 |          2 |         63 |
+| y:\mc\view\app\components\page\AppearanceSettings.js | JavaScript |         34 |          0 |          3 |         37 |
+| y:\mc\view\app\components\page\DownloadPage.js       | JavaScript |         30 |          0 |          2 |         32 |
+| y:\mc\view\app\components\page\DownloadSetting.js    | JavaScript |         50 |          0 |          2 |         52 |
+| y:\mc\view\app\components\page\EasyuseSetting.js     | JavaScript |         65 |          0 |          3 |         68 |
+| y:\mc\view\app\components\page\GameSetting.js        | JavaScript |        117 |          0 |          3 |        120 |
+| y:\mc\view\app\components\page\GeneralSetting.js     | JavaScript |         22 |          0 |          2 |         24 |
+| y:\mc\view\app\components\page\Settings.js           | JavaScript |         42 |          0 |          2 |         44 |
+| y:\mc\view\app\components\page\WareHouse.js          | JavaScript |        165 |          0 |          2 |        167 |
+| y:\mc\view\app\components\page\test.js               | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\view\app\components\sidebar.js                 | JavaScript |         15 |          0 |          2 |         17 |
+| y:\mc\view\app\components\sidebarItem.js             | JavaScript |         14 |          0 |          1 |         15 |
+| y:\mc\view\app\components\sliderBar.js               | JavaScript |         66 |          0 |          2 |         68 |
+| y:\mc\view\app\components\tooltip.js                 | JavaScript |          7 |          0 |          1 |          8 |
+| y:\mc\view\app\components\window\colorChooser.js     | JavaScript |         64 |          0 |          0 |         64 |
+| y:\mc\view\app\components\window\gameInstall.js      | JavaScript |         32 |          0 |          2 |         34 |
+| y:\mc\view\app\components\window\msLogin.js          | JavaScript |         19 |          0 |          2 |         21 |
+| y:\mc\view\app\core\auth.js                          | JavaScript |        240 |         12 |         10 |        262 |
+| y:\mc\view\app\core\download.js                      | JavaScript |         24 |          4 |          3 |         31 |
+| y:\mc\view\app\core\installer.js                     | JavaScript |        154 |         10 |          5 |        169 |
+| y:\mc\view\app\i18n\loader.js                        | JavaScript |          4 |          0 |          2 |          6 |
+| y:\mc\view\app\i18n\zh_cn.js                         | JavaScript |         61 |          0 |          1 |         62 |
+| y:\mc\view\app\onload.js                             | JavaScript |        143 |         17 |          9 |        169 |
+| y:\mc\view\app\view\Button.js                        | JavaScript |          6 |          0 |          3 |          9 |
+| y:\mc\view\app\view\Card.js                          | JavaScript |         37 |          5 |          1 |         43 |
+| y:\mc\view\app\view\Control.js                       | JavaScript |        163 |          0 |          9 |        172 |
+| y:\mc\view\app\view\Page.js                          | JavaScript |         20 |          0 |          3 |         23 |
+| y:\mc\view\app\view\PopupWindow.js                   | JavaScript |         30 |          0 |          3 |         33 |
+| y:\mc\view\app\view\Sidebar.js                       | JavaScript |         36 |          0 |          5 |         41 |
+| y:\mc\view\assets\images\loading.svg                 | XML        |        118 |          0 |          0 |        118 |
+| y:\mc\view\assets\styles\animation.css               | CSS        |        173 |         12 |         37 |        222 |
+| y:\mc\view\assets\styles\control.css                 | CSS        |        515 |         15 |         94 |        624 |
+| y:\mc\view\assets\styles\font-icon.css               | CSS        |        204 |          0 |         55 |        259 |
+| y:\mc\view\assets\styles\font.css                    | CSS        |         99 |          1 |         19 |        119 |
+| y:\mc\view\assets\styles\index.css                   | CSS        |      1,146 |         59 |        211 |      1,416 |
+| y:\mc\view\index.html                                | HTML       |         60 |         11 |          4 |         75 |
+| y:\mc\view\renderer.js                               | JavaScript |        111 |          1 |         13 |        125 |
+| y:\mc\view\vendor\ac-colors.min.js                   | JavaScript |          1 |          0 |          0 |          1 |
+| y:\mc\view\vendor\hsvToRgb.js                        | JavaScript |         84 |          0 |          1 |         85 |
+| y:\mc\view\vendor\jquery-ui.min.js                   | JavaScript |      8,217 |          4 |          1 |      8,222 |
+| y:\mc\view\vendor\jquery.js                          | JavaScript |          1 |          0 |          0 |          1 |
+| y:\mc\view\vendor\vanilla-tilt.js                    | JavaScript |          1 |          0 |          0 |          1 |
+| y:\mc\view\vendor\vue.dev.js                         | JavaScript |     13,100 |      1,950 |        120 |     15,170 |
+| y:\mc\view\vendor\vue.js                             | JavaScript |          1 |          0 |          0 |          1 |
+| Total                                                |            |     36,325 |      2,489 |        776 |     39,590 |
++------------------------------------------------------+------------+------------+------------+------------+------------+
