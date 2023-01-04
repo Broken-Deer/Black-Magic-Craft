@@ -4,7 +4,7 @@ import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
 import sliderBar from "../sliderBar.js";
 import zh_cn from "../../onload.js";
-import { load, update } from "../../tools/LoadConfigs.js";
+import { load, update } from "../../LoadConfigs.js";
 import card from "../card.js";
 
 export default {
@@ -46,7 +46,7 @@ export default {
       <div class="input input-text input-file" id="E16616C6">
         <span class="name">{{ ui.global_settings.java_path }}</span>
         <div class="input-data input-data-file">
-          <input type="text" title="{{ ui.global_settings.java_path }}" @input="updateData('globle.game.jvpath', jvpath)" required v-model="jvpath" />
+          <input type="text" title="{{ ui.global_settings.java_path }}" @input="updateData('globle.game.jvpath', jvpath)" required v-model="jvpath" readonly />
           <div class="underline"></div>
         </div>
         <div class="choose-file">

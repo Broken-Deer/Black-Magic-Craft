@@ -1,4 +1,4 @@
-import { load, update } from "../tools/LoadConfigs.js";
+import { load, update } from "../LoadConfigs.js";
 
 export const checkbox = {
     data() {

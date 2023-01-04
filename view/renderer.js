@@ -20,15 +20,17 @@ function choose_java(eventobj) {
         if (path == "canceled") {
             return;
         } else if (path == "error") {
-            var title = eventobj.parentNode.previousElementSibling.previousElementSibling;
+            let val = $(input).val()
             $(inputbox).addClass("input-error");
-            $(input).val("Java 路径不正确！");
+            $(input).val("Java 路径不正确");
+            $(eventobj.parentNode).addClass('disable')
             setTimeout(() => {
-                $(input).val("");
+                $(input).val(val);
                 $(inputbox).removeClass("input-error");
-            }, 3000);
+                $(eventobj.parentNode).removeClass('disable')
+            }, 1000);
         } else {
-            $(input).val('"' + path + '"');
+            $(input).val(path);
         }
     });
 }

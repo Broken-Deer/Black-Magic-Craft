@@ -205,16 +205,18 @@ i.spinner-third {
 /* 对移动中的元素应用的过渡 */
 .list-item-enter-active,
 .list-item-leave-active {
-    transition: all 50s ease;
+    transition: all 300ms ease;
 }
 
 .list-item-enter-from,
 .list-item-leave-to {
     opacity: 0;
+    transform: scale(0.99);
 }
-
 /* 确保将离开的元素从布局流中删除
   以便能够正确地计算移动的动画。 */
-.list-item-leave-active {
-    /* display: none; */
-}
+/* .list-item-leave-active {
+   position: absolute;
+   left: 0;
+   right: 0;
+} */

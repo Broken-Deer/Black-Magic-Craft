@@ -2,13 +2,10 @@ const { app, BrowserWindow, dialog } = require("electron");
 const path = require("path");
 const ipcMain = require("electron").ipcMain;
 const ElectronStore = require("electron-store");
-
+const f = require("fs");
 ElectronStore.initRenderer();
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
-(async () => {
-    /* await import("./src/game/LaunchOptions.mjs");
-    await import("./src/installer/minecraft.mjs"); */
-})();
+
 var win;
 const createWindow = show => {
     win = new BrowserWindow({
@@ -40,16 +37,12 @@ const createWindow = show => {
             closeWindow.reply("close-window");
         }
     });
-    win.on('close', () => {
-        app.exit()
-    })
+    win.on("close", () => {
+        app.exit();
+    });
     win.focus();
 };
 var closeWindow;
-ipcMain.on("main-get-event-obj", event => {
-    closeWindow = event;
-});
-
 app.commandLine.appendSwitch("disable-pinch", true);
 app.whenReady().then(() => {
     createWindow(false);
@@ -60,6 +53,12 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
 });
+(async () => {
+    await import("./src/index.mjs");
+})();
+ipcMain.on("main-get-event-obj", event => {
+    closeWindow = event;
+});
 
 ipcMain.on("window-min", () => {
     win.minimize();
@@ -68,54 +67,57 @@ ipcMain.on("window-min", () => {
 ipcMain.on("window-close", () => {
     app.exit();
 });
-
 ipcMain.on("OpenDevTools", () => {
     win.webContents.openDevTools();
 });
-
 ipcMain.on("choose_java", event => {
     win.focus();
     // 如果平台是“win32”或“Linux”
     if (process.platform !== "darwin") {
-        // Resolves to a Promise<Object>
         dialog
             .showOpenDialog(win, {
                 title: "选择Java",
-                // 指定文件选择器属性
                 properties: ["openFile"],
                 filters: [{ name: "可执行文件", extensions: ["exe"] }],
             })
             .then(file => {
-                // 说明对话框操作是否已取消。
-                console.log(file.canceled);
+                // 验证这玩意是不是Java
                 if (!file.canceled) {
                     const filepath = file.filePaths[0].toString();
-                    console.log(filepath);
+                    const releaseFilePath = path.join(filepath, "../../release");
+                    if (
+                        !f.existsSync(releaseFilePath) ||
+                        (path.basename(filepath) !== "java.exe" && path.basename(filepath) !== "javaw.exe")
+                    ) {
+                        event.reply("file", "error");
+                        return;
+                    }
                     event.reply("file", filepath);
                 } else {
-                    event.reply("file", "error");
+                    event.reply("file", "canceled");
                 }
             })
             .catch(err => {
                 console.log(err);
             });
     } else {
-        // 如果平台是“darwin”（macOS）
         dialog
             .showOpenDialog({
                 title: "选择Java",
-                // 指定文件选择器和目录
-                // macOS 中的选择器属性
                 properties: ["openFile"],
             })
             .then(file => {
-                console.log(file.canceled);
+                // 验证这玩意是不是Java
                 if (!file.canceled) {
                     const filepath = file.filePaths[0].toString();
-                    console.log(filepath);
-                    event.send("file", filepath);
+                    const releaseFilePath = path.join(filepath, "../release");
+                    if (!f.existsSync(releaseFilePath)) {
+                        event.reply("file", "error");
+                        return;
+                    }
+                    event.reply("file", filepath);
                 } else {
-                    event.reply("file", "error");
+                    event.reply("file", "canceled");
                 }
             })
             .catch(err => {

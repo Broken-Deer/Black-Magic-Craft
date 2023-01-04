@@ -1,4 +1,4 @@
-import { load, update } from "../tools/LoadConfigs.js";
+import { load, update } from "../LoadConfigs.js";
 
 export default {
     data() {
@@ -19,7 +19,7 @@ export default {
       </div>
       <div class="input-data mini">
         <input type="text" :title="name"
-          required v-model="value" placeholder="默认" @Blur="onBlur"/>
+          required v-model="value" placeholder="默认" @blur="onBlur"/>
         <div class="underline"></div>
       </div>
       <span class="text">{{text}}</span>
@@ -36,13 +36,12 @@ export default {
         AllowExceeding: String,
     },
     methods: {
+        onClick() {
+            alert(1);
+        },
         onBlur() {
-            if (!/^\d+$/.test(this.value)) {
-                this.value = this.min;
-            }
-            if (this.value - 1 - this.min < 0) {
-                this.value = this.min;
-            }
+            if (!/^\d+$/.test(this.value)) this.value = this.min;
+            if (this.value - 1 - this.min < 0) this.value = this.min;
         },
         updateData() {
             update(this.config, Number(this.value));

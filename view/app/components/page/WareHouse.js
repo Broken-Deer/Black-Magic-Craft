@@ -10,6 +10,7 @@ export default {
                 { name: "新的世界", icon: "./assets/images/Unknown_server.webp", time: "2022/11/4 16:10:53" },
                 { name: "新的世界", icon: "./assets/images/Unknown_server.webp", time: "2022/11/4 16:10:53" },
             ],
+            nosave: false,
             mods: [
                 {
                     name: "Fabric API",
@@ -37,6 +38,7 @@ export default {
                     icon: "./assets/images/Unknown_server.webp",
                 },
             ],
+            nomod: false,
             resourcepacks: [
                 {
                     name: "32x32",
@@ -49,6 +51,7 @@ export default {
                     icon: "./assets/images/pack.png",
                 },
             ],
+            nores: false,
             shaderpacks: [
                 {
                     name: "ComplementaryShaders_v4.4.zip",
@@ -56,6 +59,7 @@ export default {
                         '"M:\\Minecraft\\.minecraft\\versions\\1.18.2\\shaderpacks\\ComplementaryShaders_v4.4.zip"',
                 },
             ],
+            noshader: false,
         };
     },
     template: /* template */ `
@@ -95,13 +99,14 @@ export default {
                 </div>
               </div>
               <card margin="10,0,0,0" title="地图存档" description="创建了0个世界" icon="map" :is-swaped="false" :can-swap="true"
-                :padding="[16,20,16,20]">
-                <TransitionGroup name="list-item" tag="ul">
+                :padding="[16,20,16,20]" :height="heightA">
+                <TransitionGroup name="list-item">
                 <list-item :logo="save.icon" :title="save.name" :description="save.time" v-for="save in saves" :key="save">
                   <list-item-button icon="folders"></list-item-button>
                   <list-item-button icon="circle-info"></list-item-button>
                   <list-item-button icon="arrow-up-right-from-square"></list-item-button>
                 </list-item></TransitionGroup>
+                <p class="text-center text-gray text-italic" v-if="nosave">此视图筛选条件无匹配结果</p>
               </card>
               <card margin="10,0,0,0" title="模组" description="启用了0个模组" icon="puzzle-piece" :is-swaped="true"
                 :can-swap="true" :padding="[16,20,16,20]">
@@ -111,22 +116,25 @@ export default {
                 <list-item-button icon="folders"></list-item-button>
                 <list-item-button icon="trash-can"></list-item-button>
                 </list-item></TransitionGroup>
+                <p class="text-center text-gray text-italic" v-if="nomod">此视图筛选条件无匹配结果</p>
               </card>
               <card margin="10,0,0,0" title="资源包" description="启用了0个资源包" icon="palette" :is-swaped="true"
                 :can-swap="true" :padding="[16,20,16,20]">
-                <TransitionGroup name="list-item" tag="ul">
+                <TransitionGroup name="list-item">
                 <list-item :logo="resourcepack.icon" :title="resourcepack.name" :description="resourcepack.description" v-for="resourcepack in resourcepacks" :key="resourcepack">
                 <list-item-button icon="circle-info"></list-item-button>
                 <list-item-button icon="folders"></list-item-button>
                 <list-item-button icon="trash-can"></list-item-button>
               </list-item></TransitionGroup>
+              <p class="text-center text-gray text-italic" v-if="nores">此视图筛选条件无匹配结果</p>
                 </card>
               <card margin="10,0,20,0" title="光影包" description="启用了0个光影包" icon="lightbulb-on" :is-swaped="true" :can-swap="true" :padding="[16,20,16,20]">
-              <TransitionGroup name="list-item" tag="ul"><list-item :title="shaderpack.name" v-for="shaderpack in shaderpacks" :key="shaderpack">
+              <TransitionGroup name="list-item"><list-item :title="shaderpack.name" v-for="shaderpack in shaderpacks" :key="shaderpack">
               <list-item-button icon="circle-info"></list-item-button>
               <list-item-button icon="folders"></list-item-button>
               <list-item-button icon="trash-can"></list-item-button>
             </list-item></TransitionGroup>
+            <p class="text-center text-gray text-italic" v-if="noshader">此视图筛选条件无匹配结果</p>
               </card>
             </div>
           </div>
@@ -140,8 +148,19 @@ export default {
     },
     methods: {
         updateData() {
+            ipc.send("test");
+            ipc.once("test", (event, data) => {
+                console.log(data);
+            });
             console.log(1);
-            this.saves.shift();
+            this.saves = [];
+            setTimeout(() => {
+                if (this.saves == 0) {
+                    this.nosave = true;
+                } else {
+                    this.nosave = false;
+                }
+            }, 300);
         },
     },
 };

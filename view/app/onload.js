@@ -96,6 +96,7 @@ window.onload = () => {
         "style",
         "transform: scale(1); opacity: 1; transition: all 250ms cubic-bezier(0.04, 0.47, 0.47, 0.98)"
     );
+    console.clear()
     console.log(`
     ___  __         __       __  ___          _         __                      __          
     / _ )/ /__ _____/ /__    /  |/  /__ ____ _(_)___    / /  ___ ___ _____  ____/ /  ___ ____        

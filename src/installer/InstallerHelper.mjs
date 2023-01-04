@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import os, { version } from "os";
-import f from "fs";
+import f from "fs/promises";
 /* import { app } from "electron"; */
 import path from "path";
 import got from "got";
@@ -73,20 +73,20 @@ export function GetPath() {
 }
 
 export async function removeDir(dir) {
-    let files = f.readdirSync(dir);
+    let files = await f.readdir(dir);
     for (var i = 0; i < files.length; i++) {
         let newPath = join(dir, files[i]);
-        let stat = f.statSync(newPath);
-        if (stat.isDirectory()) {
+        if ((await f.stat(newPath)).isDirectory()) {
             //如果是文件夹就递归下去
-            removeDir(newPath);
+            await removeDir(newPath);
         } else {
             //删除文件
-            f.unlinkSync(newPath);
+            await f.unlink(newPath);
         }
     }
-    f.rmdirSync(dir); //如果文件夹是空的，就将自己删除掉
+    await f.rmdir(dir); //如果文件夹是空的，就将自己删除掉
 }
+
 export function GetTaskStatus(task, lastProgress) {
     return {
         name: task.name,
@@ -106,19 +106,19 @@ export function renameGame(OldVersionName, NewVersionName) {
     const NewVersionDir = path.join(GetPath().gamePath, "versions", NewVersionName);
     try {
         f.renameSync(OldVersionDir, NewVersionDir);
-    } catch (error) {}
+    } catch (error) { }
     try {
         f.renameSync(
             path.join(NewVersionDir, `${OldVersionName}.jar`),
             path.join(NewVersionDir, `${NewVersionName}.jar`)
         );
-    } catch (error) {}
+    } catch (error) { }
     try {
         f.renameSync(
             path.join(NewVersionDir, `${OldVersionName}.json`),
             path.join(NewVersionDir, `${NewVersionName}.json`)
         );
-    } catch (error) {}
+    } catch (error) { }
 }
 
 /**
@@ -127,32 +127,32 @@ export function renameGame(OldVersionName, NewVersionName) {
  * @param { Boolean } deleteOriginal 是否删除原来的version.json
  */
 export async function MargeVersionJSON(filePath, deleteOriginal, inheritsFrom) {
-    const OriginalVersionJSON = JSON.parse(f.readFileSync(filePath));
+    const OriginalVersionJSON = JSON.parse(await f.readFile(filePath));
     let VersionJSON;
     if (typeof inheritsFrom === "string") {
         VersionJSON = JSON.parse(
-            f.readFileSync(path.join(path.dirname(filePath), "..", inheritsFrom, `${inheritsFrom}.json`))
+            await f.readFile(path.join(path.dirname(filePath), "..", inheritsFrom, `${inheritsFrom}.json`))
         );
     } else {
         VersionJSON = await getVersionJSON(OriginalVersionJSON.inheritsFrom);
     }
     try {
         VersionJSON.arguments.jvm = [...VersionJSON.arguments.jvm, ...OriginalVersionJSON.arguments.jvm];
-    } catch (error) {}
+    } catch (error) { }
     try {
         VersionJSON.arguments.game = [...VersionJSON.arguments.game, ...OriginalVersionJSON.arguments.game];
-    } catch (error) {}
+    } catch (error) { }
     try {
         VersionJSON.libraries = [...VersionJSON.libraries, ...OriginalVersionJSON.libraries];
-    } catch (error) {}
+    } catch (error) { }
     try {
         VersionJSON.logging = [...VersionJSON.logging, ...OriginalVersionJSON.logging];
-    } catch (error) {}
+    } catch (error) { }
     try {
         VersionJSON.mainClass = OriginalVersionJSON.mainClass;
-    } catch (error) {}
+    } catch (error) { }
     if (deleteOriginal) {
-        f.unlink(filePath, () => {});
+        f.unlink(filePath);
     }
     console.log(VersionJSON);
     return VersionJSON;

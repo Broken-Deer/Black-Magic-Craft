@@ -230,22 +230,19 @@ button.command-button:active,
 .input-file .choose-file {
     width: 42px;
     height: 32px;
-    margin-left: 6.5px;
+    margin-left: 6px;
     outline: 1px solid #0000001c;
     background: #fff;
     border-radius: 4px;
     transition: all 0.1s ease;
-    display: inline-block;
 }
 
 .input-file .choose-file>i {
-    /* width: 100%; */
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: "fa";
-    flex-shrink: 0;
 }
 
 /* 小型控件 */

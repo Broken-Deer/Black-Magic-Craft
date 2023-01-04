@@ -2,7 +2,7 @@ import { inputText } from "../inputText.js";
 import { checkbox } from "../checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
-import { load, update } from "../../tools/LoadConfigs.js";
+import { load, update } from "../../LoadConfigs.js";
 import card from "../card.js";
 
 export default {

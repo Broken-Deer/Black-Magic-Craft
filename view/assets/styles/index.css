@@ -11,6 +11,18 @@
     background: rgba(45, 170, 219, 0.3);
 }
 
+.text-center {
+    text-align: center;
+}
+
+.text-gray {
+    color: #0000005b;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
 img {
     pointer-events: none;
 }
@@ -473,16 +485,16 @@ div.page {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    transition: height 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: all 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .card-body>div {
     margin: 23px 33px 23px 33px;
     font-size: 14px;
-    overflow: visible;
     color: rgb(0, 0, 0);
     /* max-height: 500px; */
     /* display: none; */
+    position: relative;
 }
 
 .card-footer {
@@ -644,7 +656,8 @@ div.sidebar {
     z-index: 10000;
 }
 
-.dont_display *, .dont_display {
+.dont_display *,
+.dont_display {
     display: none !important;
 }
 
@@ -1249,7 +1262,7 @@ ul.gamelist>li {
     background-image: linear-gradient(0deg, #00000094, #0000), url(../images/headImage.webp);
     background-size: cover;
     background-position: center;
-    height: 180px;
+    height: 200px;
     padding: 16px 18px 20px 24px;
     display: flex;
     flex-direction: column;
@@ -1272,9 +1285,10 @@ ul.gamelist>li {
     border: 1.6px solid #ffffff26;
     font-size: 14px;
     padding: 6px 12px;
-    color: #ffffffc7;
+    color: #ffffff;
     display: flex;
     width: 200px;
+    background: #00000036;
 }
 
 .home-page .version-info>div:first-child img {
@@ -1350,6 +1364,7 @@ ul.gamelist>li {
     display: flex;
     align-items: center;
 }
+
 .list-item>div:first-child {
     flex: 1;
     overflow: hidden;
@@ -1364,6 +1379,7 @@ ul.gamelist>li {
     margin-right: 10px;
     overflow: hidden;
     border-radius: 6px;
+    background-image: url(./assets/images/Unknown_server.webp);
 }
 
 .list-item h4 {
@@ -1375,8 +1391,8 @@ ul.gamelist>li {
     color: #0000005d;
     font-size: 14px;
     overflow: hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     max-width: calc(100%);
 }
 
@@ -1390,9 +1406,11 @@ ul.gamelist>li {
     font-size: 15px;
     margin: 0 6px;
 }
+
 .list-item .list-item-btn:hover {
     color: #600081;
 }
+
 .list-item .list-item-btn:active {
     transform: scale(0.86);
 }
