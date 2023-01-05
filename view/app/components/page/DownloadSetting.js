@@ -22,7 +22,7 @@ export default {
         }
     },
     template: /* html */ `
-<div id="7277F10D" style="display: none">
+<div id="7277F10D">
 <div class="card">
     <div class="card-body">
         <div>

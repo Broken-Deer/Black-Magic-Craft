@@ -24,7 +24,7 @@ export default {
         }
     },
     template: /* html */ `
-    <div id="6783F38B" style="display:none">
+    <div id="6783F38B">
     <div class="card">
     <card-header title="辅助功能" description="使你的启动器更易于使用" icon="hand"></card-header>
     <div class="card-body">

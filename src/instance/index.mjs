@@ -18,231 +18,169 @@
 
 import { ipcMain } from "electron";
 import { newInstance, renameInstance, deleteInstance, getInstances } from "./InstanceManager.mjs";
-import { addMod, getFileSystem, getModFilePath, getModMeta, getMods, getModType, removeMod } from "./Mod.mjs";
+import { addMod, getModFileSystem, getModFilePath, getModMeta, getMods, getModType, removeMod } from "./Mod.mjs";
 import { addResourcepacks, getResourcepacks, removeResourcepacks } from "./Resourcepack.mjs";
 import { addShaderpack, getShaderpacks, removeShaderpack } from "./Shaderpack.mjs";
 import { addWorld, getWorldInfo, getWorldList, getWorldName, removeWorld } from "./Worlds.mjs";
 
 function setInstanceManagerDetector() {
-    ipcMain
-        .on('new-instance', async (event, {
-            instanceName,
-            minecraftVersion,
-            forgeVersion,
-            liteloaderVersion,
-            fabricLoaderVersion,
-            optifineVersion,
-            quiltVersion,
-            author
-        }) => {
-            let result
-            let err
-            try {
-                result = await newInstance(
-                    instanceName,
-                    minecraftVersion,
-                    forgeVersion,
-                    liteloaderVersion,
-                    fabricLoaderVersion,
-                    optifineVersion,
-                    quiltVersion,
-                    author)
-            } catch (error) {
-                err = error
-            }
-            event.reply('new-instance', { result: result, err: err })
-        })
-        .on('rename-instance', async (event, { oldInstanceName, newInstanceName }) => {
-            let result
-            let err
-            try {
-                result = await renameInstance(oldInstanceName, newInstanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('rename-instance', { result: result, err: err })
-        })
-        .on('delete-instance', async (event, { instanceName }) => {
-            let result
-            let err
-            try {
-                result = await deleteInstance(instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('delete-instance', { result: result, err: err })
-        })
-        .on('get-instances', async (event) => {
-            let result
-            let err
-            try {
-                result = await getInstances()
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-instances', { result: result, err: err })
-        })
-        .on('get-mod-meta', async (event, { instanceName, modfileName }) => {
-            let result
-            let err
-            try {
-                result = await getModMeta(instanceName, modfileName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-mod-meta', { result: result, err: err })
-        })
-        .on('get-mod-type', async (event, { instanceName, modfileName }) => {
-            let result
-            let err
-            try {
-                const fs = getFileSystem(getModFilePath(instanceName, modfileName))
-                result = await getModType(fs)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-mod-type', { result: result, err: err })
-        })
-        .on('add-mod', async (event, { from, instanceName }) => {
-            let result
-            let err
-            try {
-                result = await addMod(from, instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('add-mod', { result: result, err: err })
-        })
-        .on('remove-mod', async (event, { instanceName, modFileName }) => {
-            let result
-            let err
-            try {
-                result = await removeMod(instanceName, modFileName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('remove-mod', { result: result, err: err })
-        })
-        .on('get-mods', async (event, instanceName) => {
-            let result
-            let err
-            try {
-                result = await getMods(instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-mods', { result: result, err: err })
-        })
-        .on('add-resourcepack', async (event, { from, instanceName }) => {
-            let result
-            let err
-            try {
-                result = await addResourcepacks(from, instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('add-resourcepack', { result: result, err: err })
-        })
-        .on('remove-resourcepack', async (event, { instanceName, resourcepackName }) => {
-            let result
-            let err
-            try {
-                result = await removeResourcepacks(instanceName, resourcepackName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('remove-resourcepack', { result: result, err: err })
-        })
-        .on('get-resourcepacks', async (event, instanceName) => {
-            let result
-            let err
-            try {
-                result = await getResourcepacks(instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-resourcepack', { result: result, err: err })
-        })
-        .on('add-shaderpack', async (event, { from, instanceName }) => {
-            let result
-            let err
-            try {
-                result = await addShaderpack(instanceName, from)
-            } catch (error) {
-                err = error
-            }
-            event.reply('add-shaderpack', { result: result, err: err })
-        })
-        .on('remove-shaderpack', async (event, { instanceName, shaderpackName }) => {
-            let result
-            let err
-            try {
-                result = await removeShaderpack(instanceName, shaderpackName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('remove-shaderpack', { result: result, err: err })
-        })
-        .on('get-shaderpacks', async (event, instanceName) => {
-            let result
-            let err
-            try {
-                result = await getShaderpacks(instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
-        .on('get-world-info', async (event, { instanceName, DirName }) => {
-            let result
-            let err
-            try {
-                result = await getWorldInfo(instanceName, DirName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
-        .on('get-world-name', async (event, { instanceName, DirName }) => {
-            let result
-            let err
-            try {
-                result = await getWorldName(instanceName, DirName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
-        .on('add-world', async (event, { instanceName, from }) => {
-            let result
-            let err
-            try {
-                result = await addWorld(instanceName, from)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
-        .on('remove-world', async (event, { instanceName, worldDirName }) => {
-            let result
-            let err
-            try {
-                result = await removeWorld(instanceName, worldDirName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
-        .on('get-world-list', async (event, instanceName) => {
-            let result
-            let err
-            try {
-                result = await getWorldList(instanceName)
-            } catch (error) {
-                err = error
-            }
-            event.reply('get-shaderpacks', { result: result, err: err })
-        })
+    ipcMain.on('new-instance', async (event, {
+        instanceName,
+        minecraftVersion,
+        forgeVersion,
+        liteloaderVersion,
+        fabricLoaderVersion,
+        optifineVersion,
+        quiltVersion,
+        author
+    }) => {
+        let result
+        let err
+        try {
+            result = await newInstance(
+                instanceName,
+                minecraftVersion,
+                forgeVersion,
+                liteloaderVersion,
+                fabricLoaderVersion,
+                optifineVersion,
+                quiltVersion,
+                author)
+        } catch (error) {
+            err = error
+        }
+        event.reply('new-instance', { result: result, err: err })
+    })
+    ipcMain.on('rename-instance', async (event, { oldInstanceName, newInstanceName }) => {
+        let result
+        let err
+        try {
+            result = await renameInstance(oldInstanceName, newInstanceName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('rename-instance', { result: result, err: err })
+    })
+    ipcMain.on('delete-instance', async (event, { instanceName }) => {
+        let result
+        let err
+        try {
+            result = await deleteInstance(instanceName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('delete-instance', { result: result, err: err })
+    })
+    ipcMain.handle('get-instances', async () => {
+        return await getInstances()
+    })
+    ipcMain.handle('get-mod-meta', async (event, { instanceName, modfileName }) => {
+        try {
+            return await getModMeta(instanceName, modfileName)
+        } catch (error) { }
+    })
+    ipcMain.handle('get-mod-type', async (event, { instanceName, modfileName }) => {
+        const fs = getModFileSystem(getModFilePath(instanceName, modfileName))
+        return await getModType(fs)
+    })
+    ipcMain.on('add-mod', async (event, { from, instanceName }) => {
+        let result
+        let err
+        try {
+            result = await addMod(from, instanceName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('add-mod', { result: result, err: err })
+    })
+    ipcMain.on('remove-mod', async (event, { instanceName, modFileName }) => {
+        let result
+        let err
+        try {
+            result = await removeMod(instanceName, modFileName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('remove-mod', { result: result, err: err })
+    })
+    ipcMain.handle('get-mods', async (event, instanceName) => {
+        return await getMods(instanceName)
+    })
+    ipcMain.on('add-resourcepack', async (event, { from, instanceName }) => {
+        let result
+        let err
+        try {
+            result = await addResourcepacks(from, instanceName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('add-resourcepack', { result: result, err: err })
+    })
+    ipcMain.on('remove-resourcepack', async (event, { instanceName, resourcepackName }) => {
+        let result
+        let err
+        try {
+            result = await removeResourcepacks(instanceName, resourcepackName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('remove-resourcepack', { result: result, err: err })
+    })
+    ipcMain.handle('get-resourcepacks', async (event, instanceName) => {
+        return await getResourcepacks(instanceName)
+    })
+    ipcMain.on('add-shaderpack', async (event, { from, instanceName }) => {
+        let result
+        let err
+        try {
+            result = await addShaderpack(instanceName, from)
+        } catch (error) {
+            err = error
+        }
+        event.reply('add-shaderpack', { result: result, err: err })
+    })
+    ipcMain.on('remove-shaderpack', async (event, { instanceName, shaderpackName }) => {
+        let result
+        let err
+        try {
+            result = await removeShaderpack(instanceName, shaderpackName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('remove-shaderpack', { result: result, err: err })
+    })
+    ipcMain.handle('get-shaderpacks', async (event, instanceName) => {
+        return await getShaderpacks(instanceName)
+    })
+    ipcMain.handle('get-world-info', async (event, { instanceName, DirName }) => {
+        return await getWorldInfo(instanceName, DirName)
+    })
+    ipcMain.handle('get-world-name', async (event, { instanceName, DirName }) => {
+        return await getWorldName(instanceName, DirName)
+    })
+    ipcMain.on('add-world', async (event, { instanceName, from }) => {
+        let result
+        let err
+        try {
+            result = await addWorld(instanceName, from)
+        } catch (error) {
+            err = error
+        }
+        event.reply('get-shaderpacks', { result: result, err: err })
+    })
+    ipcMain.on('remove-world', async (event, { instanceName, worldDirName }) => {
+        let result
+        let err
+        try {
+            result = await removeWorld(instanceName, worldDirName)
+        } catch (error) {
+            err = error
+        }
+        event.reply('get-shaderpacks', { result: result, err: err })
+    })
+    ipcMain.handle('get-world-list', async (event, instanceName) => {
+        return await getWorldList(instanceName)
+    })
 }
 
 export {

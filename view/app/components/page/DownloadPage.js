@@ -4,7 +4,7 @@ import { commandButton, commandButtonMini } from "../commandButton.js";
 
 export default {
     template: /* html */ `
-        <div id="download_pg" style="display: none">
+        <div id="download_pg">
           <div class="child-sidebar">
             <ul>
               <li class="active" onclick="sidebar_active(this)"><i class="rectangle-terminal"></i>自动安装</li>

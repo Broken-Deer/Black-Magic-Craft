@@ -1068,7 +1068,7 @@ div.child-sidebar li:active {
     color: #00000085;
 }
 
-div.child-sidebar li.active {
+div.child-sidebar .active {
     background-color: #60008117;
     pointer-events: none;
     color: #600081;
@@ -1085,7 +1085,7 @@ div.child-sidebar li::before {
     transition: background-color 0.15s ease;
 }
 
-div.child-sidebar li.active::before {
+div.child-sidebar .active::before {
     background-color: #600081;
     content: "";
 }

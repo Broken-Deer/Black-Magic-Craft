@@ -31,7 +31,7 @@ export const checkbox = {
             <label>
                 <input type="checkbox" :onclick="click" @input="updateData" v-model="checked"/>
                 <span>
-                    <div class="button"></div>
+                    <div></div>
                 </span>
             </label>
         </div>
@@ -59,7 +59,7 @@ export const checkboxMini = {
             <label>
                 <input type="checkbox" @input="execute" v-model="checked"/>
                 <span>
-                    <div class="button"></div>
+                    <div></div>
                 </span>
             </label>
         </div>

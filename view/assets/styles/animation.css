@@ -201,6 +201,52 @@ i.spinner-third {
 }
 
 /* vue动画 */
+/* 
+页面切换动画
+page-winui: 模仿winui
+fade: 淡入淡出
+move-up: 上移
+move-down: 下移
+*/
+.page-winui-leave-active {
+    transition: all .1s ease;
+}
+
+.page-winui-enter-active {
+    transition: all .3s cubic-bezier(0, 0.75, 0.2, 1)
+}
+
+.page-winui-leave-from {
+    opacity: 1;
+}
+
+.page-winui-leave-to {
+    opacity: 0;
+}
+
+.page-winui-enter-from {
+    transform: translate(0, 70px);
+}
+
+.page-winui-enter-to {
+    transform: translate(0, 0);
+}
+
+.fade-leave-active,
+.fade-enter-active {
+    transition: all .1s ease;
+}
+
+.fade-leave-from,
+.fade-enter-to {
+    opacity: 1;
+}
+
+.fade-leave-to,
+.fade-enter-from {
+    opacity: 0;
+}
+
 .list-item-move,
 /* 对移动中的元素应用的过渡 */
 .list-item-enter-active,
@@ -213,6 +259,7 @@ i.spinner-third {
     opacity: 0;
     transform: scale(0.99);
 }
+
 /* 确保将离开的元素从布局流中删除
   以便能够正确地计算移动的动画。 */
 /* .list-item-leave-active {
@@ -220,3 +267,10 @@ i.spinner-third {
    left: 0;
    right: 0;
 } */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::after, *::before {
+      animation: none !important;
+      transition: none !important;
+    }
+  }

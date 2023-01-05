@@ -181,7 +181,7 @@ div.page-title {
     border-radius: 200px !important;
     position: absolute;
     background-color: #5a5a5a !important;
-    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99) !important;
+    transition: all 0.3s cubic-bezier(0, 0.6, 0.32, 0.99);
 }
 
 .input-box label input:checked~span {

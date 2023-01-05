@@ -6,7 +6,7 @@ import card from "../card.js";
 
 export default {
     template: /* html */ `
-  <div id="A3FAE39B" style="display: none">
+  <div id="A3FAE39B">
     <card :card-header=false>
       <p>如果你需要管理你的 Minecraft 帐户，请在「仪表盘」中操作</p>
     </card>

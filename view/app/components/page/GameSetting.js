@@ -40,7 +40,7 @@ export default {
         }
     },
     template: /* html */ `
-  <div id="AF3BE70D" style="display: none">
+  <div id="AF3BE70D">
     <card :title="ui.global_settings.java_path_title" :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands">
       <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"  config="globle.game.autojv"></checkbox>
       <div class="input input-text input-file" id="E16616C6">

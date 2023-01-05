@@ -6,16 +6,6 @@ function sidebar() {
     }
 }
 
-function sidebar_hidden() {
-    if ($("#sidebar").hasClass("sidebar-close")) {
-        $("#sidebar").addClass("sidebar-close");
-    }
-    $("#sidebar").attr("style", "width: 0px !important");
-}
-
-function sidebar_show() {
-    $("#sidebar").attr("style", "");
-}
 
 function sidebar_active(el, pgid, id2) {
     $(el.parentNode.parentNode.parentNode.lastElementChild).children("*").fadeOut(100);
@@ -32,9 +22,4 @@ function sidebar_active(el, pgid, id2) {
             $(el.parentNode).attr("style", style ? style : "");
         }, 100);
     }, 100);
-}
-
-function backtoHome() {
-    sidebar_show();
-    change_page("#download_pg");
 }

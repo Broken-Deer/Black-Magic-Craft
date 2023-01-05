@@ -1,7 +1,8 @@
 import { ipcMain, app, dialog } from "electron";
 import path from "path";
 import f from 'fs'
-import { setInstanceManagerDetector } from "./instance/Index.mjs";
+import { setInstanceManagerDetector } from "./instance/index.mjs";
+
 function setDetector(win) {
     ipcMain.on('execute-function', (functionName) => {
         eval(functionName)

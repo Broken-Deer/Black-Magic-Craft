@@ -151,15 +151,20 @@ Vue.createApp({
 
 Vue.createApp({
     template: /* template */ `
-    <sidebar></sidebar>
+<sidebar></sidebar>
     `,
-    components: { sidebar },
+    components: { sidebar }
 }).mount(".sidebar-links");
-Vue.createApp({
+export const page = Vue.createApp({
+    data() {
+        return {
+            activeComponent: 'WareHouse'
+        }
+    },
     template: `
-    <ware-house>   </ware-house>
-        <download-page></download-page>
-        <settings></settings>
+    <Transition name="page-winui" mode="out-in">
+    <component :is="activeComponent"></component>
+    </Transition>
         `,
     components: { downloadPage, settings, WareHouse },
 }).mount("#main");

@@ -1,10 +1,5 @@
 const ipc = require("electron").ipcRenderer;
 
-async function a() {
-    ipc.invoke().then((result) => { })
-    console.log(1)
-}
-
 function execute(command) {
     ipc.send(command);
 }

@@ -27,7 +27,7 @@ export default {
         }
     },
     template: /* html */ `
-    <div id="489C5E28" style="display:none">
+    <div id="489C5E28">
     <card :card-header=false>
     <p>如果你不清楚这些选项的作用，请不要乱动它们。你可以使用右上角的重置按钮将此页设置恢复为默认值</p>
     </card>

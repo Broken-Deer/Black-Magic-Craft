@@ -9,7 +9,7 @@ export default {
         return zh_cn;
     },
     template: /* html */ `
-  <div id="09C2A5F5" style="display: none">
+  <div id="09C2A5F5">
   <div class="card">
   <card-header title="主题" description="更改主题、加载自定义主题" icon="brush"></card-header>
   <div class="card-body">
