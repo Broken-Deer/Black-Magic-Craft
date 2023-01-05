@@ -78,4 +78,8 @@ async function removeResourcepacks(instanceName, resourcepackName) {
     } catch (error) { }
 }
 
-export { getResourcepacks, addResourcepacks, removeResourcepacks }
+export {
+    getResourcepacks,
+    addResourcepacks,
+    removeResourcepacks
+}

@@ -49,8 +49,7 @@ export default {
 <card title="调试选项" description="这些设置只用于调试" icon="debug-settings">
     <checkbox name="将启动器日志保存到文件" config="globle.advanced.savelog"></checkbox>
     <command-button name="导出启动器日志" text="导出"></command-button>
-    <command-button name="打开开发人员工具" text="启动 DevTools"></command-button>
-    <command-button name="使启动器崩溃" text="使启动器崩溃"></command-button>
+    <command-button name="打开开发人员工具" text="启动 DevTools" @click="OpenDevtools"></command-button>
 </card>
     </div>`,
     components: { inputText, checkbox, cardHeader, commandButton, card },
@@ -58,5 +57,8 @@ export default {
         updateData(key, val) {
             update(key, val);
         },
+        OpenDevtools() {
+            ipc.send('OpenDevTools')
+        }
     },
 };

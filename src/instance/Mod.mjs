@@ -17,7 +17,7 @@
  */
 
 import { readFabricMod, readForgeModToml, readLiteloaderMod, readQuiltMod } from "@xmcl/mod-parser";
-import path, { join } from "path";
+import path from "path";
 import { GetPath } from "../installer/InstallerHelper.mjs";
 import f from 'fs/promises'
 import system from '@xmcl/system'
@@ -41,8 +41,8 @@ async function getMods(instanceName) {
     return mods
 }
 
-async function getModMeta(instanceName, modfile) {
-    const fs = await getFileSystem(getModFilePath(instanceName, modfile))
+async function getModMeta(instanceName, modfileName) {
+    const fs = await getModFileSystem(getModFilePath(instanceName, modfileName))
     switch (await getModType(fs)) {
         case 'fabric':
             try {
@@ -81,18 +81,14 @@ async function getModType(fs) {
     return 'forge of other'
 }
 
-async function getFileSystem(modfile) {
-    return await system.resolveFileSystem(modfile)
-}
-
 async function addMod(from, instanceName) {
     await f.copyFile(from, path.join(getModFilePath(instanceName), path.basename(from)))
-    .catch((reason) => { throw reason })
+        .catch((reason) => { throw reason })
 }
 
-async function removeMod(instanceName, modFile) {
-    await f.unlink(ppath.join(getModFilePath(instanceName), path.basename(from)))
-    .catch((reason) => { throw reason })
+async function removeMod(instanceName, modFileName) {
+    await f.unlink(path.join(getModFilePath(instanceName), path.basename(modFileName)))
+        .catch((reason) => { throw reason })
 }
 
 function getModFilePath(instanceName, modName) {
@@ -109,10 +105,16 @@ function getModFilePath(instanceName, modName) {
     }
 }
 
+async function getModFileSystem(modfile) {
+    return await system.resolveFileSystem(modfile)
+}
+
 export {
     getMods,
     getModMeta,
     getModType,
     addMod,
-    removeMod
+    removeMod,
+    getModFileSystem,
+    getModFilePath
 }
