@@ -78,7 +78,7 @@ async function getInstances() {
         const InstanceDir = path.join(InstancePath, Dirs[index]);
         try {
             Instances.push({
-                name: InstanceDir,
+                name: Dirs[index],
                 metadata: JSON.parse(
                     (await f.readFile(path.join(InstanceDir, 'instance.json'))).toString()
                 )

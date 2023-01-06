@@ -20,24 +20,40 @@ import path from "path";
 import { GetPath, removeDir } from "../installer/InstallerHelper.mjs";
 import { readPackMetaAndIcon } from "@xmcl/resourcepack"
 import f from 'fs/promises'
+import fs from 'fs'
 import { copydir } from "../utils/Promisify.mjs";
+import { GetActiveID } from "./index.mjs";
 
-async function getResourcepacks(instanceName) {
+async function getResourcepacks(instanceName, id) {
     const ResourcepacksPath = path.join(
         GetPath().gamePath,
         'instances',
         instanceName,
         'resourcepacks'
     )
+    if (!fs.existsSync(ResourcepacksPath)) {
+        return []
+    }
     let resourcepacks = []
     let resourcepackDirs = await f.readdir(ResourcepacksPath)
     for (let index = 0; index < resourcepackDirs.length; index++) {
+        if (id !== GetActiveID() && typeof id !== 'undefined') {
+            return []
+        }
         const Resourcepack = path.join(ResourcepacksPath, resourcepackDirs[index])
         try {
+            const MetaData = await readPackMetaAndIcon(Resourcepack)
+            let icon
+            if (typeof MetaData.icon === 'undefined') {
+                icon = './assets/images/Default_pack.webp'
+            } else {
+                icon = `data:image/png;base64,${Buffer.from(MetaData.icon).toString('base64')}`
+            }
             resourcepacks.push({
                 name: path.basename(Resourcepack),
                 path: path.join(Resourcepack),
-                ...(await readPackMetaAndIcon(Resourcepack))
+                icon: icon,
+                metadata: MetaData
             })
         } catch (error) { continue }
     }

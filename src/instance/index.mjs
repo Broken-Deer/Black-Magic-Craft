@@ -127,8 +127,8 @@ function setInstanceManagerDetector() {
         }
         event.reply('remove-resourcepack', { result: result, err: err })
     })
-    ipcMain.handle('get-resourcepacks', async (event, instanceName) => {
-        return await getResourcepacks(instanceName)
+    ipcMain.handle('get-resourcepacks', async (event, {instanceName, id}) => {
+        return await getResourcepacks(instanceName, id)
     })
     ipcMain.on('add-shaderpack', async (event, { from, instanceName }) => {
         let result
@@ -150,8 +150,8 @@ function setInstanceManagerDetector() {
         }
         event.reply('remove-shaderpack', { result: result, err: err })
     })
-    ipcMain.handle('get-shaderpacks', async (event, instanceName) => {
-        return await getShaderpacks(instanceName)
+    ipcMain.handle('get-shaderpacks', async (event, {instanceName, id}) => {
+        return await getShaderpacks(instanceName, id)
     })
     ipcMain.handle('get-world-info', async (event, { instanceName, DirName }) => {
         return await getWorldInfo(instanceName, DirName)

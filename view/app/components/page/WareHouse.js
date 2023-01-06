@@ -21,6 +21,8 @@ export default {
             },
             saves: [],
             mods: [],
+            resourcepacks: [],
+            shaderpacks: [],
             instances: [],
             activeID: 1,
             activeInstanceID: 0,
@@ -37,14 +39,14 @@ export default {
               <p @click="updateInstances">游戏</p>
               <ul class="gamelist" id="gamelist">
                 <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)">
-                  <img src="./assets/images/Grass_Block.webp">{{instance.metadata.name}}
+                  <img src="./assets/images/Grass_Block.webp">{{instance.name}}
                 </li>
               </ul>
             </div>
           </div>
           <div>
           <Transition :name="transitionName" mode="out-in">
-          <component :is="activeComponent" :saves="saves" :mods="mods" :instanceInfo="instanceInfoData"></component>
+          <component :is="activeComponent" :saves="saves" :mods="mods" :resourcepacks="resourcepacks" :shaderpacks="shaderpacks" :instanceInfo="instanceInfoData"></component>
           </Transition>
           </div>
         </div>
@@ -78,18 +80,18 @@ export default {
             } else {
                 this.transitionName = 'slide-up'
             }
-            console.log(this.transitionName)
             this.activeID = id
             this.activeComponent = componentName
         },
         showInstancePage(el, index) {
-            console.log(index)
-            this.instanceInfoData.instanceName = this.instances[index].metadata.name
+            this.instanceInfoData.instanceName = this.instances[index].name
             this.instanceInfoData.minecraftVersion = `Minecraft ${this.instances[index].metadata.runtime.minecraft}`
             this.setActiveComponent(el, 'InstanceInfoPage', 2)
             this.activeInstanceID = index
-            this.updateSaves(this.instances[index].metadata.name, index)
-            this.updateMods(this.instances[index].metadata.name, index)
+            this.updateSaves(this.instances[index].name, index)
+            this.updateMods(this.instances[index].name, index)
+            this.updateResourcepacks(this.instances[index].name, index)
+            this.updateShaderpacks(this.instances[index].name, index)
             ipcInvoke('change-activeID', index)
             VanillaTilt.init(document.querySelectorAll(".start-game"), {
                 max: 0, //最大倾斜度数
@@ -115,9 +117,7 @@ export default {
                     icon: element.icon.replace(/[\r\n]/g, '')
                 })
             }
-            console.log(index)
             if (this.activeInstanceID != index) return
-            console.log(saves)
             this.saves = saves
             if (gotSaves == 0) {
                 this.instanceInfoData.nosave = true
@@ -129,7 +129,6 @@ export default {
         async updateMods(instanceName, index) {
             this.instanceInfoData.modsIsLoading = true
             let gotMods = await ipcInvoke('get-mods', { instanceName: instanceName, id: index })
-            console.log(gotMods)
             let mods = []
             for (let index = 0; index < gotMods.length; index++) {
                 const element = gotMods[index];
@@ -154,16 +153,56 @@ export default {
                     icon: element.icon.replace(/[\r\n]/g, '')
                 })
             }
-            console.log(this.activeID, index)
             if (this.activeInstanceID != index) return
             this.mods = mods
-            console.log(this.mods)
             if (gotMods == 0) {
                 this.instanceInfoData.nomod = true
             } else {
                 this.instanceInfoData.nomod = false
             }
             this.instanceInfoData.modsIsLoading = false
+        },
+        async updateResourcepacks(instanceName, index) {
+            this.instanceInfoData.resourcepacksIsLoading = true
+            let gotResourcepacks = await ipcInvoke('get-resourcepacks', { instanceName: instanceName, id: index })
+            let resourcepacks = []
+            for (let index = 0; index < gotResourcepacks.length; index++) {
+                const element = gotResourcepacks[index];
+                let description
+                try {
+                    description = element.metadata.metadata.description.replace(/§+./g, '')
+                } catch (error) { }
+                resourcepacks.push({
+                    name: element.name,
+                    description: description,
+                    icon: element.icon.replace(/[\r\n]/g, '')
+                })
+            }
+            if (this.activeInstanceID != index) return
+            this.resourcepacks = resourcepacks
+            if (gotResourcepacks == 0) {
+                this.instanceInfoData.noresourcepack = true
+            } else {
+                this.instanceInfoData.noresourcepack = false
+            }
+            this.instanceInfoData.resourcepacksIsLoading = false
+        },
+        async updateShaderpacks(instanceName, index) {
+            this.instanceInfoData.shaderpacksIsLoading = true
+            let gotShaderpacks = await ipcInvoke('get-shaderpacks', { instanceName: instanceName, id: index })
+            let shaderpacks = []
+            for (let index = 0; index < gotShaderpacks.length; index++) {
+                const element = gotShaderpacks[index];
+                shaderpacks.push({ name: element.name })
+            }
+            if (this.activeInstanceID != index) return
+            this.shaderpacks = shaderpacks
+            if (shaderpacks == 0) {
+                this.instanceInfoData.noshaderpack = true
+            } else {
+                this.instanceInfoData.noshaderpack = false
+            }
+            this.instanceInfoData.shaderpacksIsLoading = false
         }
     },
 };

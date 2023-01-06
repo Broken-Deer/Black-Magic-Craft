@@ -1,0 +1,95 @@
+Date : 2023-01-06 09:13:43
+Directory : y:\mc
+Total : 50 files,  651 codes, 454 comments, 80 blanks, all 1185 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         45 |        524 |        450 |         48 |      1,022 |
+| CSS        |          2 |        131 |         -2 |         33 |        162 |
+| HTML       |          1 |          0 |          6 |         -1 |          5 |
+| JSON       |          2 |         -4 |          0 |          0 |         -4 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                  |         50 |        651 |        454 |         80 |      1,185 |
+| . (Files)                                          |          3 |        -57 |         14 |         -1 |        -44 |
+| src                                                |         19 |        401 |        155 |         28 |        584 |
+| src (Files)                                        |          1 |         74 |          3 |          1 |         78 |
+| src\game                                           |          1 |        -24 |          0 |         -4 |        -28 |
+| src\installer                                      |          8 |          2 |         16 |          9 |         27 |
+| src\instance                                       |          7 |        349 |        102 |         20 |        471 |
+| src\utils                                          |          2 |          0 |         34 |          2 |         36 |
+| view                                               |         28 |        307 |        285 |         53 |        645 |
+| view (Files)                                       |          2 |         -4 |          6 |         -2 |          0 |
+| view\app                                           |         24 |        180 |        281 |         22 |        483 |
+| view\app (Files)                                   |          2 |         -1 |         34 |          2 |         35 |
+| view\app\components                                |         17 |        194 |        196 |         18 |        408 |
+| view\app\components (Files)                        |         11 |         22 |        187 |         12 |        221 |
+| view\app\components\page                           |          6 |        172 |          9 |          6 |        187 |
+| view\app\core                                      |          4 |          0 |         51 |          5 |         56 |
+| view\app\view                                      |          1 |        -13 |          0 |         -3 |        -16 |
+| view\assets                                        |          2 |        131 |         -2 |         33 |        162 |
+| view\assets\styles                                 |          2 |        131 |         -2 |         33 |        162 |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                           | language   | code       | comment    | blank      | total      |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| y:\mc\main.js                                      | JavaScript |        -53 |         14 |         -1 |        -40 |
+| y:\mc\package-lock.json                            | JSON       |         -5 |          0 |          0 |         -5 |
+| y:\mc\package.json                                 | JSON       |          1 |          0 |          0 |          1 |
+| y:\mc\src\game\GetGameInfo.mjs                     | JavaScript |        -24 |          0 |         -4 |        -28 |
+| y:\mc\src\index.mjs                                | JavaScript |         74 |          3 |          1 |         78 |
+| y:\mc\src\installer\DefaultGameInstaller.mjs       | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\FabricInstaller.mjs            | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\FileDownloader.mjs             | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\ForgeInstaller.mjs             | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\InstallerHelper.mjs            | JavaScript |          0 |         -1 |          1 |          0 |
+| y:\mc\src\installer\LiteloaderInstaller.mjs        | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\QuiltInstaller.mjs             | JavaScript |          0 |          0 |          1 |          1 |
+| y:\mc\src\installer\index.mjs                      | JavaScript |          2 |         17 |          2 |         21 |
+| y:\mc\src\instance\InstanceManager.mjs             | JavaScript |         82 |         17 |          8 |        107 |
+| y:\mc\src\instance\Mod.mjs                         | JavaScript |         45 |         17 |          2 |         64 |
+| y:\mc\src\instance\Resourcepack.mjs                | JavaScript |          4 |         17 |          1 |         22 |
+| y:\mc\src\instance\Shaderpack.mjs                  | JavaScript |         -1 |         17 |          1 |         17 |
+| y:\mc\src\instance\Worlds.mjs                      | JavaScript |         56 |         17 |          5 |         78 |
+| y:\mc\src\instance\index.js                        | JavaScript |        -13 |          0 |         -1 |        -14 |
+| y:\mc\src\instance\index.mjs                       | JavaScript |        176 |         17 |          4 |        197 |
+| y:\mc\src\utils\FileSystem.mjs                     | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\src\utils\Promisify.mjs                      | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\LoadConfigs.js                      | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\card.js                  | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\cardHeader.js            | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\checkbox.js              | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\commandButton.js         | JavaScript |         -2 |         17 |          1 |         16 |
+| y:\mc\view\app\components\inputText.js             | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\listItem.js              | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\loading.js               | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\page\AdvancedSetting.js  | JavaScript |          2 |          0 |          0 |          2 |
+| y:\mc\view\app\components\page\InstanceInfoPage.js | JavaScript |        131 |          0 |          3 |        134 |
+| y:\mc\view\app\components\page\MainPage.js         | JavaScript |         11 |          0 |          2 |         13 |
+| y:\mc\view\app\components\page\Settings.js         | JavaScript |         26 |          9 |          0 |         35 |
+| y:\mc\view\app\components\page\WareHouse.js        | JavaScript |          2 |          0 |          2 |          4 |
+| y:\mc\view\app\components\page\test.js             | JavaScript |          0 |          0 |         -1 |         -1 |
+| y:\mc\view\app\components\sidebar.js               | JavaScript |         24 |         17 |          2 |         43 |
+| y:\mc\view\app\components\sidebarItem.js           | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\sliderBar.js             | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\components\tooltip.js               | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\core\auth.js                        | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\core\download.js                    | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\core\installer.js                   | JavaScript |          0 |         17 |          1 |         18 |
+| y:\mc\view\app\core\instance.mjs                   | JavaScript |          0 |          0 |          2 |          2 |
+| y:\mc\view\app\onload.js                           | JavaScript |         -1 |         17 |          1 |         17 |
+| y:\mc\view\app\view\Sidebar.js                     | JavaScript |        -13 |          0 |         -3 |        -16 |
+| y:\mc\view\assets\styles\animation.css             | CSS        |        129 |          4 |         34 |        167 |
+| y:\mc\view\assets\styles\index.css                 | CSS        |          2 |         -6 |         -1 |         -5 |
+| y:\mc\view\index.html                              | HTML       |          0 |          6 |         -1 |          5 |
+| y:\mc\view\renderer.js                             | JavaScript |         -4 |          0 |         -1 |         -5 |
+| Total                                              |            |        651 |        454 |         80 |      1,185 |
++----------------------------------------------------+------------+------------+------------+------------+------------+

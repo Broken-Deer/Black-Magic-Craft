@@ -17,17 +17,26 @@
  */
 
 import f from 'fs/promises'
+import fs from 'fs'
 import path from 'path'
 import { GetPath } from '../installer/InstallerHelper.mjs'
 import { removeDir } from '../utils/FileSystem.mjs'
+import { GetActiveID } from './index.mjs'
 
-async function getShaderpacks(instanceName) {
-    const files = await f.readFile(getShaderpackPath(instanceName))
+async function getShaderpacks(instanceName, id) {
+    const ShaderpacksPath = getShaderpackPath(instanceName)
+    if (!fs.existsSync(ShaderpacksPath)) {
+        return []
+    }
+    const files = await f.readdir(ShaderpacksPath)
     let shaderpacks = []
     for (let index = 0; index < files.length; index++) {
+        if (id !== GetActiveID() && typeof id !== 'undefined') {
+            return []
+        }
         const stat = await f.stat(getShaderpackPath(instanceName, files[index]))
-        if (stat.isDirectory() || (stat.isFile() && path.extname(files[index]) === 'zip')) {
-            shaderpacks.push(files[index])
+        if (stat.isDirectory() || (stat.isFile() && path.extname(files[index]) === '.zip')) {
+            shaderpacks.push({ name: files[index], path: path.join(ShaderpacksPath, files[index]) })
         }
     }
     return shaderpacks
