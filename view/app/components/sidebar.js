@@ -37,14 +37,22 @@ export default {
                 version_list('vanilla')
             }
             if (pageName === 'settings') {
+                page.transitionName = 'zoom-out'
                 if ($("#sidebar").hasClass("sidebar-close")) {
                     $("#sidebar").addClass("sidebar-close");
                 }
                 $("#sidebar").attr("style", "width: 0px !important");
             } else {
+                if (page.activeComponent === 'settings') {
+                    page.transitionName = 'zoom-in'
+                } else {
+                    page.transitionName = 'page-winui'
+                }
                 $("#sidebar").attr("style", "");
             }
+            console.log(page.transitionName)
             page.activeComponent = pageName
+            
         }
     },
     components: { sidebarItem },

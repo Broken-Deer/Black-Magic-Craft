@@ -39,7 +39,7 @@ const createWindow = show => {
         webviewTag: true,
         webPreferences: {
             spellcheck: false,
-            nodeIntegration: true,
+            nodeIntegration: show,
             enableRemoteModule: true,
             contextIsolation: false,
             webSecurity: false,
@@ -77,13 +77,11 @@ ipcMain.on("main-get-event-obj", event => {
 app.commandLine.appendSwitch("disable-pinch", true);
 app.whenReady().then(() => {
     createWindow(false);
-    setTimeout(() => {
+    setTimeout(async () => {
         createWindow(true);
-    }, 3000);
-    (async () => {
         let index = await import('./src/index.mjs');
         index.setDetector(win)
-    })();
+    }, 300);
 });
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();

@@ -16,26 +16,65 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { readFabricMod, readForgeModToml, readLiteloaderMod, readQuiltMod } from "@xmcl/mod-parser";
+import { readFabricMod, readForgeModJson, readLiteloaderMod, readQuiltMod } from "@xmcl/mod-parser";
 import path from "path";
 import { GetPath } from "../installer/InstallerHelper.mjs";
 import f from 'fs/promises'
+import fs from 'fs'
 import system from '@xmcl/system'
+import { GetActiveID } from "./index.mjs";
 
-async function getMods(instanceName) {
+async function getMods(instanceName, id) {
     const ModsDir = path.join(
         GetPath().gamePath,
         'instances',
         instanceName,
         'mods',
     )
+    if (!fs.existsSync(ModsDir)) {
+        return []
+    }
     let files = await f.readdir(ModsDir)
     let mods = []
     for (let index = 0; index < files.length; index++) {
+        if (id !== GetActiveID() && typeof id !== 'undefined') {
+            return []
+        }
         const ModFile = files[index];
+        const gotmodmeta = await getModMeta(instanceName, ModFile)
+        const ExtName = path.extname(ModFile)
+        if (ExtName !== '.jar' && ExtName !== '.disabled' && ExtName !== '.litemod') {
+            continue
+        }
+        let ModMeta
+        let fs
+        let type
+        try {
+            type = gotmodmeta.type
+            fs = gotmodmeta.fs
+            if (type == 'forge or other') {
+                ModMeta = gotmodmeta.modmeta[0]
+            } else {
+                ModMeta = gotmodmeta.modmeta
+            }
+        } catch (error) {
+            continue
+        }
+        let icon
+        try {
+            if (type == 'forge or other') {
+                icon = `data:image/png;base64,${Buffer.from(await fs.readFile(ModMeta.logoFile)).toString('base64')}`
+            } else {
+                icon = `data:image/png;base64,${Buffer.from(await fs.readFile(ModMeta.icon)).toString('base64')}`
+            }
+        } catch (error) {
+            icon = './assets/images/Unknown_server.webp'
+        }
         mods.push({
             filename: ModFile,
-            ...await getModMeta(instanceName, ModFile)
+            icon: icon,
+            modmeta: ModMeta,
+            type: type,
         })
     }
     return mods
@@ -46,22 +85,22 @@ async function getModMeta(instanceName, modfileName) {
     switch (await getModType(fs)) {
         case 'fabric':
             try {
-                return await readFabricMod(fs)
+                return { modmeta: await readFabricMod(fs), fs: fs, type: 'fabric' }
             } catch (error) { }
 
         case 'quilt':
             try {
-                return await readQuiltMod(fs)
+                return { modmeta: await readQuiltMod(fs), fs: fs, type: 'quilt' }
             } catch (error) { }
 
         case 'liteloader':
             try {
-                return await readLiteloaderMod(fs)
+                return { modmeta: await readLiteloaderMod(fs), fs: fs, type: 'liteloader' }
             } catch (error) { }
 
         case 'forge of other':
             try {
-                return await readForgeModToml(fs)
+                return { modmeta: await readForgeModJson(fs), fs: fs, type: 'forge or other' }
             } catch (error) { }
         default:
             break;
@@ -109,6 +148,10 @@ async function getModFileSystem(modfile) {
     return await system.resolveFileSystem(modfile)
 }
 
+async function changeActiveID(id) {
+    activeID = id
+}
+
 export {
     getMods,
     getModMeta,
@@ -116,5 +159,6 @@ export {
     addMod,
     removeMod,
     getModFileSystem,
-    getModFilePath
+    getModFilePath,
+    changeActiveID
 }

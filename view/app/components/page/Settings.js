@@ -10,41 +10,52 @@ import sidebar from "../sidebar.js";
 export default {
     data() {
         return {
-            activeComponent: 'generalSetting'
+            activeComponent: 'generalSetting',
+            activeID: 1,
+            transitionName: ''
         }
     },
     template: /* html */ `
     <div id="setting_pg" class="settings">
         <div class="child-sidebar">
             <ul>
-            <li class="active" @click="setActiveComponent($event,'generalSetting')"><i class="house"></i>常规</li>
-            <li @click="setActiveComponent($event,'gameSetting')"><i class="gamepad"></i>游戏</li>
-            <li @click="setActiveComponent($event,'accountSetting')"><i class="user"></i>帐户</li>
-            <li @click="setActiveComponent($event,'advancedSetting')"><i class="pro-settings"></i>高级</li>
-            <li @click="setActiveComponent($event,'appearanceSettings')"><i class="palette"></i>个性化</li>
-            <li @click="setActiveComponent($event,'downloadSetting')"><i class="download"></i>下载</li>
-            <li @click="setActiveComponent($event,'easyuseSetting')"><i class="arrows-spin"></i>辅助功能</li>
+            <li class="active" @click="setActiveComponent($event,'generalSetting',1)"><i class="house"></i>常规</li>
+            <li @click="setActiveComponent($event,'gameSetting',2)"><i class="gamepad"></i>游戏</li>
+            <li @click="setActiveComponent($event,'accountSetting',3)"><i class="user"></i>帐户</li>
+            <li @click="setActiveComponent($event,'advancedSetting',4)"><i class="pro-settings"></i>高级</li>
+            <li @click="setActiveComponent($event,'appearanceSettings',5)"><i class="palette"></i>个性化</li>
+            <li @click="setActiveComponent($event,'downloadSetting',6)"><i class="download"></i>下载</li>
+            <li @click="setActiveComponent($event,'easyuseSetting',7)"><i class="arrows-spin"></i>辅助功能</li>
             </ul>
             <li @click="backtoHome" style="margin-bottom: -9px;" class="backtoHome"><i class="arrow-left"></i>返回</li>
         </div>
         <div class="rua">
-        <Transition name="page-winui" mode="out-in">
+        <Transition :name="transitionName" mode="out-in">
         <component :is="activeComponent"></component>
         </Transition>
         </div>
     </div>`,
     methods: {
-        setActiveComponent(el, componentName) {
+        setActiveComponent(el, componentName, id) {
             el = el.currentTarget
             setTimeout(() => {
                 $(el.parentNode.parentNode.parentNode.lastElementChild).scrollTop(0);
             }, 100);
+
             $(el).siblings().removeClass("active");
             $(el).addClass("active");
+            console.log(id, this.activeID)
+            if (id < this.activeID) {
+                this.transitionName = 'slide-down'
+            } else {
+                this.transitionName = 'slide-up'
+            }
+            console.log(this.transitionName)
+            this.activeID = id
             this.activeComponent = componentName
         },
         backtoHome() {
-            sidebar.methods.changePage(null, 'WareHouse')
+            sidebar.methods.changePage('WareHouse')
         }
     },
     components: {

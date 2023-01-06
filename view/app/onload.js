@@ -158,12 +158,13 @@ Vue.createApp({
 export const page = Vue.createApp({
     data() {
         return {
-            activeComponent: 'WareHouse'
+            transitionName: 'page-winui',
+            activeComponent: 'WareHouse',
         }
     },
     template: `
-    <Transition name="page-winui" mode="out-in">
-    <component :is="activeComponent"></component>
+    <Transition :name="transitionName" mode="out-in">
+        <component :is="activeComponent"></component>
     </Transition>
         `,
     components: { downloadPage, settings, WareHouse },
@@ -181,10 +182,4 @@ Vue.createApp({
     },
 }).mount(".dialogs");
 
-VanillaTilt.init(document.querySelectorAll(".start-game"), {
-    max: 0, //最大倾斜度数
-    speed: 500, //倾斜转换的速度
-    glare: true, //是否开启眩光效果
-    "max-glare": 0.7, //最大眩光的不透明度
-});
 

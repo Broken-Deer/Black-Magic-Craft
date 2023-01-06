@@ -20,7 +20,10 @@ import path from "path";
 import nbt from "prismarine-nbt";
 import { GetPath } from "../installer/InstallerHelper.mjs";
 import f from 'fs/promises'
+import fs from 'fs'
 import { removeDir } from "../utils/FileSystem.mjs";
+import Long from "long";
+import { GetActiveID } from "./index.mjs";
 
 async function getWorldInfo(instanceName, DirName) {
     let WorldInfoNBT;
@@ -68,14 +71,33 @@ function getWorldPath(instanceName, worldName) {
     }
 }
 
-async function getWorldList(instanceName) {
-    const WorldsDirs = await f.readdir(path.join(GetPath().gamePath, `instances/${instanceName}/saves`))
+async function getWorldList(instanceName, id) {
+    const WorldsPath = path.join(GetPath().gamePath, `instances/${instanceName}/saves`)
+    if (!fs.existsSync(WorldsPath)) {
+        return []
+    }
+    const WorldsDirs = await f.readdir(WorldsPath)
     let worldList = [];
     for (let index = 0; index < WorldsDirs.length; index++) {
+        if (id !== GetActiveID() && typeof id !== 'undefined') {
+            return []
+        }
         const dirname = WorldsDirs[index];
+        const savePath = path.join(GetPath().gamePath, `instances/${instanceName}/saves/${dirname}`)
+        let icon
+        try {
+            icon = `data:image/png;base64,${Buffer.from(await f.readFile(path.join(savePath, 'icon.png'))).toString('base64')}`
+        } catch (error) {
+            icon = './assets/images/Unknown_server.webp'
+        }
+        const worldInfo = await getWorldInfo(instanceName, dirname)
         worldList.push({
-            worldInfo: await getWorldInfo(instanceName, dirname),
-            path: path.join(GetPath().gamePath, `instances/${instanceName}/saves/${dirname}`),
+            worldInfo: worldInfo,
+            path: savePath,
+            icon: icon,
+            time: (
+                new Date(new Long(worldInfo.LastPlayed[1], worldInfo.LastPlayed[0]).toNumber())
+            ).toLocaleString()
         });
     }
     return worldList;

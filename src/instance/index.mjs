@@ -23,6 +23,7 @@ import { addResourcepacks, getResourcepacks, removeResourcepacks } from "./Resou
 import { addShaderpack, getShaderpacks, removeShaderpack } from "./Shaderpack.mjs";
 import { addWorld, getWorldInfo, getWorldList, getWorldName, removeWorld } from "./Worlds.mjs";
 
+var activeID = 0 // 对应WareHouse.js文件的activeID，用来表示用户正在查看的instance。获取列表时如果发现此id与调用函数时获取的id不同，则认定用户在加载完成之前离开了此页面并停止查询
 function setInstanceManagerDetector() {
     ipcMain.on('new-instance', async (event, {
         instanceName,
@@ -103,8 +104,8 @@ function setInstanceManagerDetector() {
         }
         event.reply('remove-mod', { result: result, err: err })
     })
-    ipcMain.handle('get-mods', async (event, instanceName) => {
-        return await getMods(instanceName)
+    ipcMain.handle('get-mods', async (event, { instanceName, id }) => {
+        return await getMods(instanceName, id)
     })
     ipcMain.on('add-resourcepack', async (event, { from, instanceName }) => {
         let result
@@ -178,11 +179,19 @@ function setInstanceManagerDetector() {
         }
         event.reply('get-shaderpacks', { result: result, err: err })
     })
-    ipcMain.handle('get-world-list', async (event, instanceName) => {
+    ipcMain.handle('get-world-list', async (event, {instanceName, id}) => {
         return await getWorldList(instanceName)
+    })
+    ipcMain.handle('change-activeID', (event, id) => {
+        activeID = id
     })
 }
 
+function GetActiveID() {
+    return activeID
+}
+
 export {
-    setInstanceManagerDetector
+    setInstanceManagerDetector,
+    GetActiveID
 }

@@ -1,7 +1,7 @@
 const ipc = require("electron").ipcRenderer;
 
-function execute(command) {
-    ipc.send(command);
+async function ipcInvoke(command, arg) {
+    return await ipc.invoke(command, arg)
 }
 function choose_java(eventobj) {
     ipc.send("choose_java");
