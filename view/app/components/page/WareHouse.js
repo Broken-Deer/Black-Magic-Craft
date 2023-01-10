@@ -1,6 +1,6 @@
 import card from "../card.js";
 import { listItem, listItemButton } from "../listItem.js";
-import { checkboxMini } from "../checkbox.js";
+import { checkboxMini } from "../controller/checkbox.js";
 import MainPage from './MainPage.js'
 import InstanceInfoPage from "./InstanceInfoPage.js";
 
@@ -10,6 +10,10 @@ export default {
             instanceInfoData: {
                 instanceName: '',
                 minecraftVersion: '',
+                instanceMetadata: {},
+                banner: '',
+                index: 0,
+                installed: false,
                 savesIsLoading: false,
                 modsIsLoading: false,
                 resourcepacksIsLoading: false,
@@ -41,12 +45,13 @@ export default {
                 <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)">
                   <img src="./assets/images/Grass_Block.webp">{{instance.name}}
                 </li>
+                <p v-if="instances == 0">此视图筛选条件无匹配结果</p>
               </ul>
             </div>
           </div>
           <div>
           <Transition :name="transitionName" mode="out-in">
-          <component :is="activeComponent" :saves="saves" :mods="mods" :resourcepacks="resourcepacks" :shaderpacks="shaderpacks" :instanceInfo="instanceInfoData"></component>
+          <component :is="activeComponent" :saves="saves" :mods="mods" :resourcepacks="resourcepacks" :shaderpacks="shaderpacks" :instanceInfo="instanceInfoData" :key="instanceInfoData.instanceName"></component>
           </Transition>
           </div>
         </div>
@@ -63,7 +68,7 @@ export default {
         this.updateInstances()
     },
     methods: {
-        setActiveComponent(el, componentName, id) {
+        setActiveComponent(el, componentName, id, index) {
             el = el.currentTarget
             setTimeout(() => {
                 $(el.parentNode.parentNode.parentNode.lastElementChild).scrollTop(0);
@@ -75,7 +80,13 @@ export default {
                 $(el.parentNode).siblings().removeClass("active");
             }
             $(el).addClass("active");
-            if (id < this.activeID) {
+            if (this.activeID === id) {
+                if (index < this.instanceInfoData.index) {
+                    this.transitionName = 'slide-down'
+                } else {
+                    this.transitionName = 'slide-up'
+                }
+            } else if (id < this.activeID) {
                 this.transitionName = 'slide-down'
             } else {
                 this.transitionName = 'slide-up'
@@ -84,25 +95,33 @@ export default {
             this.activeComponent = componentName
         },
         showInstancePage(el, index) {
-            this.instanceInfoData.instanceName = this.instances[index].name
-            this.instanceInfoData.minecraftVersion = `Minecraft ${this.instances[index].metadata.runtime.minecraft}`
-            this.setActiveComponent(el, 'InstanceInfoPage', 2)
-            this.activeInstanceID = index
-            this.updateSaves(this.instances[index].name, index)
-            this.updateMods(this.instances[index].name, index)
-            this.updateResourcepacks(this.instances[index].name, index)
-            this.updateShaderpacks(this.instances[index].name, index)
-            ipcInvoke('change-activeID', index)
-            VanillaTilt.init(document.querySelectorAll(".start-game"), {
-                max: 0, //最大倾斜度数
-                speed: 500, //倾斜转换的速度
-                glare: true, //是否开启眩光效果
-                "max-glare": 0.7, //最大眩光的不透明度
-            });
-
+            this.setActiveComponent(el, 'InstanceInfoPage', 2, index)
+            const this_ = this
+            this.updateInstances().then(() => {
+                this_.instanceInfoData.instanceName = this_.instances[index].name;
+                this_.instanceInfoData.minecraftVersion = `Minecraft ${this_.instances[index].metadata.runtime.minecraft}`;
+                this_.instanceInfoData.installed = this_.instances[index].installed;
+                this_.instanceInfoData.banner = this_.instances[index].banner
+                this_.instanceInfoData.index = index
+                this_.activeInstanceID = index;
+                this_.updateSaves(this_.instances[index].name, index);
+                this_.updateMods(this_.instances[index].name, index);
+                this_.updateResourcepacks(this_.instances[index].name, index);
+                this_.updateShaderpacks(this_.instances[index].name, index);
+                ipcInvoke('change-activeID', index);
+            })
+            setTimeout(() => {
+                VanillaTilt.init(document.querySelectorAll(".start-game, .install-game"), {
+                    max: 0,
+                    speed: 500,
+                    glare: true,
+                    "max-glare": 0.7, //最大眩光的不透明度
+                });
+            },100);
         },
         async updateInstances() {
             let gotInstances = await ipcInvoke('get-instances')
+            console.log(gotInstances)
             this.instances = gotInstances
         },
         async updateSaves(instanceName, index) {
@@ -113,7 +132,7 @@ export default {
                 const element = gotSaves[index];
                 saves.push({
                     name: element.worldInfo.LevelName,
-                    time: `最后打开于${element.time}`,
+                    description: `${element.time}, ${gotSaves[index].worldInfo.allowCommands ? '允许作弊' : '不允许作弊'}`,
                     icon: element.icon.replace(/[\r\n]/g, '')
                 })
             }
@@ -203,7 +222,7 @@ export default {
                 this.instanceInfoData.noshaderpack = false
             }
             this.instanceInfoData.shaderpacksIsLoading = false
-        }
+        },
     },
 };
 

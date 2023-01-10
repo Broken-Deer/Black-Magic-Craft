@@ -16,16 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { load, update } from "../LoadConfigs.js";
+import { load, update } from "../../LoadConfigs.js";
 
 export default {
     data() {
-        const config = load(this.config);
-        var value;
-        typeof config === "number" ? (value = config) : (value = this.min);
         return {
-            value: value,
-        };
+            value: this.min
+        }
     },
     template: /* template */ `
     <div class="input input-text input-slider">
@@ -33,7 +30,7 @@ export default {
     <div style="display: flex; line-height: 1.7;width: 100%;justify-content: flex-end;">
       <div class="slider">
           <div :style="orbit"></div>
-          <input ref="element" type="range" :max="max" :min="min" :step="step" v-model="value" @input="updateData">
+          <input ref="element" type="range" :max="max" :min="min" :step="step" v-model="value" @blur="onBlur">
       </div>
       <div class="input-data mini">
         <input type="text" :title="name"
@@ -54,14 +51,9 @@ export default {
         AllowExceeding: String,
     },
     methods: {
-        onClick() {
-            alert(1);
-        },
         onBlur() {
             if (!/^\d+$/.test(this.value)) this.value = this.min;
             if (this.value - 1 - this.min < 0) this.value = this.min;
-        },
-        updateData() {
             update(this.config, Number(this.value));
         },
     },
@@ -81,5 +73,14 @@ export default {
                 return `width: ${((this.value - 1 - this.min) / (this.max - this.min)) * 230 + 10}px`;
             }
         },
+    },
+    mounted() {
+        const this_ = this;
+        (async function () {
+            const config = await load(this_.config);
+            var value;
+            typeof config === "number" ? (value = config) : (value = this_.min);
+            this_.value = value
+        })()
     },
 };

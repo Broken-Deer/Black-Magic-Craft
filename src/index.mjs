@@ -2,10 +2,22 @@ import { ipcMain, app, dialog } from "electron";
 import path from "path";
 import f from 'fs'
 import { setInstanceManagerDetector } from "./instance/index.mjs";
+import { setInstallerCommandDetector } from "./installer/index.mjs";
+import { setEventObj } from "./utils/Other.mjs";
+import ElectronStore from "electron-store";
 
 function setDetector(win) {
-    ipcMain.on('execute-function', (functionName) => {
-        eval(functionName)
+    const store = new ElectronStore()
+    ipcMain.handle('get-config', (event, key) => {
+        return store.get(key)
+    })
+    ipcMain.handle('update-config', (event, { key, value }) => {
+        console.log(key, value)
+        store.set(key, value)
+
+    })
+    ipcMain.on('event-obj', (event) => {
+        setEventObj(event)
     })
     ipcMain.on("window-min", () => {
         win.minimize();
@@ -72,6 +84,7 @@ function setDetector(win) {
         }
     });
     setInstanceManagerDetector()
+    setInstallerCommandDetector()
 }
 
 export {

@@ -16,12 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { load, update } from "../LoadConfigs.js";
+import { load, update } from "../../LoadConfigs.js";
 
 export const checkbox = {
     data() {
         return {
-            checked: load(this.config),
+            checked: false,
         };
     },
     template: /* html */ `            
@@ -44,8 +44,14 @@ export const checkbox = {
     },
     methods: {
         updateData() {
-            update(this.config, !this.check);
+            update(this.config, !this.checked);
         },
+    },
+    mounted() {
+        const this_ = this;
+        (async function () {
+            this_.checked = await load(this_.config)
+        })()
     },
 };
 export const checkboxMini = {

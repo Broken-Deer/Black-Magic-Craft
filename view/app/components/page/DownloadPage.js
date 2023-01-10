@@ -1,5 +1,5 @@
 import loading from "../loading.js";
-import { checkbox } from "../checkbox.js";
+import { checkbox } from "../controller/checkbox.js";
 import { commandButton, commandButtonMini } from "../commandButton.js";
 
 export default {

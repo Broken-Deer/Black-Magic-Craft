@@ -16,13 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { inputText } from "./components/inputText.js";
-import { checkbox } from "./components/checkbox.js";
+import { inputText } from "./components/controller/inputText.js";
+import { checkbox } from "./components/controller/checkbox.js";
 import cardHeader from "./components/cardHeader.js";
 import loading from "./components/loading.js";
 import { commandButton, commandButtonMini } from "./components/commandButton.js";
 import sidebarItem from "./components/sidebarItem.js";
-import sliderBar from "./components/sliderBar.js";
+import sliderBar from "./components/controller/sliderBar.js";
 import card from "./components/card.js";
 import { listItem, listItemButton } from "./components/listItem.js";
 
@@ -97,7 +97,9 @@ var zh_cn = {
     },
 };
 export default zh_cn;
-
+$(document).ready(function () {
+    ipc.send('dcl')
+});
 window.onload = () => {
     /*     $("#2B39A329").click(function () {
         const a = document.querySelectorAll(".crafting_table");
@@ -115,13 +117,15 @@ window.onload = () => {
         "transform: scale(1); opacity: 1; transition: all 250ms cubic-bezier(0.04, 0.47, 0.47, 0.98)"
     );
     console.log(`
-    ___  __         __       __  ___          _         __                      __          
+     ___  __         __       __  ___          _         __                      __          
     / _ )/ /__ _____/ /__    /  |/  /__ ____ _(_)___    / /  ___ ___ _____  ____/ /  ___ ____        
    / _  / / _ \`/ __/  '_/   / /|_/ / _ \`/ _ \`/ / __/   / /__/ _ \`/ // / _ \\/ __/ _ \\/ -_) __/    
   /____/_/\\_,_/\\__/_/\\_\\   /_/  /_/\\_,_/\\_, /_/\\__/   /____/\\_,_/\\_,_/_//_/\\__/_//_/\\__/_/       
                                        /___/                    
     Black Magic Launcher v1.0.0-b1                               由 Broken_Deer 用 ❤️ 制作
   `);
+    ipc.send('onload')
+    ipc.send('event-obj')
 };
 /* updateGamelist();
 setInterval(() => {

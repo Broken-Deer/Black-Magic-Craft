@@ -37,7 +37,7 @@ i.arrows-rotate {
 i.arrows-rotate::before {
     content: "\f021";
     font-family: "fa-pro";
-    font-weight: 400;
+    /* font-weight: 400; */
     font-style: normal;
     font-size: 1.6rem;
 }
@@ -256,4 +256,8 @@ i.arrow-up-right-from-square::before {
 
 i.trash-can::before {
     content: '\f2ed';
+}
+
+i.xmark-large::before {
+    content: '\e59b';
 }

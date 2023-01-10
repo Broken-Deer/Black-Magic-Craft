@@ -19,43 +19,50 @@
 import { InstallVanillaGame, InstallGameByJSON } from "./DefaultGameInstaller.mjs";
 import { installForgeTask } from "@xmcl/installer";
 import { GetPath, GetTaskStatus, MargeVersionJSON, renameGame } from "./InstallerHelper.mjs";
+import { getEventObj } from "../utils/Other.mjs";
 import path from "path";
-import f from "fs";
+import f from "fs/promises";
 
 /**
  * 安装游戏然后安装forge
  */
-export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeVersion) {
+export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeVersion, instanceName) {
     const MinecraftLocation = GetPath().gamePath;
+    const event = getEventObj()
     await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false);
+    console.log(ForgeVersion, MinecraftVersion, MinecraftLocation)
     const ForgeInstallTask = installForgeTask(
         { version: ForgeVersion, mcversion: MinecraftVersion },
         MinecraftLocation
     );
     let ForgeInstallLastProgress;
     const AutoUpdateUI = setInterval(() => {
-        if (ForgeInstallTask.isDone && ForgeInstallTask.isDone) {
+        if (ForgeInstallTask.isDone) {
             clearInterval(AutoUpdateUI);
-            console.log("done");
-            return;
         }
-        console.log(GetTaskStatus(ForgeInstallTask, ForgeInstallLastProgress));
+        const stat = {
+            instanceName: instanceName,
+            status: GetTaskStatus(ForgeInstallTask, ForgeInstallLastProgress)
+        }
+        event.reply('update-download-task', stat)
+        console.log(stat)
         ForgeInstallLastProgress = ForgeInstallTask.progress;
-    }, 500);
-    var onFaild = {
+    }, 300);
+    await ForgeInstallTask.startAndWait({
         onFailed(task, error) {
+            console.log(114514)
             ForgeInstallTask.cancel();
+            event.reply('download-faild', { instanceName: instanceName, error: error })
             clearInterval(AutoUpdateUI);
             throw error;
         },
-    };
-    await ForgeInstallTask.startAndWait(onFaild);
-    renameGame(`${MinecraftVersion}-forge-${ForgeVersion}`, versionName);
-    f.writeFileSync(
+    });
+    await renameGame(`${MinecraftVersion}-forge-${ForgeVersion}`, versionName);
+    await f.writeFile(
         path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`),
         JSON.stringify(
             await MargeVersionJSON(path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`))
         )
     );
-    await InstallGameByJSON(versionName, true);
+    event.reply('download-complete', instanceName)
 }

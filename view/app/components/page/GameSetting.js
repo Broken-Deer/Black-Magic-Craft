@@ -1,6 +1,6 @@
-import { inputText, inputTextMini } from "../inputText.js";
-import { checkbox } from "../checkbox.js";
-import cardHeader from "../cardHeader.js";
+import { inputText, inputTextMini } from "../controller/inputText.js";
+import { checkbox } from "../controller/checkbox.js";
+import cardHeader from "../controller/cardHeader.js";
 import { commandButton } from "../commandButton.js";
 import sliderBar from "../sliderBar.js";
 import zh_cn from "../../onload.js";

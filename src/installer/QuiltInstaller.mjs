@@ -17,7 +17,8 @@
  */
 
 import { installQuiltVersion } from "@xmcl/installer";
-import f from "fs";
+import fs from "fs";
+import f from 'fs/promises'
 import path from "path";
 import { InstallGameByJSON, InstallVanillaGame } from "./DefaultGameInstaller.mjs";
 import { downloadFileByAria2 } from "./FileDownloader.mjs";
@@ -31,7 +32,7 @@ import { GetPath, MargeVersionJSON } from "./InstallerHelper.mjs";
  */
 export async function InstallGameWithQuilt(MinecraftVersion, QuiltVersion, VersionName) {
     const MinecraftLocation = GetPath().gamePath;
-    if (!f.existsSync(path.join(MinecraftLocation, "versions", VersionName))) {
+    if (!fs.existsSync(path.join(MinecraftLocation, "versions", VersionName))) {
         await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false);
     }
     installQuiltVersion({
@@ -40,16 +41,11 @@ export async function InstallGameWithQuilt(MinecraftVersion, QuiltVersion, Versi
         minecraft: MinecraftLocation,
     });
     const VersionDir = path.join(GetPath().gamePath, `versions/${VersionName}`);
-    f.rename(
-        path.join(MinecraftLocation, `versions/quilt-loader-${QuiltVersion}-${MinecraftVersion}`),
-        VersionDir,
-        () => {
-            const VersionJSON = MargeVersionJSON(
-                path.join(VersionDir, `quilt-loader-${QuiltVersion}-${MinecraftVersion}.json`),
-                true
-            );
-            f.writeFileSync(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-            InstallGameByJSON(VersionName, true);
-        }
+    await f.rename(path.join(MinecraftLocation, `versions/quilt-loader-${QuiltVersion}-${MinecraftVersion}`), VersionDir,);
+    const VersionJSON = MargeVersionJSON(
+        path.join(VersionDir, `quilt-loader-${QuiltVersion}-${MinecraftVersion}.json`),
+        true
     );
+    await f.writeFile(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
+    InstallGameByJSON(VersionName, true);
 }

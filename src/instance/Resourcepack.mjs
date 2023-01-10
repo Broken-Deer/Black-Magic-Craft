@@ -45,7 +45,7 @@ async function getResourcepacks(instanceName, id) {
             const MetaData = await readPackMetaAndIcon(Resourcepack)
             let icon
             if (typeof MetaData.icon === 'undefined') {
-                icon = './assets/images/Default_pack.webp'
+                icon = './assets/images/unknown_pack.webp'
             } else {
                 icon = `data:image/png;base64,${Buffer.from(MetaData.icon).toString('base64')}`
             }

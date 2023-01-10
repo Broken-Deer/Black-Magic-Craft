@@ -4,21 +4,34 @@ import { listItem, listItemButton } from "../listItem.js"
 export default {
     data() {
         return {
-            instanceName: 'a',
+            instanceName: '',
+            downloading: '',
+            faild: false
         }
     },
     template: /* template */`
     <div>
-    <div class="version-info card">
+    <div class="version-info card" :style="banner">
         <div>
-            <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}</div>
+            <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}{{downloading}}</div>
         </div>
         <div>
             <p class="version-name">{{instanceInfo.instanceName}}</p>
             <div style="display: flex;flex-direction: row-reverse;align-items: center;">
-                <div class="start-game"><i class="play"
-                        style="font-family: 'fa-pro'; font-style: normal; margin-right: 5px; font-weight: 100;"></i>开始游戏
+            <div v-if="faild">
+                <div class="download-faild" @click="installGame"><i class="xmark-large"
+                style="font-family: 'fa-pro'; font-style: normal; margin-right: 5px; font-weight: 100;"></i>安装失败
                 </div>
+            </div>
+            <div v-else>
+                <div class="start-game" v-if="instanceInfo.installed" @click="launchGame"><i class="play"
+                style="font-family: 'fa-pro'; font-style: normal; margin-right: 5px; font-weight: 100;"></i>开始游戏
+                </div>
+                <div class="install-game" v-else @click="installGame"><i class="download"
+                style="font-family: 'fa-pro'; font-style: normal; margin-right: 5px; font-weight: 400;"></i>安装
+                </div>
+            </div>
+                
                 <i class="button gear"></i>
                 <i class="button circle-info"></i>
                 <i class="button star"></i>
@@ -28,7 +41,7 @@ export default {
     <card margin="10,0,0,0" title="地图存档" :description="savesCount" icon="map" :is-swaped="true" :can-swap="true"
         :padding="[16,20,16,20]">
         <ul class="in-card show-scroolbar" v-if="!this.instanceInfo.savesIsLoading">
-        <list-item :logo="save.icon" :title="save.name" :description="save.time" v-for="save in saves" :key="save">
+        <list-item :logo="save.icon" :title="save.name" :description="save.description" v-for="save in saves" :key="save">
         <list-item-button icon="folders"></list-item-button>
         <list-item-button icon="circle-info"></list-item-button>
         <list-item-button icon="arrow-up-right-from-square"></list-item-button>
@@ -82,7 +95,7 @@ export default {
         mods: Array,
         resourcepacks: Array,
         shaderpacks: Array,
-        instanceInfo: Object
+        instanceInfo: Object,
     },
     components: {
         listItemButton,
@@ -90,6 +103,9 @@ export default {
         card
     },
     computed: {
+        banner() {
+            return `background-image: linear-gradient(0deg, #00000094, #0000), url(${this.instanceInfo.banner})`
+        },
         savesCount() {
             if (this.instanceInfo.savesIsLoading) {
                 return '正在加载...'
@@ -114,5 +130,55 @@ export default {
             }
             return `安装了${this.shaderpacks.length}个光影包`
         }
-    }
+    },
+    methods: {
+        launchGame() {
+            ipc.send('launch-game', this.instanceInfo.instanceName)
+        },
+        async installGame() {
+            await ipc.invoke('install-game-from-instance', this.instanceInfo.instanceName)
+        },
+        updateUI(downloadingInfo) { // 检查收到的下载状态对应的名字是否当前正在显示的相同
+            if (this.instanceInfo.instanceName != downloadingInfo.instanceName) return
+            this.downloading = downloadingInfo.status
+        },
+        async downloadCompleted(instanceName) {
+            if (instanceName === this.instanceInfo.instanceName) {
+                let instances = await ipcInvoke('get-instances')
+                for (let index = 0; index < instances.length; index++) {
+                    const instance = instances[index];
+                    if (
+                        instance.name === this.instanceInfo.instanceName
+                    ) this.instanceInfo.installed = true
+                }
+            }
+        },
+        downloadFaild(instanceName) {
+            if (instanceName === this.instanceInfo.instanceName) {
+                this.faild = true
+            }
+        },
+    },
+    mounted() {
+        const this_ = this
+        ipc.on('update-download-task', function (event, downloadingInfo) {
+            updateUI(downloadingInfo)
+        })
+        ipc.on('download-complete', (event, instanceName) => {
+            downloadCompleted(instanceName)
+        })
+        ipc.on('download-faild', (event, {instanceName, error}) => {
+            downloadFaild(instanceName)
+            console.log(error)
+        })
+        function updateUI(downloadingInfo) {
+            this_.updateUI(downloadingInfo)
+        }
+        function downloadCompleted(instanceName) {
+            this_.downloadCompleted(instanceName)
+        }
+        function downloadFaild(instanceName) {
+            this_.downloadFaild(instanceName)
+        }
+    },
 }

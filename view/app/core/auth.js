@@ -16,10 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// 已弃用
+
+
 var status_code;
 
 async function show_login_window() {
-    setTimeout(async () => {
         console.log("1. 等待用户登录完成");
         const new_webview = document.createElement("webview");
         new_webview.id = "ms_login_webview";
@@ -32,7 +34,6 @@ async function show_login_window() {
             "&redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf";
         new_webview.style = "display: inline-flex;width: 100%;height: 308px;";
         await $(new_webview).appendTo(document.getElementById("ms_login_body").firstElementChild);
-        var a = true;
         const webview = document.querySelector("webview");
         webview.addEventListener("dom-ready", (e) => {
             /* 缩放比例 */
@@ -82,7 +83,6 @@ async function show_login_window() {
             const pref = "https://login.live.com/oauth20_desktop.srf?";
             /* 如果重定向地址以https://login.live.com/oauth20_desktop.srf?code= 开头，从中截取code的值，并丢给验证程序进行验证 */
             if (url.startsWith(pref + "code=")) {
-                a = false;
                 console.log("第一步完成");
                 $("webview").remove();
                 var code = url.substring(pref.length).split("&")[0].split("=")[1];
@@ -113,7 +113,6 @@ async function show_login_window() {
                 popup_window_close("ms_login");
             }
         });
-    }, 1000);
 }
 
 async function ms_oauth(code) {

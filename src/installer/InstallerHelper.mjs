@@ -77,14 +77,12 @@ export async function removeDir(dir) {
     for (var i = 0; i < files.length; i++) {
         let newPath = join(dir, files[i]);
         if ((await f.stat(newPath)).isDirectory()) {
-            //如果是文件夹就递归下去
             await removeDir(newPath);
         } else {
-            //删除文件
             await f.unlink(newPath);
         }
     }
-    await f.rmdir(dir); //如果文件夹是空的，就将自己删除掉
+    await f.rmdir(dir); 
 }
 
 export function GetTaskStatus(task, lastProgress) {
@@ -101,20 +99,20 @@ export function GetTaskStatus(task, lastProgress) {
     };
 }
 
-export function renameGame(OldVersionName, NewVersionName) {
+export async function renameGame(OldVersionName, NewVersionName) {
     const OldVersionDir = path.join(GetPath().gamePath, "versions", OldVersionName);
     const NewVersionDir = path.join(GetPath().gamePath, "versions", NewVersionName);
     try {
-        f.renameSync(OldVersionDir, NewVersionDir);
+        await f.rename(OldVersionDir, NewVersionDir);
     } catch (error) { }
     try {
-        f.renameSync(
+        await f.rename(
             path.join(NewVersionDir, `${OldVersionName}.jar`),
             path.join(NewVersionDir, `${NewVersionName}.jar`)
         );
     } catch (error) { }
     try {
-        f.renameSync(
+        await f.rename(
             path.join(NewVersionDir, `${OldVersionName}.json`),
             path.join(NewVersionDir, `${NewVersionName}.json`)
         );

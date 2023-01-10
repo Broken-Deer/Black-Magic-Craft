@@ -19,7 +19,10 @@
 import path from "path"
 import { GetPath } from "../installer/InstallerHelper.mjs"
 import f from 'fs/promises'
+import fs from 'fs'
 import { removeDir } from "../utils/FileSystem.mjs"
+import { checkVersionAlreadyInstaller } from "../installer/index.mjs"
+import { getSettings } from "../settings/Settings.mjs"
 
 async function newInstance(
     instanceName,
@@ -77,11 +80,33 @@ async function getInstances() {
     for (let index = 0; index < Dirs.length; index++) {
         const InstanceDir = path.join(InstancePath, Dirs[index]);
         try {
+            let metadata = JSON.parse(
+                (await f.readFile(path.join(InstanceDir, 'instance.json'))).toString()
+            )
+            let installed
+            if (!(await checkVersionAlreadyInstaller(metadata.version)) || metadata.version === "") {
+                installed = false
+            } else {
+                installed = true
+            }
+            let banner = ''
+            const MinecraftVersion = metadata.runtime.minecraft
+            const SupportedBanners = getSettings().banners
+            for (let index = 0; index < SupportedBanners.length; index++) {
+                if (MinecraftVersion === SupportedBanners[index] ||
+                    MinecraftVersion.replace(/(?=(\.)(?!.*\1)).*?$/g, '') === SupportedBanners[index]) {
+                    banner = `./assets/images/banners/${SupportedBanners[index]}.webp`
+                    break
+                }
+            }
+            if (banner === '') {
+                banner = `./assets/images/banners/default.webp`
+            }
             Instances.push({
                 name: Dirs[index],
-                metadata: JSON.parse(
-                    (await f.readFile(path.join(InstanceDir, 'instance.json'))).toString()
-                )
+                metadata: metadata,
+                installed: installed,
+                banner: banner
             })
         } catch (error) {
             continue

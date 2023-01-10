@@ -44,9 +44,11 @@ img {
 ::-webkit-scrollbar-track {
     display: none;
 }
+
 .show-scroolbar::-webkit-scrollbar-thumb {
     display: unset;
 }
+
 #setting_pg {
     margin-left: -60px;
 }
@@ -82,7 +84,7 @@ div.title-bar {
     border-radius: 8px 8px 0 0;
     display: flex;
     justify-content: space-between;
-    background: #600081;
+    background: linear-gradient(248deg, #600081, #74009c);
     color: #fff;
 }
 
@@ -485,7 +487,7 @@ div.page {
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
     transition: all 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -1252,6 +1254,7 @@ ul.gamelist>li {
     background-image: linear-gradient(0deg, #00000094, #0000), url(../images/headImage.webp);
     background-size: cover;
     background-position: center;
+    border: none;
     height: 200px;
     padding: 16px 18px 20px 24px;
     display: flex;
@@ -1277,8 +1280,9 @@ ul.gamelist>li {
     padding: 6px 12px;
     color: #ffffff;
     display: flex;
+    backdrop-filter: blur(6px);
     width: 200px;
-    background: #00000036;
+    background: #0000001c;
 }
 
 .home-page .version-info>div:first-child img {
@@ -1293,9 +1297,10 @@ ul.gamelist>li {
     align-items: center;
 }
 
-.home-page .version-info .start-game {
+.home-page .version-info .start-game,
+.home-page .version-info .install-game,
+.home-page .version-info .download-faild {
     border-radius: 4px;
-    background-image: linear-gradient(248deg, #18b14e, #4fc82f);
     font-size: 15px;
     padding: 8px 20px;
     color: #ffffff;
@@ -1303,15 +1308,24 @@ ul.gamelist>li {
     transition: all .1s ease;
     display: inline-block;
     overflow: hidden;
+    font-family: 'Harmony-light';
 }
 
-.home-page .version-info .start-game::before {
-    content: '';
-    background-color: #fff0;
+.home-page .version-info .start-game {
+    background-image: linear-gradient(248deg, #18b14e, #4fc82f);
 }
 
-.home-page .version-info .start-game:hover::before {
-    background-color: #fff;
+.home-page .version-info .install-game {
+    width: 116.25px;
+    height: 36px;
+    background-image: linear-gradient(248deg, #235dce, #399bed);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.home-page .version-info .download-faild {
+    background-image: linear-gradient(248deg, #ce234e, #ed5e39);
+    text-align: center;
 }
 
 .home-page .version-info-mini>div:first-child>div {
@@ -1338,6 +1352,14 @@ ul.gamelist>li {
 
 .home-page .button:active {
     background: #ffffff33;
+}
+
+.home-page .gamelist p {
+    color: #00000079;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
 }
 
 .list-item {

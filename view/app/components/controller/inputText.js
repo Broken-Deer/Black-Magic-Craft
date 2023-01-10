@@ -16,26 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { load, update } from "../LoadConfigs.js";
+import { load, update } from "../../LoadConfigs.js";
 
 export var inputText = {
     data() {
-        var conf = load(this.config);
-        var value;
-        if (typeof conf == "string") {
-            value = conf;
-        } else {
-            value = "";
-        }
         return {
-            value: value,
+            value: "",
         };
     },
     template: /* html */ `
         <div class="input input-text">
             <span class="name">{{name}}</span>
             <div class="input-data">
-                <input type="text" :title="name" :placeholder="placeholder" @input="updateData" required v-model="value"/>
+                <input type="text" :title="name" :placeholder="placeholder" @blur="updateData" required v-model="value"/>
                 <div class="underline"></div>
             </div>
         </div>`,
@@ -46,9 +39,20 @@ export var inputText = {
     },
     methods: {
         updateData() {
-            console.log(this.value);
             update(this.config, this.value);
         },
+    },
+    mounted() {
+        const this_ = this;
+        (async function () {
+            var conf = await load(this_.config)
+            var value;
+            if (typeof conf == "string") {
+                this_.value = conf;
+            } else {
+                this_.value = "";
+            }
+        })()
     },
 };
 export var inputTextMini = {
@@ -77,8 +81,19 @@ export var inputTextMini = {
     },
     methods: {
         updateData() {
-            console.log(this.value);
             update(this.config, this.value);
         },
+    },
+    mounted() {
+        const this_ = this;
+        (async function () {
+            var conf = await load(this_.config)
+            var value;
+            if (typeof conf == "string") {
+                this_.value = conf;
+            } else {
+                this_.value = "";
+            }
+        })()
     },
 };

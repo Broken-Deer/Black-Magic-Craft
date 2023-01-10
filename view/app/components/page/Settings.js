@@ -44,7 +44,6 @@ export default {
 
             $(el).siblings().removeClass("active");
             $(el).addClass("active");
-            console.log(id, this.activeID)
             if (id < this.activeID) {
                 this.transitionName = 'slide-down'
             } else {

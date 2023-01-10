@@ -19,28 +19,30 @@
 import { Version } from "@xmcl/core";
 import { installLibrariesTask, installAssetsTask, getVersionList } from "@xmcl/installer";
 import path from "path";
-import f from "fs";
+import f from "fs/promises";
 import { GetTaskStatus, GetPath, removeDir } from "./InstallerHelper.mjs";
 import { downloadFileByGot, downloadFileByAria2 } from "./FileDownloader.mjs";
+import { getEventObj } from "../utils/Other.mjs";
 
 /**
  * 使用version.json安装游戏，需确保version.json名称与文件夹名相同
  */
-export async function InstallGameByJSON(versionName, completeFile) {
+export async function InstallGameByJSON(versionName, completeFile, instanceName) {
+    const event = getEventObj()
     const VersionDir = path.join(GetPath().gamePath, "versions", versionName);
-    const VersionJSON = JSON.parse(f.readFileSync(path.join(VersionDir, `${versionName}.json`)));
+    const VersionJSON = JSON.parse(await f.readFile(path.join(VersionDir, `${versionName}.json`)));
     downloadFileByAria2(
         VersionJSON.downloads.client.url,
         path.join(VersionDir, `${versionName}.jar`),
         undefined,
         DownloadResults => {
             if (DownloadResults.stat !== "OK") {
-                throw "Download Faild!";
+                event.reply('download-faild', instanceName)
             }
         }
     );
     if (completeFile) {
-        await InstallAssetsAndLibraries(versionName);
+        await InstallAssetsAndLibraries(versionName, instanceName);
     }
 }
 
@@ -66,37 +68,57 @@ export async function InstallVanillaGame(versionName, minecraftVersion, onlySave
 /**
  * 安装原版依赖库及资源文件
  */
-export async function InstallAssetsAndLibraries(versionName) {
+export async function InstallAssetsAndLibraries(versionName, instanceName) {
+    const event = getEventObj()
     const MinecraftLocation = GetPath().gamePath;
     const ResolvedVersion = await Version.parse(MinecraftLocation, versionName);
     const LibrariesInstallTask = installLibrariesTask(ResolvedVersion);
     const AssetsInstallTask = installAssetsTask(ResolvedVersion);
     let LibrariesLastProgress = 0;
     let AssetsLastProgress = 0;
+    let LibrariesInstallDone = false
+    let AssetsInstallDone = false
     const AutoUpdateUI = setInterval(() => {
-        if (LibrariesInstallTask.isDone && AssetsInstallTask.isDone) {
+        if (LibrariesInstallDone && AssetsInstallDone) {
             clearInterval(AutoUpdateUI);
-            console.log("done");
-            return;
+            event.reply('download-complete', instanceName)
         }
-        console.log(GetTaskStatus(LibrariesInstallTask, LibrariesLastProgress));
+        event.reply('update-download-task', {
+            instanceName: instanceName,
+            status: GetTaskStatus(AssetsInstallTask, AssetsLastProgress)
+        })
         console.log(GetTaskStatus(AssetsInstallTask, AssetsLastProgress));
         LibrariesLastProgress = LibrariesInstallTask.progress;
         AssetsLastProgress = AssetsInstallTask.progress;
-    }, 500);
-    var onFaild = {
-        onFailed(task, error) {
-            LibrariesInstallTask.cancel();
-            AssetsInstallTask.cancel();
-            clearInterval(AutoUpdateUI);
-            throw error;
-        },
-    };
+    }, 300);
     (async () => {
-        await LibrariesInstallTask.startAndWait(onFaild);
+        await LibrariesInstallTask.startAndWait({
+            onFailed(task, error) {
+                console.log(1111111111111)
+                LibrariesInstallTask.cancel();
+                AssetsInstallTask.cancel();
+                event.reply('download-faild', {instanceName: instanceName, error: error})
+                clearInterval(AutoUpdateUI);
+                throw error
+            },
+            onSucceed() {
+                LibrariesInstallDone = true
+            }
+        });
     })();
     (async () => {
-        await AssetsInstallTask.startAndWait(onFaild);
+        await AssetsInstallTask.startAndWait({
+            onFailed(task, error) {
+                console.log(1111111111111)
+                LibrariesInstallTask.cancel();
+                AssetsInstallTask.cancel();
+                event.reply('download-faild', {instanceName: instanceName, error: error})
+                clearInterval(AutoUpdateUI);
+            },
+            onSucceed() {
+                AssetsInstallDone = true
+            }
+        });
     })();
 }
 
@@ -114,3 +136,4 @@ export function UninstallGame(name, event) {
         event.reply("Uninstall", "succeed");
     })();
 }
+

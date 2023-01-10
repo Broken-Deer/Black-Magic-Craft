@@ -20,7 +20,8 @@ import { installLiteloader } from "@xmcl/installer";
 import { InstallGameByJSON } from "./DefaultGameInstaller.mjs";
 import { InstallVanillaGame } from "./DefaultGameInstaller.mjs";
 import { GetPath, MargeVersionJSON } from "./InstallerHelper.mjs";
-import f from "fs";
+import fs from "fs";
+import f from 'fs/promises'
 import path from "path";
 import got from "got";
 
@@ -29,16 +30,22 @@ import got from "got";
  * @param {String} MinecraftVersion Minecraft版本
  * @param {String} VersionName 命名为
  */
-export async function InstallGameWithLiteloader(MinecraftVersion, VersionName) {
+export async function InstallGameWithLiteloader(MinecraftVersion, VersionName, inheritsFrom) {
     const MinecraftLocation = GetPath().gamePath;
-    if (!f.existsSync(path.join(MinecraftLocation, "versions", MinecraftVersion, `${MinecraftVersion}.json`))) {
-        await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false);
+    if (typeof inheritsFrom === 'string') {
+        await installLiteloader(await getLiteloaderVersionMeta(MinecraftVersion), MinecraftLocation, {
+            inheritsFrom: inheritsFrom,
+            versionId: VersionName,
+        });
+    } else {
+        if (!fs.existsSync(path.join(MinecraftLocation, "versions", MinecraftVersion, `${MinecraftVersion}.json`))) {
+            await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false);
+        }
+        await installLiteloader(await getLiteloaderVersionMeta(MinecraftVersion), MinecraftLocation, {
+            versionId: VersionName,
+        });
     }
-    await installLiteloader(await getLiteloaderVersionMeta("1.12.2"), MinecraftLocation, {
-        inheritsFrom: MinecraftVersion,
-        versionId: VersionName,
-    });
-    f.writeFileSync(
+    await f.writeFile(
         path.join(MinecraftLocation, "versions", VersionName, `${VersionName}.json`),
         await MargeVersionJSON(
             path.join(MinecraftLocation, "versions", VersionName, `${VersionName}.json`),
@@ -46,7 +53,7 @@ export async function InstallGameWithLiteloader(MinecraftVersion, VersionName) {
             MinecraftVersion
         )
     );
-    InstallGameByJSON(VersionName);
+    await InstallGameByJSON(VersionName);
 }
 
 /**

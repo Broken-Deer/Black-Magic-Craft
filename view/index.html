@@ -63,7 +63,29 @@
     <!-- 在这里挂载弹窗内容 -->
   </div>
 </body>
-
+<script type="text/javascript">   
+  var images = new Array()   
+   function preload() {   
+       for (i = 0; i < preload.arguments.length; i++) {   
+           images[i] = new Image()   
+           images[i].src = preload.arguments[i]   
+       }   
+   }
+   // 预加载图像防止显示时闪烁
+   preload(   
+       "./assets/images/banners/1.9.webp",
+       "./assets/images/banners/1.11.webp",
+       "./assets/images/banners/1.12.webp",
+       "./assets/images/banners/1.13.webp",
+       "./assets/images/banners/1.14.webp",
+       "./assets/images/banners/1.15.webp",
+       "./assets/images/banners/1.16.webp",
+       "./assets/images/banners/1.17.webp",
+       "./assets/images/banners/1.18.webp",
+       "./assets/images/banners/1.19.webp",
+       "./assets/images/banners/default.webp",
+   )   
+</script> 
 </html>
 <!-- 
        　  　▃▆█▇▄▖

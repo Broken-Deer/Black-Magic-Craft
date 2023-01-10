@@ -127,7 +127,7 @@ function setInstanceManagerDetector() {
         }
         event.reply('remove-resourcepack', { result: result, err: err })
     })
-    ipcMain.handle('get-resourcepacks', async (event, {instanceName, id}) => {
+    ipcMain.handle('get-resourcepacks', async (event, { instanceName, id }) => {
         return await getResourcepacks(instanceName, id)
     })
     ipcMain.on('add-shaderpack', async (event, { from, instanceName }) => {
@@ -150,7 +150,7 @@ function setInstanceManagerDetector() {
         }
         event.reply('remove-shaderpack', { result: result, err: err })
     })
-    ipcMain.handle('get-shaderpacks', async (event, {instanceName, id}) => {
+    ipcMain.handle('get-shaderpacks', async (event, { instanceName, id }) => {
         return await getShaderpacks(instanceName, id)
     })
     ipcMain.handle('get-world-info', async (event, { instanceName, DirName }) => {
@@ -179,12 +179,13 @@ function setInstanceManagerDetector() {
         }
         event.reply('get-shaderpacks', { result: result, err: err })
     })
-    ipcMain.handle('get-world-list', async (event, {instanceName, id}) => {
+    ipcMain.handle('get-world-list', async (event, { instanceName, id }) => {
         return await getWorldList(instanceName)
     })
     ipcMain.handle('change-activeID', (event, id) => {
         activeID = id
     })
+    
 }
 
 function GetActiveID() {
