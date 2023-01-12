@@ -32,17 +32,15 @@ img {
 }
 
 :hover::-webkit-scrollbar {
-    width: 5px;
+    width: 2.5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #a8a8a834;
+    background-color: #00000026;
     border-radius: 10px;
-    display: none;
 }
 
 ::-webkit-scrollbar-track {
-    display: none;
 }
 
 .show-scroolbar::-webkit-scrollbar-thumb {
@@ -136,7 +134,6 @@ div.title-bar>div.button #max svg {
 
 div.sidebar {
     font-size: 16px;
-    /* position: absolute; */
     z-index: 10;
     margin: 0;
     top: 0px;
@@ -144,16 +141,11 @@ div.sidebar {
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
-    /* padding-top: 4rem; */
-    /* padding: 1rem 0.5rem 7px 0.5rem; */
-    /* padding-bottom: 3rem; */
 }
 
 div.sidebar ul.sidebar-links {
     padding: 0;
     list-style-type: none;
-    /* display: flex; */
-    /* width: calc(250px - 1rem); */
     flex-wrap: wrap;
     display: flex;
     flex-direction: column;
@@ -259,8 +251,6 @@ div.sidebar .sidebar-item a.sidebar:hover {
 div.sidebar>div {
     margin: 1rem 0.5rem 7px 0.5rem;
     height: 100%;
-    /* width: 0; */
-    /* z-index: 100; */
 }
 
 body {
@@ -273,46 +263,6 @@ body {
     border-radius: 6px;
     border: 1px solid hsla(210, 18%, 87%, 1);
     color: #24292f;
-}
-
-/* .card .card-header {
-    border-bottom: 1px solid rgb(0 0 0 / 8%);
-}
-
-.card .card-header p,
-.card .card-footer {
-    margin: 13px 18px;
-}
-
-.card .card-header p {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.card .card-body {
-    padding: 1.3rem 1.45rem;
-}
-
-.card .card-footer {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: #f7f7f7;
-    border-radius: 0 0 0.5rem 0.5rem;
-} */
-
-.user-panel {
-    /* border-bottom: 1px solid rgba(0, 0, 0, 0.466); */
-    width: calc(250px - 2.4rem) !important;
-    padding-bottom: 0.7rem;
-}
-
-.user-panel img {
-    height: auto;
-    width: 2.1rem;
-}
-
-.user-panel .image {
-    display: inline-block;
-    padding-left: 0.8rem;
 }
 
 .d-flex {
@@ -351,7 +301,7 @@ div.sidebar li.sidebar-header:active {
 
 i.nav-icon {
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 400;
     color: #000;
     font-family: "fa-pro";
     font-style: normal;
@@ -397,17 +347,17 @@ div.page {
 }
 
 .card {
-    border-radius: 0.5rem;
+    border-radius: 8px;
     box-shadow: 0 3px 6px rgb(140 149 159 / 0%);
     background-color: #ffffffe0;
-    border: 1px solid #0000003b;
+    border: 1px solid #00000017;
     margin: 15px 0 15px 0;
 }
 
 .card-icon {
     width: 2rem;
     height: 2em;
-    margin-right: 0.6rem;
+    margin-right: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -416,26 +366,26 @@ div.page {
 .card-icon i {
     font-family: 'fa-pro';
     font-style: normal;
-    font-size: 1.5rem;
+    font-size: 23px;
     font-weight: 500;
 }
 
 .card-header,
 .card-body,
 .card-footer {
-    padding: 1.15rem 1.25rem;
+    padding: 16px 18px;
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .card-header>.card-button {
-    width: 2.3em;
-    height: 2.3em;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -456,8 +406,13 @@ div.page {
 
 .card-header>.card-title {
     display: flex;
+    align-items: center;
 }
-
+.card-header>.card-title>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .card-header h4 {
     font-weight: 100;
     height: 1.3em;
@@ -492,7 +447,7 @@ div.page {
 }
 
 .card-body>div {
-    margin: 23px 33px 23px 33px;
+    margin: 24px 34px;
     font-size: 14px;
     color: rgb(0, 0, 0);
     position: relative;
@@ -676,7 +631,7 @@ div.page>iframe>* {
     transform: scale(0.7);
 }
 
-.popup_window {
+.dialog {
     display: flex;
     width: inherit;
     height: inherit;
@@ -691,31 +646,31 @@ div.page>iframe>* {
     align-items: center;
 }
 
-.popup_window_display {
+.dialog_display {
     opacity: 1;
     z-index: 20000;
     pointer-events: all;
 }
 
-.popup_window_main {
+.dialog_main {
     border-radius: 8px;
     background: #fff;
-    animation: 0.4s popup_window cubic-bezier(0, 0.47, 0.25, 1);
+    animation: 0.4s dialog cubic-bezier(0, 0.47, 0.25, 1);
     transition: all 0.2s ease;
 }
 
-.popup_window_main>* {
+.dialog_main>* {
     padding: 1.15rem 0.65rem;
 }
 
-.popup_window_main>.body {
-    padding: 0.6rem 0.6rem;
+.dialog_main>.body {
+    padding: 9px 9px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.popup_window_main>.body>div {
+.dialog_main>.body>div {
     height: 100%;
     width: 100%;
     display: flex;
@@ -723,7 +678,7 @@ div.page>iframe>* {
     align-items: center;
 }
 
-@keyframes popup_window {
+@keyframes dialog {
     from {
         transform: scale(0.9);
         opacity: 0;
@@ -1025,18 +980,20 @@ div.child-sidebar {
     font-size: 16px;
     margin-bottom: 20px;
     transition: all 0.2s cubic-bezier(0, 0.83, 0.47, 1);
-    padding: 22px 0 0 8px;
+    padding: 22px 0px 0 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 div.child-sidebar ul {
-    padding: 0;
+    padding-left: 4px;
     list-style-type: none;
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+    max-height: calc(100vh - 196px);
+    overflow: overlay;
 }
 
 div.child-sidebar li {
@@ -1047,7 +1004,7 @@ div.child-sidebar li {
     width: 100%;
     margin: 0.1rem 0;
     border-radius: 6px;
-    padding: 7px 10px;
+    padding: 7px 7px;
     display: flex;
     align-items: center;
     transition: all 80ms ease;
@@ -1070,17 +1027,18 @@ div.child-sidebar .active {
 div.child-sidebar li::before {
     background-color: #007bff00;
     content: "";
-    height: 22px;
-    width: 5px;
+    height: 14px;
+    width: 4px;
     position: relative;
-    left: -17px;
-    border-radius: 3px;
-    transition: background-color 0.15s ease;
+    left: -7px;
+    border-radius: 5px;
+    transition: all 0.15s ease;
 }
 
 div.child-sidebar .active::before {
     background-color: #600081;
     content: "";
+    height: 18px;
 }
 
 div.child-sidebar i {
@@ -1212,9 +1170,9 @@ div.home-page {
 }
 
 div.home-page>div:first-child {
-    width: 180px;
-    overflow-x: hidden;
-    overflow-y: overlay;
+    width: 200px;
+    /* overflow-x: hidden; */
+    /* overflow-y: overlay; */
 }
 
 div.home-page>div:first-child>div {
@@ -1225,8 +1183,9 @@ div.home-page>div:last-child {
     flex: 1;
     margin: 10px 20px 0 16px;
     border-radius: 6px 6px 0 0;
-    overflow-x: hidden;
+    overflow-x: visible;
     overflow-y: overlay;
+    padding-right: 5px;
 }
 
 div.child-sidebar>p {
@@ -1368,7 +1327,8 @@ ul.gamelist>li {
     border-radius: 6px;
     transition: all .1s ease;
     justify-content: space-between;
-    border: 1px solid #0000001f;
+    border: 1px solid #00000010;
+    background: #fdfdfd;
     margin-bottom: 6px;
 }
 
@@ -1431,3 +1391,4 @@ ul.in-card {
     max-height: 300px;
     overflow: overlay;
 }
+

@@ -1,6 +1,6 @@
-async function popup_window(id) {
+async function dialog(id) {
     var jqid = `#${id}`;
-    await $("#pop_up_window_shadow").addClass("popup_window_display");
+    await $("#pop_up_window_shadow").addClass("dialog_display");
     await $(jqid).clone(true).appendTo("#pop_up_window_shadow");
 
     setTimeout(async () => {
@@ -17,11 +17,11 @@ async function popup_window(id) {
     }, 300);
 }
 
-function popup_window_close(window_id) {
+function dialog_close(window_id) {
     var jqid = window_id;
     $(jqid).attr("style", "transform: scale(0.9);opacity: 0;");
     setTimeout(() => {
-        $("#pop_up_window_shadow").removeClass("popup_window_display");
+        $("#pop_up_window_shadow").removeClass("dialog_display");
     }, 300);
     setTimeout(() => {
         $("#pop_up_window_shadow").empty();

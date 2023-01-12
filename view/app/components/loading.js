@@ -18,7 +18,7 @@
 
 export default {
     template: /* html */ `
-        <div :style="styles">
+        <div :style="styles" :id="id">
             <div class="Sf-Kd mspin-medium" id="loading">
                 <div>
                     <div></div>
@@ -27,5 +27,6 @@ export default {
         </div>`,
     props: {
         styles: String,
+        id: String
     },
 };

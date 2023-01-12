@@ -5,6 +5,7 @@ import { setInstanceManagerDetector } from "./instance/index.mjs";
 import { setInstallerCommandDetector } from "./installer/index.mjs";
 import { setEventObj } from "./utils/Other.mjs";
 import ElectronStore from "electron-store";
+import { setGameServicesDetector } from "./game/index.mjs";
 
 function setDetector(win) {
     const store = new ElectronStore()
@@ -85,6 +86,7 @@ function setDetector(win) {
     });
     setInstanceManagerDetector()
     setInstallerCommandDetector()
+    setGameServicesDetector()
 }
 
 export {

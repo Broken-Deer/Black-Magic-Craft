@@ -3,6 +3,7 @@ import { listItem, listItemButton } from "../listItem.js";
 import { checkboxMini } from "../controller/checkbox.js";
 import MainPage from './MainPage.js'
 import InstanceInfoPage from "./InstanceInfoPage.js";
+import UserManager from "./UserManager.js";
 
 export default {
     data() {
@@ -40,6 +41,7 @@ export default {
           <div>
             <div class="child-sidebar">
               <li class="active" @click="setActiveComponent($event,'MainPage',1)"><i class="house"></i>主页</li>
+              <li @click="setActiveComponent($event,'UserManager',2)"><i class="user"></i>帐户</li>
               <p @click="updateInstances">游戏</p>
               <ul class="gamelist" id="gamelist">
                 <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)">
@@ -62,19 +64,23 @@ export default {
         listItemButton,
         checkboxMini,
         InstanceInfoPage,
-        MainPage
+        MainPage,
+        UserManager
     },
     mounted() {
         this.updateInstances()
     },
     methods: {
+        test() {
+            alert('114514')
+        },
         setActiveComponent(el, componentName, id, index) {
             el = el.currentTarget
             setTimeout(() => {
                 $(el.parentNode.parentNode.parentNode.lastElementChild).scrollTop(0);
             }, 100);
             $(el).siblings().removeClass("active");
-            if (componentName === 'MainPage') {
+            if (componentName != 'InstanceInfoPage') {
                 $(el.parentNode.lastElementChild).children().removeClass("active");
             } else {
                 $(el.parentNode).siblings().removeClass("active");
@@ -95,7 +101,7 @@ export default {
             this.activeComponent = componentName
         },
         showInstancePage(el, index) {
-            this.setActiveComponent(el, 'InstanceInfoPage', 2, index)
+            this.setActiveComponent(el, 'InstanceInfoPage', 3, index)
             const this_ = this
             this.updateInstances().then(() => {
                 this_.instanceInfoData.instanceName = this_.instances[index].name;
@@ -121,7 +127,6 @@ export default {
         },
         async updateInstances() {
             let gotInstances = await ipcInvoke('get-instances')
-            console.log(gotInstances)
             this.instances = gotInstances
         },
         async updateSaves(instanceName, index) {

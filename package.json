@@ -5,6 +5,7 @@
     "main": "main.js",
     "scripts": {
         "start": "electron .",
+        "scripts-build": "webpack",
         "build": "electron-builder -w --x64",
         "package": "electron-packager . black_magic_launcher --platform=win32 --arch=x64 --out=./out --asar --app-version=1.0.0 --overwrite --ignore=node_modules",
         "test": "node test.js"
@@ -15,7 +16,9 @@
         "electron": "21.2.2",
         "electron-builder": "23.6.0",
         "electron-packager": "17.1.1",
-        "path": "0.12.7"
+        "path": "0.12.7",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
     },
     "build": {
         "productName": "Black Magic Launcher",

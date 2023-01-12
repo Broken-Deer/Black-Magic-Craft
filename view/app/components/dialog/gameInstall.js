@@ -1,6 +1,6 @@
 export default {
     template: /* html */ `
-    <div class="popup_window_main" id="game_install">
+    <div class="dialog_main">
       <div class="head">
         <div class="title"><i class="folder-arrow-down"></i>
           <div>

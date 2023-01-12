@@ -17,7 +17,7 @@
  */
 
 import sidebarItem from "./sidebarItem.js";
-import { page } from "../onload.js";
+import { page } from "../Apps.js";
 
 export default {
     template: /* html */ `

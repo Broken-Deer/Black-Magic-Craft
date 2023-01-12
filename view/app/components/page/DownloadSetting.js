@@ -1,6 +1,6 @@
 import cardHeader from "../cardHeader.js";
-import { checkbox } from "../checkbox.js";
-import sliderBar from "../sliderBar.js";
+import { checkbox } from "../controller/checkbox.js";
+import sliderBar from "../controller/sliderBar.js";
 import { load, update } from "../../LoadConfigs.js";
 
 export default {

@@ -1,5 +1,5 @@
-import { inputText } from "../inputText.js";
-import { checkbox } from "../checkbox.js";
+import { inputText } from "../controller/inputText.js";
+import { checkbox } from "../controller/checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
 import card from "../card.js";

@@ -1,45 +1,45 @@
+import cardHeader from "../cardHeader.js";
+import sliderBar from "../controller/sliderBar.js";
+import zh_cn from "../../i18n/zh_cn.js";
+import card from "../card.js";
 import { inputText, inputTextMini } from "../controller/inputText.js";
 import { checkbox } from "../controller/checkbox.js";
-import cardHeader from "../controller/cardHeader.js";
-import { commandButton } from "../commandButton.js";
-import sliderBar from "../sliderBar.js";
-import zh_cn from "../../onload.js";
 import { load, update } from "../../LoadConfigs.js";
-import card from "../card.js";
+import { commandButton } from "../commandButton.js";
 
 export default {
-    data() {
-        var confA = [
-            { id: 1, text: "最高" },
-            { id: 2, text: "较高" },
-            { id: 3, text: "中" },
-            { id: 4, text: "较低" },
-            { id: 5, text: "最低" },
-        ];
-        var jvpathConf = load("globle.game.jvpath");
-        var jvpath;
-        if (typeof jvpathConf == "string") {
-            jvpath = jvpathConf;
-        } else {
-            jvpath = "";
-        }
-        if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
-            return {
-                configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
-                configItemsA: confA,
-                ui: zh_cn["ui"],
-                jvpath: jvpath,
-            };
-        } else {
-            return {
-                configA: confA[0]["text"],
-                configItemsA: confA,
-                ui: zh_cn["ui"],
-                jvpath: jvpath,
-            };
-        }
-    },
-    template: /* html */ `
+  data() {
+    var confA = [
+      { id: 1, text: "最高" },
+      { id: 2, text: "较高" },
+      { id: 3, text: "中" },
+      { id: 4, text: "较低" },
+      { id: 5, text: "最低" },
+    ];
+    var jvpathConf = load("globle.game.jvpath");
+    var jvpath;
+    if (typeof jvpathConf == "string") {
+      jvpath = jvpathConf;
+    } else {
+      jvpath = "";
+    }
+    if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
+      return {
+        configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
+        configItemsA: confA,
+        ui: zh_cn["ui"],
+        jvpath: jvpath,
+      };
+    } else {
+      return {
+        configA: confA[0]["text"],
+        configItemsA: confA,
+        ui: zh_cn["ui"],
+        jvpath: jvpath,
+      };
+    }
+  },
+  template: /* html */ `
   <div id="AF3BE70D">
     <card :title="ui.global_settings.java_path_title" :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands">
       <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"  config="globle.game.autojv"></checkbox>
@@ -110,10 +110,10 @@ export default {
   </div>
    
 `,
-    components: { inputText, checkbox, cardHeader, commandButton, sliderBar, inputTextMini, card },
-    methods: {
-        updateData(key, val) {
-            update(key, val);
-        },
+  components: { inputText, checkbox, cardHeader, commandButton, sliderBar, inputTextMini, card },
+  methods: {
+    updateData(key, val) {
+      update(key, val);
     },
+  },
 };

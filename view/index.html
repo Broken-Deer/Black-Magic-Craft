@@ -17,7 +17,7 @@
   <script src="./vendor/ac-colors.min.js"></script>
   <script src="./vendor/hsvToRgb.js"></script>
   <script src="./vendor/vue.dev.js"></script>
-  <script src="./vendor/vanilla-tilt.js"></script>
+  <script async src="./vendor/vanilla-tilt.js"></script>
   <script async src="./app/core/auth.js"></script>
   <script async src="./app/core/download.js"></script>
   <script async src="./app/core/installer.js"></script>
@@ -28,13 +28,15 @@
   <script async src="./app/view/PopupWindow.js"></script>
   <script async src="./app/view/Sidebar.js"></script>
   <script async src="./renderer.js"></script>
+  <script async src="./app/Apps.js" type="module"></script>
   <script async src="./app/onload.js" type="module"></script>
+  <script src="./app/components/dialogs.js" type="module"></script>
   <style id="style"></style>
 </head>
 
 <body>
   <div id="win" style="transform: scale(0.92); opacity: 0;">
-    <div class="popup_window" id="pop_up_window_shadow"></div>
+    <div id="dialog" class="dialog"></div>
     <div class="title-bar">
       <div class="title">
         <div id="icon"></div>
@@ -46,7 +48,7 @@
       </div>
     </div>
     <div class="sidebar sidebar-close" id="sidebar">
-      <!-- popup_window('ms_login', true) -->
+      <!-- dialog('ms_login', true) -->
       <div>
         <div class="sidebar-button" onclick="sidebar()"><i></i></div>
         <ul class="sidebar-links">
@@ -59,33 +61,31 @@
       </div>
     </main>
   </div>
-  <div class="dont_display dialogs">
-    <!-- 在这里挂载弹窗内容 -->
-  </div>
 </body>
-<script type="text/javascript">   
-  var images = new Array()   
-   function preload() {   
-       for (i = 0; i < preload.arguments.length; i++) {   
-           images[i] = new Image()   
-           images[i].src = preload.arguments[i]   
-       }   
-   }
-   // 预加载图像防止显示时闪烁
-   preload(   
-       "./assets/images/banners/1.9.webp",
-       "./assets/images/banners/1.11.webp",
-       "./assets/images/banners/1.12.webp",
-       "./assets/images/banners/1.13.webp",
-       "./assets/images/banners/1.14.webp",
-       "./assets/images/banners/1.15.webp",
-       "./assets/images/banners/1.16.webp",
-       "./assets/images/banners/1.17.webp",
-       "./assets/images/banners/1.18.webp",
-       "./assets/images/banners/1.19.webp",
-       "./assets/images/banners/default.webp",
-   )   
-</script> 
+<script>
+  var images = new Array()
+  function preload() {
+    for (i = 0; i < preload.arguments.length; i++) {
+      images[i] = new Image()
+      images[i].src = preload.arguments[i]
+    }
+  }
+  // 预加载图像防止显示时闪烁
+  preload(
+    "./assets/images/banners/1.9.webp",
+    "./assets/images/banners/1.11.webp",
+    "./assets/images/banners/1.12.webp",
+    "./assets/images/banners/1.13.webp",
+    "./assets/images/banners/1.14.webp",
+    "./assets/images/banners/1.15.webp",
+    "./assets/images/banners/1.16.webp",
+    "./assets/images/banners/1.17.webp",
+    "./assets/images/banners/1.18.webp",
+    "./assets/images/banners/1.19.webp",
+    "./assets/images/banners/default.webp",
+  )   
+</script>
+
 </html>
 <!-- 
        　  　▃▆█▇▄▖

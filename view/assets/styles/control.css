@@ -622,3 +622,19 @@ div#color_chooser>div:last-child>ul>li input:focus-visible {
     border: 1px solid #0080ff;
     box-shadow: inset 0 0 0 1px #0969da;
 }
+
+.card-command-button i.chevron-right {
+    transition: transform .2s ease;
+}
+
+.card-command-button:hover {
+    background-color: #0000;
+}
+
+.card-command-button:hover i.chevron-right {
+    transform: translate(4px, 0px);
+}
+
+.card-command-button:active {
+    opacity: 0.8;
+}

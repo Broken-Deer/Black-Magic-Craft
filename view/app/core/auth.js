@@ -90,7 +90,7 @@ async function show_login_window() {
                 await ms_oauth(code);
                 switch (status_code) {
                     case 0:
-                        popup_window_close("ms_login");
+                        dialog_close("ms_login");
                         break;
                     case 2:
                         login_fail_alert("ms_login", "获取 Microsoft 授权令牌失败，请检查你的 Microsoft 帐户");
@@ -110,7 +110,7 @@ async function show_login_window() {
                         break;
                 }
             } else if (url.startsWith(pref + "error=")) {
-                popup_window_close("ms_login");
+                dialog_close("ms_login");
             }
         });
 }

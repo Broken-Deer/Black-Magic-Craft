@@ -1,6 +1,6 @@
 export default {
     template: /* html */ `
-    <div class="popup_window_main" id="color_chooser">
+    <div class="dialog_main">
         <div>
             <ul>
                 <li>

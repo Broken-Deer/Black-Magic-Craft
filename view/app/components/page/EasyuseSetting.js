@@ -1,29 +1,29 @@
-import { checkbox } from "../checkbox.js";
+import { checkbox } from "../controller/checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { load, update } from "../../LoadConfigs.js";
 
 export default {
-    data() {
-        var confA = [
-            { id: 1, text: "特别慢" },
-            { id: 2, text: "慢" },
-            { id: 3, text: "正常" },
-            { id: 4, text: "快" },
-            { id: 5, text: "特别快" },
-        ];
-        if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
-            return {
-                configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
-                configItemsA: confA,
-            };
-        } else {
-            return {
-                configA: confA[3 - 1]["text"],
-                configItemsA: confA,
-            };
-        }
-    },
-    template: /* html */ `
+  data() {
+    var confA = [
+      { id: 1, text: "特别慢" },
+      { id: 2, text: "慢" },
+      { id: 3, text: "正常" },
+      { id: 4, text: "快" },
+      { id: 5, text: "特别快" },
+    ];
+    if (typeof load("globle.accessibility.AnimationSpeed") == "number") {
+      return {
+        configA: confA[load("globle.accessibility.AnimationSpeed") - 1]["text"],
+        configItemsA: confA,
+      };
+    } else {
+      return {
+        configA: confA[3 - 1]["text"],
+        configItemsA: confA,
+      };
+    }
+  },
+  template: /* html */ `
     <div id="6783F38B">
     <div class="card">
     <card-header title="辅助功能" description="使你的启动器更易于使用" icon="hand"></card-header>
@@ -58,10 +58,10 @@ export default {
     </div>
  
     `,
-    components: { checkbox, cardHeader },
-    methods: {
-        updateData(key, val) {
-            update(key, val);
-        },
+  components: { checkbox, cardHeader },
+  methods: {
+    updateData(key, val) {
+      update(key, val);
     },
+  },
 };

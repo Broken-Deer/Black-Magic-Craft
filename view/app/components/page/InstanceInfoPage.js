@@ -1,5 +1,6 @@
 import card from "../card.js"
 import { listItem, listItemButton } from "../listItem.js"
+import cardCommandButton from "../cardCommandButton.js"
 
 export default {
     data() {
@@ -100,7 +101,7 @@ export default {
     components: {
         listItemButton,
         listItem,
-        card
+        card,cardCommandButton
     },
     computed: {
         banner() {

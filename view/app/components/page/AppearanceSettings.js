@@ -1,8 +1,8 @@
-import { inputText } from "../inputText.js";
-import { checkbox } from "../checkbox.js";
+import { inputText } from "../controller/inputText.js";
+import { checkbox } from "../controller/checkbox.js";
 import cardHeader from "../cardHeader.js";
 import { commandButton } from "../commandButton.js";
-import zh_cn from "../../onload.js";
+import zh_cn from "../../i18n/zh_cn.js";
 
 export default {
     data() {
@@ -17,7 +17,7 @@ export default {
       <command-button name="更改主题" text="选择已安装主题"></command-button>
       <command-button name="安装新主题" text="转到「市场」"></command-button>
       <command-button name="打开自定义主题文件夹" text="打开"></command-button>
-      <command-button name="主题色" text="更改" click="popup_window('color_chooser')"></command-button>
+      <command-button name="主题色" text="更改" click="dialog('color_chooser')"></command-button>
     </div>
   </div>
 </div>
