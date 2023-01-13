@@ -21,7 +21,6 @@ let startTime = time
 console.log('计时器已重置', time)
 import { ipcMain, app, BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
-console.log(`导入模块用时${new Date().getTime() - time}ms`)
 ElectronStore.initRenderer();
 if (!app.isPackaged) {
     const store = new ElectronStore()

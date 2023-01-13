@@ -20,11 +20,14 @@ function setGameServicesDetector() {
             return ['error', e]
         }
     })
-    ipcMain.handle('add-microsoft-account', (event, { id, name, refreshToken, accessToken }) => {
-        addMicrosoftAccount(id, name, refreshToken, accessToken)
+    ipcMain.handle('add-microsoft-account', (event, { id, name, refreshToken, accessToken, skin, avatar }) => {
+        addMicrosoftAccount(id, name, refreshToken, accessToken, skin, avatar)
     })
     ipcMain.handle('get-accounts', () => {
         return getAccounts()
+    })
+    ipcMain.handle('launch-game', (event, { instanceName, uuid }) => {
+        launchGame(instanceName, uuid)
     })
 }
 

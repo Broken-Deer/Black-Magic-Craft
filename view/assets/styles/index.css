@@ -348,7 +348,6 @@ div.page {
 
 .card {
     border-radius: 8px;
-    box-shadow: 0 3px 6px rgb(140 149 159 / 0%);
     background-color: #ffffffe0;
     border: 1px solid #00000017;
     margin: 15px 0 15px 0;
@@ -377,7 +376,7 @@ div.page {
 }
 
 .card-header {
-    border-bottom: 1px solid rgb(0 0 0 / 10%);
+    border-bottom: 1px solid #00000017;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -638,7 +637,6 @@ div.page>iframe>* {
     border-radius: inherit;
     position: fixed;
     background: #0000004f;
-
     pointer-events: none;
     opacity: 0;
     transition: all 0.2s cubic-bezier(0, 0.68, 0.25, 1);
@@ -1327,7 +1325,7 @@ ul.gamelist>li {
     border-radius: 6px;
     transition: all .1s ease;
     justify-content: space-between;
-    border: 1px solid #00000010;
+    border: 1px solid #00000017;
     background: #fdfdfd;
     margin-bottom: 6px;
 }
@@ -1345,12 +1343,13 @@ ul.gamelist>li {
 
 .list-item div.logo {
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background-size: cover;
     margin-right: 10px;
     overflow: hidden;
     border-radius: 6px;
+    image-rendering: pixelated;
     background-image: url(./assets/images/Unknown_server.webp);
 }
 

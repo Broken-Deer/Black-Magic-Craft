@@ -20,7 +20,6 @@ export const listItem = {
     data() {
         return {
             listItemStyle: this.click ? "" : "pointer-events: none;",
-            logoStyle: this.logo ? `background-image:url(${this.logo})` : "display: none",
         };
     },
     template: /* template */ `
@@ -42,7 +41,13 @@ export const listItem = {
         title: String,
         description: String,
         click: Boolean,
+        havelogo: Boolean
     },
+    computed: {
+        logoStyle() {
+            return !this.logo && !this.havelogo ? "display: none" : `background-image:url(${this.logo})`
+        }
+    }
 };
 export const listItemButton = {
     data() {

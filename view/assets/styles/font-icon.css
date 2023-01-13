@@ -277,3 +277,7 @@ i.microsoft::before {
 i.link-slash::before {
     content: '\f127';
 }
+
+i.arrow-rotate-right::before {
+    content: '\f01e';
+}

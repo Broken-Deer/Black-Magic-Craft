@@ -14,10 +14,10 @@ export default {
     <card-command-button @click="addMicrosoftAccount" title="添加微软帐户" description="使用微软帐户登录到Minecraft" icon="microsoft" margin="10,0,10,0"></card-command-button>
     <card-command-button title="添加离线模式帐户" description="指定用户名登录到Minecraft，但不能加入有正版验证的服务器" icon="link-slash" margin="0,0,10,0"></card-command-button>
     <ul v-if="!this.AccountsIsLoading">
-        <list-item :logo="account.skin" :title="account.name" :description="account.description" v-for="account in accounts" :key="account">
-        <list-item-button icon="folders"></list-item-button>
+        <list-item :logo="account.avatar" :title="account.name" :description="account.id" v-for="account in accounts" :havelogo="true" :key="account">
+        <list-item-button icon="arrow-rotate-right"></list-item-button>
         <list-item-button icon="circle-info"></list-item-button>
-        <list-item-button icon="arrow-up-right-from-square"></list-item-button>
+        <list-item-button icon="trash-can"></list-item-button>
         </list-item>
         </ul>
         <p class="text-center text-gray text-italic" v-if="this.AccountsIsLoading">正在加载...</p>
@@ -78,25 +78,22 @@ export default {
                     })
                     const result = await ipcInvoke('ms-login', url.substring(pref.length).split("&")[0].split("=")[1]);
                     dialogs.closeDialog('ms-login')
+                    console.log(result[0])
                     if (result[0] === 'complete') {
                         // 登录成功的操作
-                        console.log(result[1].skins)
-                        const skins = result[1].skins
-                        let skin
-                        for (let index = 0; index < skins.length; index++) {
-                            if (skins[index].state === 'ACTIVE') {
-                                skin = skins[index].url
-                            }
-                        }
-                        console.log(skin)
+                        console.log(result[1].skin)
+                        var avatar = await this.getAvatar(result[1].skin, 32)
+                        console.log(avatar)
                         await ipcInvoke('add-microsoft-account', {
                             id: result[1].id,
                             name: result[1].name,
-                            skin: result[1].skins[0],
+                            skin: result[1].skin,
+                            avatar: avatar,
                             refreshToken: result[1].refreshToken,
                             accessToken: result[1].minecraftAccessToken
                         })
                         this.accounts = await ipcInvoke('get-accounts')
+                        console.log(this.accounts)
                     } else {
                         // 登录失败的操作
                     }
@@ -104,6 +101,35 @@ export default {
                     dialog_close("ms_login");
                 }
             });
+        },
+        /**
+         * 从皮肤截取头像
+         * @param {String} src 皮肤文件地址
+         * @param {int} size 截取头像的大小
+         * @returns {Promise<String>} base64编码后的头像
+         */
+        async getAvatar(src, size) {
+            const canvas = document.createElement("canvas");
+            canvas.width = size
+            canvas.height = size
+            const ctx = canvas.getContext('2d')
+            const img = new Image()
+            img.src = src
+            await new Promise(reslove => {
+                img.onload = function () {
+                    const scale = img.width / 64
+                    const faceOffset = Math.round(size / 18.0)
+                    ctx.imageSmoothingEnabled = false;
+                    ctx.drawImage(img,
+                        8 * scale, 8 * scale, 16 * scale - 8 * scale, 16 * scale - 8 * scale,
+                        faceOffset, faceOffset, size - faceOffset - faceOffset, size - faceOffset - faceOffset)
+                    ctx.drawImage(img,
+                        40 * scale, 8 * scale, 48 * scale - 40 * scale, 16 * scale - 8 * scale,
+                        0, 0, size, size)
+                    reslove();
+                }
+            })
+            return canvas.toDataURL('image/png')
         }
     },
 }

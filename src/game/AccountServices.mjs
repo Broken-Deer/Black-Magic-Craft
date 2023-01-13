@@ -191,8 +191,20 @@ async function microsoftlogin(code, refreshToken) {
     event.reply('ms-login-progress', '第 6 步，共 6 步')
     const PlayerInfo = await getPlayerInfomations(MinecraftAccessToken)
     console.log(PlayerInfo)
+    const skins = PlayerInfo.skins
+    let skin
+    for (let index = 0; index < skins.length; index++) {
+        if (skins[index].state === 'ACTIVE') {
+            skin = skins[index].url
+        }
+    }
+    if (typeof skin === 'undefined') {
+        skin = 'http://textures.minecraft.net/texture/1a4af718455d4aab528e7a61f86fa25e6a369d1768dcb13f7df319a713eb810b'
+    }
+    console.log(skin)
     return {
         ...PlayerInfo,
+        skin: skin,
         minecraftAccessToken: MinecraftAccessToken,
         refreshToken: RefreshToken // 保存它，每次登录时要用
     }
@@ -206,7 +218,7 @@ async function microsoftlogin(code, refreshToken) {
  * @param {String} accessToken Minecraft访问令牌
  * @param {String} skin 玩家的皮肤url
  */
-function addMicrosoftAccount(id, name, refreshToken, accessToken, skin) {
+function addMicrosoftAccount(id, name, refreshToken, accessToken, skin, avatar) {
     var accounts
     if (!store.has('msAccounts')) {
         accounts = []
@@ -220,6 +232,7 @@ function addMicrosoftAccount(id, name, refreshToken, accessToken, skin) {
         id: id,
         name: name,
         skin: skin,
+        avatar: avatar,
         refreshToken: refreshToken,
         accessToken: accessToken,
     })
@@ -315,6 +328,7 @@ function getAccounts() {
     }
     return store.get('msAccounts')
 }
+
 /**
  * 刷新皮肤
  */
@@ -328,5 +342,5 @@ export {
     removeMicrosoftAccount,
     getAccountInfo,
     hasAccount,
-    getAccounts
+    getAccounts,
 }

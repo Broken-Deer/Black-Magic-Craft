@@ -1,4 +1,4 @@
-module.exports = {
+exports = {
     // 入口文件指定
     entry: './main.mjs',
     // 输出资源配置
