@@ -1,20 +1,36 @@
 import card from "../card.js"
 import { listItem, listItemButton } from "../listItem.js"
 import cardCommandButton from "../cardCommandButton.js"
+import progressBar from "../controller/progress.js"
 
 export default {
     data() {
         return {
             instanceName: '',
-            downloading: '',
-            faild: false
+            downloading: {},
+            isDownloading: true,
+            faild: false,
+            loading: true
         }
+    },
+    components: {
+        listItemButton,
+        listItem,
+        card, cardCommandButton,
+        progressBar
     },
     template: /* template */`
     <div>
     <div class="version-info card" :style="banner">
         <div>
-            <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}{{downloading}}</div>
+            <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}</div>
+            <div v-if="isDownloading" style="display: flex;
+            flex-direction: column;">
+            <p v-if="loading">准备安装</p>
+            <p v-else>正在安装 ({{downloading.percentage}}%)</p>
+            <progress-bar :loading="loading" :value="downloading.percentage" width="174"></progress-bar>
+            <p v-if="!loading">{{downloading.progress}}MB / {{downloading.total}}MB</p>
+            </div>
         </div>
         <div>
             <p class="version-name">{{instanceInfo.instanceName}}</p>
@@ -98,11 +114,6 @@ export default {
         shaderpacks: Array,
         instanceInfo: Object,
     },
-    components: {
-        listItemButton,
-        listItem,
-        card,cardCommandButton
-    },
     computed: {
         banner() {
             return `background-image: linear-gradient(0deg, #00000094, #0000), url(${this.instanceInfo.banner})`
@@ -137,14 +148,22 @@ export default {
             ipc.send('launch-game', this.instanceInfo.instanceName)
         },
         async installGame() {
+            this.isDownloading = true
+            this.loading = true
             await ipc.invoke('install-game-from-instance', this.instanceInfo.instanceName)
         },
         updateUI(downloadingInfo) { // 检查收到的下载状态对应的名字是否当前正在显示的相同
             if (this.instanceInfo.instanceName != downloadingInfo.instanceName) return
             this.downloading = downloadingInfo.status
+            this.isDownloading = true
+            if (downloadingInfo.status.isDone === true) this.isDownloading = false
+            else this.isDownloading = true
+            if (Number(downloadingInfo.status.percentage) <= 0) this.loading = true
+            else this.loading = false
         },
         async downloadCompleted(instanceName) {
             if (instanceName === this.instanceInfo.instanceName) {
+                this.isDownloading = false
                 let instances = await ipcInvoke('get-instances')
                 for (let index = 0; index < instances.length; index++) {
                     const instance = instances[index];
@@ -168,7 +187,7 @@ export default {
         ipc.on('download-complete', (event, instanceName) => {
             downloadCompleted(instanceName)
         })
-        ipc.on('download-faild', (event, {instanceName, error}) => {
+        ipc.on('download-faild', (event, { instanceName, error }) => {
             downloadFaild(instanceName)
             console.log(error)
         })

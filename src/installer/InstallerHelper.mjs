@@ -51,7 +51,7 @@ export function getOSInfomation() {
     if (os.type() === "Windows_NT") {
         exePath = exePath.replace(/\\/g, "/");
     }
-    var Path = exePath.replace(/(?=(\/)(?!.*\1)).*?$/g, "/");
+    var Path = path.dirname(exePath);
     if (!app.isPackaged) {
         Path = app.getAppPath() + "/";
         Path = Path + "test/";

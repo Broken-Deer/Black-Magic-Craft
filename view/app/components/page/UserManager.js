@@ -14,11 +14,14 @@ export default {
     <card-command-button @click="addMicrosoftAccount" title="添加微软帐户" description="使用微软帐户登录到Minecraft" icon="microsoft" margin="10,0,10,0"></card-command-button>
     <card-command-button title="添加离线模式帐户" description="指定用户名登录到Minecraft，但不能加入有正版验证的服务器" icon="link-slash" margin="0,0,10,0"></card-command-button>
     <ul v-if="!this.AccountsIsLoading">
-        <list-item :logo="account.avatar" :title="account.name" :description="account.id" v-for="account in accounts" :havelogo="true" :key="account">
-        <list-item-button icon="arrow-rotate-right"></list-item-button>
-        <list-item-button icon="circle-info"></list-item-button>
-        <list-item-button icon="trash-can"></list-item-button>
-        </list-item>
+    <TransitionGroup name="list-item">
+    <list-item :logo="account.avatar" :title="account.name" :description="account.id" v-for="account in accounts" :havelogo="true" :key="account.id">
+    <list-item-button icon="arrow-rotate-right"></list-item-button>
+    <list-item-button icon="circle-info"></list-item-button>
+    <list-item-button icon="trash-can"></list-item-button>
+    </list-item>
+</TransitionGroup>
+
         </ul>
         <p class="text-center text-gray text-italic" v-if="this.AccountsIsLoading">正在加载...</p>
     </div>
@@ -92,7 +95,7 @@ export default {
                             refreshToken: result[1].refreshToken,
                             accessToken: result[1].minecraftAccessToken
                         })
-                        this.accounts = await ipcInvoke('get-accounts')
+                            this.accounts = await ipcInvoke('get-accounts')
                         console.log(this.accounts)
                     } else {
                         // 登录失败的操作
@@ -120,6 +123,7 @@ export default {
                     const scale = img.width / 64
                     const faceOffset = Math.round(size / 18.0)
                     ctx.imageSmoothingEnabled = false;
+                    /* Inspired by HMCL */
                     ctx.drawImage(img,
                         8 * scale, 8 * scale, 16 * scale - 8 * scale, 16 * scale - 8 * scale,
                         faceOffset, faceOffset, size - faceOffset - faceOffset, size - faceOffset - faceOffset)

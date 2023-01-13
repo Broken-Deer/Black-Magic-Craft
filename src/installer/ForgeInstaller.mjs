@@ -29,7 +29,7 @@ import f from "fs/promises";
 export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeVersion, instanceName) {
     const MinecraftLocation = GetPath().gamePath;
     const event = getEventObj()
-    await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false);
+    await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false,instanceName);
     console.log(ForgeVersion, MinecraftVersion, MinecraftLocation)
     const ForgeInstallTask = installForgeTask(
         { version: ForgeVersion, mcversion: MinecraftVersion },

@@ -67,7 +67,7 @@ export async function parallelDownload(tasklist, plimit, event, taskname) {
                     }
                 } else {
                     const pipeline = util.promisify(stream.pipeline);
-                    makeDir(to_.replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
+                    makeDir(path.dirname(to_));
                     const downloadStream = got.stream(from_, { timeout: {} });
                     const fileWriterStream = f.createWriteStream(to_);
                     downloadStream.on("error", error => {
@@ -104,8 +104,8 @@ export async function parallelDownload(tasklist, plimit, event, taskname) {
  * @param {array} from 下载来源
  * @param {array} to 保存路径，需要和from参数一一对应
  */
-export async function downloadFileByGot(from, to) {
-    makeDir(to.replace(/(?=(\/)(?!.*\1)).*?$/g, ""));
+export async function downloadFileByGot(from, to, instanceName) {
+    makeDir(path.dirname(to), "");
     const pipeline = util.promisify(stream.pipeline);
     const downloadStream = got.stream(from, { timeout: {} });
     const fileWriterStream = f.createWriteStream(to);
@@ -113,7 +113,7 @@ export async function downloadFileByGot(from, to) {
         console.log(`${to}下载失败，第${retryCount}次重试`);
     });
     downloadStream.on("error", error => {
-        console.log(`assets file: ${error.message}`);
+        console.log(`err: ${error.message}`);
     });
     fileWriterStream
         .on("error", () => {})

@@ -44,9 +44,11 @@ export default {
               <li @click="setActiveComponent($event,'UserManager',2)"><i class="user"></i>帐户</li>
               <p @click="updateInstances">游戏</p>
               <ul class="gamelist" id="gamelist">
+              <TransitionGroup name="list-item">
                 <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)">
                   <img src="./assets/images/Grass_Block.webp">{{instance.name}}
                 </li>
+                </TransitionGroup>
                 <p v-if="instances == 0">此视图筛选条件无匹配结果</p>
               </ul>
             </div>

@@ -31,16 +31,14 @@ export async function InstallGameByJSON(versionName, completeFile, instanceName)
     const event = getEventObj()
     const VersionDir = path.join(GetPath().gamePath, "versions", versionName);
     const VersionJSON = JSON.parse(await f.readFile(path.join(VersionDir, `${versionName}.json`)));
-    downloadFileByAria2(
-        VersionJSON.downloads.client.url,
-        path.join(VersionDir, `${versionName}.jar`),
-        undefined,
-        DownloadResults => {
-            if (DownloadResults.stat !== "OK") {
-                event.reply('download-faild', instanceName)
-            }
-        }
-    );
+    try {
+        await downloadFileByGot(
+            VersionJSON.downloads.client.url,
+            path.join(VersionDir, `${versionName}.jar`),
+        );
+    } catch (error) {
+        event.reply('download-faild', instanceName)
+    }
     if (completeFile) {
         await InstallAssetsAndLibraries(versionName, instanceName);
     }
@@ -51,7 +49,7 @@ export async function InstallGameByJSON(versionName, completeFile, instanceName)
  * @param {string} versionName 要安装游戏的名称
  * @param {string} minecraftVersion 要安装的版本id
  */
-export async function InstallVanillaGame(versionName, minecraftVersion, onlySaveJSON, completeFile) {
+export async function InstallVanillaGame(versionName, minecraftVersion, onlySaveJSON, completeFile,instanceName) {
     const MinecraftLocation = GetPath().gamePath;
     const VersionInfo = (await getVersionList()).versions.filter((value, index, array) => {
         if (array[index].id === minecraftVersion) {
@@ -61,7 +59,7 @@ export async function InstallVanillaGame(versionName, minecraftVersion, onlySave
     const VersionJsonPath = `${MinecraftLocation}versions/${versionName}/${versionName}.json`;
     await downloadFileByGot(VersionInfo.url, VersionJsonPath);
     if (!onlySaveJSON) {
-        await InstallGameByJSON(versionName, completeFile);
+        await InstallGameByJSON(versionName, completeFile,instanceName);
     }
 }
 
@@ -97,7 +95,7 @@ export async function InstallAssetsAndLibraries(versionName, instanceName) {
                 console.log(1111111111111)
                 LibrariesInstallTask.cancel();
                 AssetsInstallTask.cancel();
-                event.reply('download-faild', {instanceName: instanceName, error: error})
+                event.reply('download-faild', { instanceName: instanceName, error: error })
                 clearInterval(AutoUpdateUI);
                 throw error
             },
@@ -112,7 +110,7 @@ export async function InstallAssetsAndLibraries(versionName, instanceName) {
                 console.log(1111111111111)
                 LibrariesInstallTask.cancel();
                 AssetsInstallTask.cancel();
-                event.reply('download-faild', {instanceName: instanceName, error: error})
+                event.reply('download-faild', { instanceName: instanceName, error: error })
                 clearInterval(AutoUpdateUI);
             },
             onSucceed() {

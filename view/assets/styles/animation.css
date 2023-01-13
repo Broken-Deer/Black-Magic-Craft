@@ -358,8 +358,7 @@ move-down: 下移
     transform: translate(0, 0px);
     opacity: 1;
 }
-/* 
-.list-item-move, */
+.list-item-move, 
 /* 对移动中的元素应用的过渡 */
 .list-item-enter-active {
     transition: all 300ms ease;
