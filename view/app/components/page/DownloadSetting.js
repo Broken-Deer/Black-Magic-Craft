@@ -13,11 +13,13 @@ export default {
             return {
                 configA: confA[load("globle.download.module") - 1]["text"],
                 configItemsA: confA,
+                throttling: false
             };
         } else {
             return {
                 configA: confA[0]["text"],
                 configItemsA: confA,
+                throttling: false
             };
         }
     },
@@ -34,9 +36,9 @@ export default {
 <card-header title="下载选项" description="下载源、线程限制、下载引擎设置" icon="download"></card-header>
 <div class="card-body">
   <div>
-    <checkbox name="网络节流" config="globle.download.throttling"></checkbox>
-    <slider-bar name="最大线程数" max="256" min="1" step="1" config="globle.download.maxThreadNum"></slider-bar>
-    <slider-bar name="最大下载速度(MiB/s)" max="50" min="1" step="1" config="globle.download.maxDownloadSpeed"></slider-bar>
+    <checkbox name="网络节流" @click="clickUpdateUI" config="globle.download.throttling"></checkbox>
+    <slider-bar v-show="throttling" name="最大线程数" max="256" min="1" step="1" config="globle.download.maxThreadNum"></slider-bar>
+    <slider-bar v-show="throttling" name="最大下载速度(MiB/s)" max="50" min="1" step="1" config="globle.download.maxDownloadSpeed"></slider-bar>
   </div>
 </div>
 </div>
@@ -44,8 +46,17 @@ export default {
     `,
     components: { cardHeader, checkbox, sliderBar },
     methods: {
-        updateData(key, val) {
-            update(key, val);
-        },
+        clickUpdateUI() {
+            const this_ = this;
+            (async function () {
+                this_.throttling = !(await load('globle.download.throttling'))
+            })()
+        }
+    },
+    mounted() {
+        const this_ = this;
+        (async function () {
+            this_.throttling = (await load('globle.download.throttling'))
+        })()
     },
 };

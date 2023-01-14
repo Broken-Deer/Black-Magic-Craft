@@ -4,7 +4,6 @@ import path from "path";
 import { GetPath } from "../installer/InstallerHelper.mjs";
 import { getSettings } from "../settings/Settings.mjs";
 import { launch, Version } from "@xmcl/core";
-import { installDependencies } from "@xmcl/installer";
 import { MinecraftFolder } from "@xmcl/core";
 import { getJavalist } from "../utils/JavaManager.mjs";
 import { getAccountInfo } from "./AccountServices.mjs";
@@ -12,24 +11,24 @@ import { getAccountInfo } from "./AccountServices.mjs";
 const Store = new ElectronStore()
 async function launchGame(instanceName, uuid) {
     const MinecraftLocation = GetPath().gamePath
-    const InstanceInfo = await f.readFile(
+    const InstanceInfo = JSON.parse(await f.readFile(
         path.join(
             MinecraftLocation, 'instances', instanceName, 'instance.json'
         )
-    )
-    const VersionJSON = await f.readFile(
+    ))
+    const VersionJSON = JSON.parse(await f.readFile(
         path.join(
-            MinecraftLocation, 'versions', InstanceInfo.version
+            MinecraftLocation, 'versions', InstanceInfo.version, `${InstanceInfo.version}.json`
         )
-    )
+    ))
     let javaPath
     /**
      * 获取设置
      */
-    const Settings = await getGameSettings()
+    const Settings = await getGameSettings(InstanceInfo)
     if (Settings.autojv == true) {
         var javaVersion = String(VersionJSON.javaVersion.majorVersion)
-        if (majorVersion === 8) {
+        if (VersionJSON.javaVersion.majorVersion === 8) {
             javaVersion = '1.8'
         }
         const Javalist = await getJavalist()
@@ -46,12 +45,15 @@ async function launchGame(instanceName, uuid) {
     } else {
         javaPath = Settings.jvpath
     }
-    await installDependencies(await Version.parse(MinecraftLocation, InstanceInfo.version))
+    // await installDependencies(await Version.parse(MinecraftLocation, InstanceInfo.version))
     const minecraftFolder = new MinecraftFolder(path.join(MinecraftLocation, 'instances', instanceName))
     const PlayerInfo = getAccountInfo(uuid)
     if (PlayerInfo === null) {
-        throw '账户不存在'
+        // throw '账户不存在'
+        return
     }
+    console.log(Settings.launcherName)
+    console.log('获取到的版本名称：', InstanceInfo.version)
     const LaunchOption = {
         gameProfile: {
             name: PlayerInfo.name,
@@ -62,12 +64,15 @@ async function launchGame(instanceName, uuid) {
         gamePath: minecraftFolder.root,
         resourcePath: MinecraftLocation,
         javaPath: javaPath,
+        launcherName: Settings.launcherName,
+        launcherBrand: Settings.launcherName,
         version: InstanceInfo.version,
         extraExecOption: {
             detached: true,
             cwd: minecraftFolder.root,
         }
     }
+    console.log('启动选项', LaunchOption)
     const proc = launch(LaunchOption)
 }
 

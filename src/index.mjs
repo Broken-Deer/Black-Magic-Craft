@@ -6,14 +6,22 @@ import { setInstallerCommandDetector } from "./installer/index.mjs";
 import { setEventObj } from "./utils/Other.mjs";
 import ElectronStore from "electron-store";
 import { setGameServicesDetector } from "./game/index.mjs";
+import { getSettings } from "./settings/Settings.mjs";
 
 function setDetector(win) {
     const store = new ElectronStore()
     ipcMain.handle('get-config', (event, key) => {
+        if (!store.has(key)) {
+            const keyNames = key.split('.')
+            var setting = getSettings().defaultLaunchSettings
+            for (let index = 0; index < keyNames.length; index++) {   
+                setting = setting[keyNames[index]] 
+            }
+            return setting
+        }
         return store.get(key)
     })
     ipcMain.handle('update-config', (event, { key, value }) => {
-        console.log(key, value)
         store.set(key, value)
 
     })

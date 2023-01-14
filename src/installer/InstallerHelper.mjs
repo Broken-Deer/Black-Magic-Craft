@@ -85,17 +85,17 @@ export async function removeDir(dir) {
     await f.rmdir(dir); 
 }
 
-export function GetTaskStatus(task, lastProgress) {
+export function GetTaskStatus(task) {
     return {
         name: task.name,
         isDone: task.isDone,
         progress: (task.progress / 1048576).toFixed(2),
         total: (task.total / 1048576).toFixed(2),
         percentage: ((task.progress / task.total) * 100).toFixed(2),
-        speed:
-            (task.progress - lastProgress) * 2 < 1048576
-                ? (((task.progress - lastProgress) * 2) / 1024).toFixed(2) + "Kib/s"
-                : (((task.progress - lastProgress) * 2) / 1048576).toFixed(2) + "Mib/s",
+        // speed:
+        //     (task.progress - lastProgress) * 2 < 1048576
+        //         ? (((task.progress - lastProgress) * 2) / 1024).toFixed(2) + "Kib/s"
+        //         : (((task.progress - lastProgress) * 2) / 1048576).toFixed(2) + "Mib/s",
     };
 }
 

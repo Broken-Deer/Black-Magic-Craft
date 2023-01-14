@@ -29,8 +29,7 @@ import f from "fs/promises";
 export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeVersion, instanceName) {
     const MinecraftLocation = GetPath().gamePath;
     const event = getEventObj()
-    await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false,instanceName);
-    console.log(ForgeVersion, MinecraftVersion, MinecraftLocation)
+    await InstallVanillaGame(MinecraftVersion, MinecraftVersion, false, false, instanceName);
     const ForgeInstallTask = installForgeTask(
         { version: ForgeVersion, mcversion: MinecraftVersion },
         MinecraftLocation
@@ -45,12 +44,10 @@ export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeV
             status: GetTaskStatus(ForgeInstallTask, ForgeInstallLastProgress)
         }
         event.reply('update-download-task', stat)
-        console.log(stat)
         ForgeInstallLastProgress = ForgeInstallTask.progress;
     }, 300);
     await ForgeInstallTask.startAndWait({
         onFailed(task, error) {
-            console.log(114514)
             ForgeInstallTask.cancel();
             event.reply('download-faild', { instanceName: instanceName, error: error })
             clearInterval(AutoUpdateUI);

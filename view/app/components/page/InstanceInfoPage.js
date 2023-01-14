@@ -8,9 +8,10 @@ export default {
         return {
             instanceName: '',
             downloading: {},
-            isDownloading: true,
+            isDownloading: false,
             faild: false,
-            loading: true
+            loading: true,
+            downloadedDone: false
         }
     },
     components: {
@@ -26,10 +27,11 @@ export default {
             <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}</div>
             <div v-if="isDownloading" style="display: flex;
             flex-direction: column;">
-            <p v-if="loading">准备安装</p>
-            <p v-else>正在安装 ({{downloading.percentage}}%)</p>
+            <p v-if="loading && !downloadedDone">正在检查版本要求</p>
+            <p v-else-if="downloadedDone">正在安装</p>
+            <p v-else>正在下载 ({{downloading.percentage}}%)</p>
             <progress-bar :loading="loading" :value="downloading.percentage" width="174"></progress-bar>
-            <p v-if="!loading">{{downloading.progress}}MB / {{downloading.total}}MB</p>
+            <p v-if="!loading && !downloadedDone">{{downloading.progress}}MB / {{downloading.total}}MB</p>
             </div>
         </div>
         <div>
@@ -116,7 +118,7 @@ export default {
     },
     computed: {
         banner() {
-            return `background-image: linear-gradient(0deg, #00000094, #0000), url(${this.instanceInfo.banner})`
+            return `background-image: linear-gradient(0deg, rgb(0 0 0 / 83%), rgb(0 0 0 / 0%)), url(${this.instanceInfo.banner})`
         },
         savesCount() {
             if (this.instanceInfo.savesIsLoading) {
@@ -145,11 +147,13 @@ export default {
     },
     methods: {
         launchGame() {
-            ipc.send('launch-game', this.instanceInfo.instanceName)
+            console.log(this.instanceInfo.instanceName)
+            ipc.send('launch-game', { instanceName: this.instanceInfo.instanceName, uuid: '100062fc9db949789bccc0f781cc0cad' })
         },
         async installGame() {
             this.isDownloading = true
             this.loading = true
+            this.downloadedDone = false
             await ipc.invoke('install-game-from-instance', this.instanceInfo.instanceName)
         },
         updateUI(downloadingInfo) { // 检查收到的下载状态对应的名字是否当前正在显示的相同
@@ -160,6 +164,11 @@ export default {
             else this.isDownloading = true
             if (Number(downloadingInfo.status.percentage) <= 0) this.loading = true
             else this.loading = false
+            if (Number(downloadingInfo.status.percentage) >= 100) {
+                this.loading = true;
+                this.downloadedDone = true;
+            }
+            else this.downloadedDone = false
         },
         async downloadCompleted(instanceName) {
             if (instanceName === this.instanceInfo.instanceName) {
@@ -176,6 +185,7 @@ export default {
         downloadFaild(instanceName) {
             if (instanceName === this.instanceInfo.instanceName) {
                 this.faild = true
+                this.isDownloading = false
             }
         },
     },

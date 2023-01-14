@@ -31,3 +31,7 @@ function taskdone(id) {
     $(id).removeClass("spinner-third");
     $(id).addClass("circle-check");
 }
+
+function change_color() {
+    
+}

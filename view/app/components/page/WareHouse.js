@@ -42,10 +42,13 @@ export default {
             <div class="child-sidebar">
               <li class="active" @click="setActiveComponent($event,'MainPage',1)"><i class="house"></i>主页</li>
               <li @click="setActiveComponent($event,'UserManager',2)"><i class="user"></i>帐户</li>
+              <div>
               <p @click="updateInstances">游戏</p>
+              <i class="plus add" style="font-family: 'fa-pro', fonr-style: normal  ;  font-weight: 400;"></i>
+              </div>
               <ul class="gamelist" id="gamelist">
               <TransitionGroup name="list-item">
-                <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)">
+                <li v-for="(instance, index) in instances" @click="showInstancePage($event, index)" :key="index">
                   <img src="./assets/images/Grass_Block.webp">{{instance.name}}
                 </li>
                 </TransitionGroup>
@@ -55,7 +58,9 @@ export default {
           </div>
           <div>
           <Transition :name="transitionName" mode="out-in">
+          <KeepAlive include="UserManager">
           <component :is="activeComponent" :saves="saves" :mods="mods" :resourcepacks="resourcepacks" :shaderpacks="shaderpacks" :instanceInfo="instanceInfoData" :key="instanceInfoData.instanceName"></component>
+          </KeepAlive>
           </Transition>
           </div>
         </div>
@@ -117,15 +122,15 @@ export default {
                 this_.updateResourcepacks(this_.instances[index].name, index);
                 this_.updateShaderpacks(this_.instances[index].name, index);
                 ipcInvoke('change-activeID', index);
+                setTimeout(() => {
+                    VanillaTilt.init(document.querySelectorAll(".start-game, .install-game"), {
+                        max: 0,
+                        speed: 500,
+                        glare: true,
+                        "max-glare": 0.7, //最大眩光的不透明度
+                    });
+                },100); 
             })
-            setTimeout(() => {
-                VanillaTilt.init(document.querySelectorAll(".start-game, .install-game"), {
-                    max: 0,
-                    speed: 500,
-                    glare: true,
-                    "max-glare": 0.7, //最大眩光的不透明度
-                });
-            },100);
         },
         async updateInstances() {
             let gotInstances = await ipcInvoke('get-instances')

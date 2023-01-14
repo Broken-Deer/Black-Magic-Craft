@@ -57,8 +57,8 @@ export default {
     <card :title="ui.global_settings.launch_options_title" :description="ui.global_settings.launch_options_description" icon="start-game">
       <input-text :name="ui.global_settings.game_window_title"
       :placeholder="ui.global_settings.game_window_title_placeholder"  config="globle.game.gmwintitle"></input-text>
-      <input-text :name="ui.global_settings.customize_launcher_info"
-        :placeholder="ui.global_settings.customize_launcher_info_placeholder" config="globle.game.lauchermsg"></input-text>
+      <input-text :name="ui.global_settings.customize_launcher_name"
+        :placeholder="ui.global_settings.customize_launcher_name_placeholder" config="globle.game.launcherName"></input-text>
       <input-text :name="ui.global_settings.server_address"
         :placeholder="ui.global_settings.server_address_placeholder" config="globle.game.serverIP"></input-text>
       <div class="input input-list" id="version_isolation">

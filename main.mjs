@@ -22,10 +22,6 @@ console.log('计时器已重置', time)
 import { ipcMain, app, BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
 ElectronStore.initRenderer();
-if (!app.isPackaged) {
-    const store = new ElectronStore()
-    store.clear()
-}
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true"; //关闭警告
 (async () => {
     time = new Date().getTime()
@@ -57,7 +53,7 @@ const createWindow = show => {
         icon: "./logo.ico",
     });
     win.loadFile("./view/index.html");
-    if (!app.isPackaged && show) win.webContents.openDevTools({ mode: 'undocked' });
+    // if (!app.isPackaged && show) win.webContents.openDevTools({ mode: 'undocked' });
     win.webContents.on("before-input-event", (event, input) => {
         if (input.code == "F4" && input.alt) {
             event.preventDefault();

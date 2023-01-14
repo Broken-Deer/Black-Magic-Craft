@@ -25,7 +25,7 @@ function getSettings() {
                     autojv: true,
                     jvpath: "",
                     gmwintitle: "",
-                    lauchermsg: "",
+                    launcherName: "Black Magic Launcher",
                     serverIP: "",
                     process: "high",
                     width: "",

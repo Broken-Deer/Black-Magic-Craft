@@ -78,7 +78,9 @@ export const page = Vue.createApp({
     },
     template: `
     <Transition :name="transitionName" mode="out-in">
+    <KeepAlive>
         <component :is="activeComponent"></component>
+        </KeepAlive>
     </Transition>
         `,
     components: { downloadPage, settings, WareHouse },

@@ -63,11 +63,11 @@ async function installGameFromInstance(instanceName) {
     if (FabricLoaderVersion != 0) {
         console.log('安装器模式为1')
         const eventObj = getEventObj()
-        try {
+  /*       try { */
             await InstallGameWithFabric(VersionName, MinecraftVersion, FabricLoaderVersion, instanceName)
-        } catch (error) {
+/*         } catch (error) {
             eventObj.reply('download-faild', { instanceName: instanceName, error: error })
-        }
+        } */
         if (OptifineVersion != 0) {
             // 安装optifine
         }

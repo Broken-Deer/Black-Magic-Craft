@@ -19,9 +19,10 @@
 import f from "fs";
 import fs from 'fs/promises'
 import path from "path";
-import { installFabric, getFabricLoaderArtifact } from "@xmcl/installer";
+import { Version } from '@xmcl/core'
+import { installFabric, getFabricLoaderArtifact, installDependenciesTask } from "@xmcl/installer";
 import { InstallVanillaGame } from "./DefaultGameInstaller.mjs";
-import { GetPath, MargeVersionJSON, renameGame } from "./InstallerHelper.mjs";
+import { GetPath, GetTaskStatus, MargeVersionJSON, renameGame } from "./InstallerHelper.mjs";
 import { getEventObj } from "../utils/Other.mjs";
 import { removeDir } from "../utils/FileSystem.mjs";
 
@@ -29,23 +30,49 @@ import { removeDir } from "../utils/FileSystem.mjs";
  * 安装原版游戏和Fabric，此处instanceName只是用来通知渲染进程安装结果的
  */
 export async function InstallGameWithFabric(VersionName, MinecraftVersion, FabricVersion, instanceName) {
+    const MinecraftLocation = GetPath().gamePath;
+    const event = getEventObj()
     try {
-        const MinecraftLocation = GetPath().gamePath;
         if (!f.existsSync(path.join(MinecraftLocation, `versions/${MinecraftVersion}/${MinecraftVersion}.json`))) {
-            await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false);
+            await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false, instanceName);
         }
         await installFabric(await getFabricLoaderArtifact(MinecraftVersion, FabricVersion), MinecraftLocation);
-        const VersionDir = path.join(GetPath().gamePath, `versions/${VersionName}`);
+        const VersionDir = path.join(MinecraftLocation, `versions/${VersionName}`);
         await renameGame(`${MinecraftVersion}-fabric${FabricVersion}`, VersionName)
         const VersionJSON = await MargeVersionJSON(
             path.join(VersionDir, `${VersionName}.json`),
             true
         );
         await fs.writeFile(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-        getEventObj().reply('download-complete', instanceName)
+        /* event.reply('download-complete', instanceName) */
     } catch (error) {
-        const MinecraftLocation = GetPath().gamePath;
-        getEventObj().reply('download-faild', { instanceName: instanceName, error: error })
+        event.reply('download-faild', { instanceName: instanceName, error: error })
         await removeDir(path.join(MinecraftLocation, `versions/${MinecraftVersion}`))
+        return
     }
+    const Task = installDependenciesTask(await Version.parse(MinecraftLocation, VersionName))
+    const AutoUpdateUI = setInterval(() => {
+        if (Task.isDone) {
+            clearInterval(AutoUpdateUI);
+        }
+        const stat = {
+            instanceName: instanceName,
+            status: GetTaskStatus(Task)
+        }
+        event.reply('update-download-task', stat)
+    }, 300);
+    await Task.startAndWait({
+        onFailed(task, error) {
+            console.log(`为实例'${instanceName}'执行的安装任务失败`)
+            try {
+                Task.cancel();
+            } catch (error) { }
+            event.reply('download-faild', { instanceName: instanceName, error: error })
+            clearInterval(AutoUpdateUI);
+            throw error;
+        },
+        onSucceed() {
+            event.reply('download-complete', instanceName)
+        }
+    });
 }

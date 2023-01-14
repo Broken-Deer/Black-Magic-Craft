@@ -33,7 +33,7 @@ export default {
           <input ref="element" type="range" :max="max" :min="min" :step="step" v-model="value" @blur="onBlur">
       </div>
       <div class="input-data mini">
-        <input type="text" :title="name"
+        <input type="number" :title="name"
           required v-model="value" placeholder="默认" @blur="onBlur"/>
         <div class="underline"></div>
       </div>

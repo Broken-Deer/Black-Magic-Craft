@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { addMicrosoftAccount, getAccountInfo, getAccounts, microsoftlogin, refreshAccessToken } from "./AccountServices.mjs";
+import { launchGame } from "./LaunchGameServices.mjs";
 
 function setGameServicesDetector() {
     ipcMain.handle('ms-login', async (event, code) => {
@@ -26,7 +27,7 @@ function setGameServicesDetector() {
     ipcMain.handle('get-accounts', () => {
         return getAccounts()
     })
-    ipcMain.handle('launch-game', (event, { instanceName, uuid }) => {
+    ipcMain.on('launch-game', (event, { instanceName, uuid }) => {
         launchGame(instanceName, uuid)
     })
 }

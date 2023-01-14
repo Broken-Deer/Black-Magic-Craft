@@ -17,11 +17,11 @@
  */
 
 import { Version } from "@xmcl/core";
-import { installLibrariesTask, installAssetsTask, getVersionList } from "@xmcl/installer";
+import { installLibrariesTask, installAssetsTask, getVersionList, installTask } from "@xmcl/installer";
 import path from "path";
 import f from "fs/promises";
 import { GetTaskStatus, GetPath, removeDir } from "./InstallerHelper.mjs";
-import { downloadFileByGot, downloadFileByAria2 } from "./FileDownloader.mjs";
+import { downloadFileByGot } from "./FileDownloader.mjs";
 import { getEventObj } from "../utils/Other.mjs";
 
 /**
@@ -49,18 +49,42 @@ export async function InstallGameByJSON(versionName, completeFile, instanceName)
  * @param {string} versionName 要安装游戏的名称
  * @param {string} minecraftVersion 要安装的版本id
  */
-export async function InstallVanillaGame(versionName, minecraftVersion, onlySaveJSON, completeFile,instanceName) {
+export async function InstallVanillaGame(versionName, minecraftVersion, onlySaveJSON, completeFile, instanceName) {
+    const event = getEventObj()
     const MinecraftLocation = GetPath().gamePath;
-    const VersionInfo = (await getVersionList()).versions.filter((value, index, array) => {
+    const VersionMeta = (await getVersionList()).versions.filter((value, index, array) => {
         if (array[index].id === minecraftVersion) {
             return true;
         } else return false;
     })[0];
-    const VersionJsonPath = `${MinecraftLocation}versions/${versionName}/${versionName}.json`;
-    await downloadFileByGot(VersionInfo.url, VersionJsonPath);
-    if (!onlySaveJSON) {
-        await InstallGameByJSON(versionName, completeFile,instanceName);
-    }
+    const InstallTask = installTask(VersionMeta, MinecraftLocation)
+    let InstallTaskLastProgress = 0
+    const AutoUpdateUI = setInterval(() => {
+        if (InstallTask.isDone) {
+            clearInterval(AutoUpdateUI);
+        }
+        const stat = {
+            instanceName: instanceName,
+            status: GetTaskStatus(InstallTask, InstallTaskLastProgress)
+        }
+        event.reply('update-download-task', stat)
+        InstallTaskLastProgress = InstallTask.progress;
+    }, 300);
+    await InstallTask.startAndWait({
+        onFailed(task, error) {
+            try {
+                InstallTask.cancel();
+            } catch (error) { }
+            event.reply('download-faild', { instanceName: instanceName, error: error })
+            clearInterval(AutoUpdateUI);
+            console.log(error);
+        },
+    });
+    // const VersionJsonPath = `${MinecraftLocation}versions/${versionName}/${versionName}.json`;
+    // await downloadFileByGot(VersionInfo.url, VersionJsonPath);
+    // if (!onlySaveJSON) {
+    //     await InstallGameByJSON(versionName, completeFile,instanceName);
+    // }
 }
 
 /**
@@ -85,14 +109,12 @@ export async function InstallAssetsAndLibraries(versionName, instanceName) {
             instanceName: instanceName,
             status: GetTaskStatus(AssetsInstallTask, AssetsLastProgress)
         })
-        console.log(GetTaskStatus(AssetsInstallTask, AssetsLastProgress));
         LibrariesLastProgress = LibrariesInstallTask.progress;
         AssetsLastProgress = AssetsInstallTask.progress;
     }, 300);
     (async () => {
         await LibrariesInstallTask.startAndWait({
             onFailed(task, error) {
-                console.log(1111111111111)
                 LibrariesInstallTask.cancel();
                 AssetsInstallTask.cancel();
                 event.reply('download-faild', { instanceName: instanceName, error: error })
@@ -107,7 +129,6 @@ export async function InstallAssetsAndLibraries(versionName, instanceName) {
     (async () => {
         await AssetsInstallTask.startAndWait({
             onFailed(task, error) {
-                console.log(1111111111111)
                 LibrariesInstallTask.cancel();
                 AssetsInstallTask.cancel();
                 event.reply('download-faild', { instanceName: instanceName, error: error })

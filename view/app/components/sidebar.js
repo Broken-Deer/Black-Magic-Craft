@@ -24,7 +24,7 @@ export default {
     <div onclick="$('#sidebar').addClass('sidebar-close');">        
     <sidebar-item title="库" icon="nav-7" @click="changePage('WareHouse')"></sidebar-item>
     <sidebar-item title="新闻" icon="newspaper" @click="changePage('')"></sidebar-item>
-    <sidebar-item title="下载" icon="nav-4" @click="changePage('downloadPage')"></sidebar-item>
+   <!-- <sidebar-item title="下载" icon="nav-4" @click="changePage('downloadPage')"></sidebar-item> --> 
     </div>
     <div onclick="$('#sidebar').addClass('sidebar-close');">
         <sidebar-item title="设置" icon="nav-5" @click="changePage('settings')"></sidebar-item>

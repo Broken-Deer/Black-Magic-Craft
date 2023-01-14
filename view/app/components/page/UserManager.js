@@ -2,7 +2,9 @@ import cardCommandButton from "../cardCommandButton.js"
 import card from "../card.js"
 import { listItem, listItemButton } from "../listItem.js"
 import { dialogs } from '../dialogs.js'
+import { load } from "../../LoadConfigs.js"
 export default {
+    name: 'UserManager',
     data() {
         return {
             accounts: [],
@@ -35,25 +37,26 @@ export default {
     mounted() {
         const this_ = this
         ipc.invoke('get-accounts').then((value) => {
-            this_.accounts = value
+            this_.accounts = value.reverse()
         })
     },
     methods: {
         addMicrosoftAccount() {
             dialogs.openDialog('ms-login')
             $('#ms-login-content').attr('style', '')
-            console.log("等待用户登录完成");
             $('#ms-login-progress').empty()
             $('#ms-login-loading').attr('style', $('#ms-login-loading').attr('style') + 'opacity: 1;')
             const new_webview = document.createElement("webview");
             new_webview.id = "ms_login_webview";
-            new_webview.src =
+            const URL =
                 "https://login.live.com/oauth20_authorize.srf" +
                 "?client_id=00000000402b5328" +
                 "&response_type=code" +
                 "&prompt=select_account" +
+                // "$prompt=login"
                 "&scope=service%3A%3Auser.auth.xboxlive.com%3A%3AMBI_SSL" +
                 "&redirect_uri=https%3A%2F%2Flogin.live.com%2Foauth20_desktop.srf";
+            new_webview.src = URL
             new_webview.style = "display: inline-flex;width: 100%;height: 308px;";
             $(document.getElementById("ms_login_body").firstElementChild).empty();
             $(new_webview).appendTo(document.getElementById("ms_login_body").firstElementChild);
@@ -62,9 +65,16 @@ export default {
                 // 网页加载完成隐藏加载动画
                 $('#ms-login-loading').attr('style', $('#ms-login-loading').attr('style') + 'opacity: 0;')
             });
-            webview.addEventListener("dom-ready", (e) => {
+            webview.addEventListener("dom-ready", async (e) => {
+                // webview.openDevTools()
                 webview.setZoomFactor(1);
-                webview.insertCSS(/* css */ `html {overflow-y: overlay !important;}.background-logo {display: none !important;}#footer {display: none !important;}.inner, .sign-in-box {max-width: none  !important;max-height: none !important;width: 100vw !important;height: 100vh !important;}#backgroundImage, .background-image-small, .background-image-holder, .background-logo-holder {display: none !important;}.login-paginated-page, .outer, .background-image-holder {background: #00000000 !important;}.inner.app, .sign-in-box.app, .vertical-split-content.app {border: none !important;box-shadow: none !important;max-width: none !important;max-height: none !important;width: 100vw !important;height: 100vh !important}.inline-block {border-radius: 4px !important;overflow: hidden !important;} 
+                const url = webview.getURL() 
+                const pref = 'https://github.com'
+                if (url.startsWith(pref) && !url.startsWith(`${pref}/login`)) {
+                    webview.loadURL(URL)
+                }
+                const color = await load('globle.appearance.themecolor')
+                webview.insertCSS(/* css */ `html {overflow-y: overlay !important;}.background-logo {display: none !important;}#footer {display: none !important;}.inner, .sign-in-box {max-width: none  !important;max-height: none !important;width: 100vw !important;height: 100vh !important;}#backgroundImage, .background-image-small, .background-image-holder, .background-logo-holder {display: none !important;}.login-paginated-page, .outer, .background-image-holder {background: #00000000 !important;}.inner.app, .sign-in-box.app, .vertical-split-content.app {border: none !important;box-shadow: none !important;max-width: none !important;max-height: none !important;width: 100vw !important;height: 100vh !important}.inline-block {border-radius: 4px !important;overflow: hidden !important;}.middle.app {padding: 0 !important} .inner{margin: 0 !important} .button.primary, .btn.btn-primary, button.btn-primary, input[type="button"].btn-primary, input[type="submit"].btn-primary, input[type="reset"].btn-primary {border-color: ${color} !important; background-color: ${color} !important;}.input.text-box:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, textarea:focus, select:focus {    border-color: ${color} !important;}
               ::-webkit-scrollbar {
                 display: none
               }
@@ -72,6 +82,9 @@ export default {
             });
             webview.addEventListener("did-redirect-navigation", async ({ url }) => {
                 const pref = "https://login.live.com/oauth20_desktop.srf?";
+                if (url.startsWith(pref + 'error=')) {
+                    webview.loadURL(URL)
+                }
                 if (url.startsWith(pref + "code=")) {
                     $(webview).remove();
                     $('#ms-login-loading').attr('style', $('#ms-login-loading').attr('style') + 'opacity: 1;')
@@ -81,12 +94,9 @@ export default {
                     })
                     const result = await ipcInvoke('ms-login', url.substring(pref.length).split("&")[0].split("=")[1]);
                     dialogs.closeDialog('ms-login')
-                    console.log(result[0])
                     if (result[0] === 'complete') {
                         // 登录成功的操作
-                        console.log(result[1].skin)
                         var avatar = await this.getAvatar(result[1].skin, 32)
-                        console.log(avatar)
                         await ipcInvoke('add-microsoft-account', {
                             id: result[1].id,
                             name: result[1].name,
@@ -95,8 +105,7 @@ export default {
                             refreshToken: result[1].refreshToken,
                             accessToken: result[1].minecraftAccessToken
                         })
-                            this.accounts = await ipcInvoke('get-accounts')
-                        console.log(this.accounts)
+                        this.accounts = (await ipcInvoke('get-accounts')).reverse()
                     } else {
                         // 登录失败的操作
                     }

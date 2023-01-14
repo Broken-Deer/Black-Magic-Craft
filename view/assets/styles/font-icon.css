@@ -281,3 +281,7 @@ i.link-slash::before {
 i.arrow-rotate-right::before {
     content: '\f01e';
 }
+
+i.plus::before {
+    content: '\2b';
+}

@@ -201,7 +201,6 @@ async function microsoftlogin(code, refreshToken) {
     if (typeof skin === 'undefined') {
         skin = 'http://textures.minecraft.net/texture/1a4af718455d4aab528e7a61f86fa25e6a369d1768dcb13f7df319a713eb810b'
     }
-    console.log(skin)
     return {
         ...PlayerInfo,
         skin: skin,

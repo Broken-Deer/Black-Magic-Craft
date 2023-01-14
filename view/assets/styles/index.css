@@ -40,8 +40,7 @@ img {
     border-radius: 10px;
 }
 
-::-webkit-scrollbar-track {
-}
+::-webkit-scrollbar-track {}
 
 .show-scroolbar::-webkit-scrollbar-thumb {
     display: unset;
@@ -77,12 +76,11 @@ img {
 
 div.title-bar {
     height: 50px;
-    background: #cacacaad;
     -webkit-app-region: drag;
-    border-radius: 8px 8px 0 0;
+    /* border-radius: 8px 8px 0 0; */
     display: flex;
     justify-content: space-between;
-    background: linear-gradient(248deg, #600081, #74009c);
+    background: rgba(var(--theme-color), 1);
     color: #fff;
 }
 
@@ -260,7 +258,7 @@ body {
 
 .card {
     background: #fbfbfb;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid hsla(210, 18%, 87%, 1);
     color: #24292f;
 }
@@ -407,11 +405,13 @@ div.page {
     display: flex;
     align-items: center;
 }
+
 .card-header>.card-title>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .card-header h4 {
     font-weight: 100;
     height: 1.3em;
@@ -567,7 +567,7 @@ button#version_list_button {
     border: none;
     border-radius: 2rem;
     box-shadow: 0px 0px 10px 0px #00000045;
-    background: #600081;
+    background: rgba(var(--theme-color), 1);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -655,6 +655,7 @@ div.page>iframe>* {
     background: #fff;
     animation: 0.4s dialog cubic-bezier(0, 0.47, 0.25, 1);
     transition: all 0.2s ease;
+    box-shadow: 0 0 50px 0px #00000033;
 }
 
 .dialog_main>* {
@@ -1001,7 +1002,7 @@ div.child-sidebar li {
     line-height: 1.3;
     width: 100%;
     margin: 0.1rem 0;
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 7px 7px;
     display: flex;
     align-items: center;
@@ -1017,9 +1018,9 @@ div.child-sidebar li:active {
 }
 
 div.child-sidebar .active {
-    background-color: #60008117;
+    background: rgba(var(--theme-color), 0.09);
     pointer-events: none;
-    color: #600081;
+    color: rgba(var(--theme-color), 1);
 }
 
 div.child-sidebar li::before {
@@ -1034,23 +1035,35 @@ div.child-sidebar li::before {
 }
 
 div.child-sidebar .active::before {
-    background-color: #600081;
+    background-color: rgba(var(--theme-color), 1);
     content: "";
     height: 18px;
 }
 
 div.child-sidebar i {
     font-family: "fa-pro";
+    border-radius: 100px;
     font-style: normal;
     font-size: 16px;
     font-weight: 400;
     margin-right: 7px;
     width: 21px;
     /* height: 100%; */
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 }
+div.child-sidebar i.add{
+    width: 36px;
+    height: 36px;
+    transition: all .2s ease;
+}
+div.child-sidebar i.add:hover {
+    color: rgb(var(--theme-color));
+    background: #0000000f;
+}
+
+div.child-sidebar i.add:active {transform: scale(0.86);}
 
 #main .rua {
     flex: 1;
@@ -1186,9 +1199,17 @@ div.home-page>div:last-child {
     padding-right: 5px;
 }
 
-div.child-sidebar>p {
+div.child-sidebar>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.child-sidebar>div>p {
     font-size: 14px;
     margin: 10px 2px;
+    display: inline;
+    width: fit-content;
 }
 
 ul.gamelist>li::before {
@@ -1212,7 +1233,7 @@ ul.gamelist>li {
     background-size: cover;
     background-position: center;
     border: none;
-    height: 200px;
+    height: 210px;
     padding: 16px 18px 20px 24px;
     display: flex;
     flex-direction: column;
@@ -1323,8 +1344,8 @@ ul.gamelist>li {
 
 .list-item {
     display: flex;
-    padding: 10px 12px;
-    border-radius: 6px;
+    padding: 8px 10px;
+    border-radius: 8px;
     transition: all .1s cubic-bezier(0, 0.43, 0.25, 1);
     justify-content: space-between;
     border: 1px solid #00000017;
@@ -1339,7 +1360,8 @@ ul.gamelist>li {
 
 .list-item>div:first-child {
     flex: 1;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
     justify-content: flex-start;
 }
 
@@ -1350,7 +1372,7 @@ ul.gamelist>li {
     background-size: cover;
     margin-right: 10px;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 4px;
     image-rendering: pixelated;
     background-image: url(./assets/images/Unknown_server.webp);
 }
@@ -1381,7 +1403,7 @@ ul.gamelist>li {
 }
 
 .list-item .list-item-btn:hover {
-    color: #600081;
+    color: rgba(var(--theme-color), 1);
 }
 
 .list-item .list-item-btn:active {
@@ -1392,4 +1414,3 @@ ul.in-card {
     max-height: 300px;
     overflow: overlay;
 }
-

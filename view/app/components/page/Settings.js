@@ -21,7 +21,7 @@ export default {
             <ul>
             <li class="active" @click="setActiveComponent($event,'generalSetting',1)"><i class="house"></i>常规</li>
             <li @click="setActiveComponent($event,'gameSetting',2)"><i class="gamepad"></i>游戏</li>
-            <li @click="setActiveComponent($event,'accountSetting',3)"><i class="user"></i>帐户</li>
+            <!--  <li @click="setActiveComponent($event,'accountSetting',3)"><i class="user"></i>帐户</li>-->
             <li @click="setActiveComponent($event,'advancedSetting',4)"><i class="pro-settings"></i>高级</li>
             <li @click="setActiveComponent($event,'appearanceSettings',5)"><i class="palette"></i>个性化</li>
             <li @click="setActiveComponent($event,'downloadSetting',6)"><i class="download"></i>下载</li>
@@ -67,12 +67,3 @@ export default {
         easyuseSetting,
     },
 };
-/* 
-
-            <game-setting></game-setting>
-            <general-setting></general-setting>
-            <account-setting></account-setting>
-            <advanced-setting></advanced-setting>
-            <appearance-settings></appearance-settings>
-            <download-setting></download-setting>
-            <easyuse-setting></easyuse-setting> */
