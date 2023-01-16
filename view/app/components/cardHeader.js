@@ -19,11 +19,12 @@
 export default {
     data() {
         return {
-            cardButton: !this.canSwap ? `display: none;` : "",
+            cardButton: this.canSwap ? "" : `display: none;`,
+            headerStyle: this.canSwap ? '' : 'pointer-events: none;'
         };
     },
     template: /* html */ `
-        <div class="card-header">
+        <div class="card-header" :style="headerStyle">
           <div class="card-title">
             <div class="card-icon"><i :class="icon" :style="iconStyle"></i></div>
             <div>
@@ -42,12 +43,12 @@ export default {
         logoPixelated: Boolean,
         click: {
             type: String,
-            default: "expanded_card(this)",
+            default: "",
         },
     },
     computed: {
         iconStyle() {
             return this.logoPixelated ? "image-rendering: pixelated;" : ""
-        }
+        },
     }
 };

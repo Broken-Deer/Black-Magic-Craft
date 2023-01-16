@@ -384,14 +384,14 @@ move-down: 下移
     transition: all 0.5s ease;
 }
 
-.v-enter-from,
-.v-leave-to {
+.popup-enter-from,
+.popup-leave-to {
   transform: scale(0.95);
   opacity: 0;
 }
 
-.v-enter-to,
-.v-leave-from {
+.popup-enter-to,
+.popup-leave-from {
     transform: scale(1);
     opacity: 1;
 }

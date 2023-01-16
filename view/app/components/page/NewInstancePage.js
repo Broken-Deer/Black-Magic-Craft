@@ -50,7 +50,7 @@ const newInstance = {
             </div>
         </card>
         <card margin="10,0,0,0" title="Minecraft" :description="minecraftDescription" icon="minecraft" :is-swaped="true"
-            :can-swap="true" :padding="[16,20,16,20]" :flexStart="true">
+            :can-swap="true" :padding="[16,20,16,20]" :flexStart="true" ref="minecraftVersionList">
             <ul class="show-scroolbar" v-if="!this.mcVersionIsloading" style="width: 100%;">
                 <li v-for="versions in minecraftVersionList" class="list-group">
                     <div>
@@ -71,7 +71,7 @@ const newInstance = {
             <p class="text-center text-gray text-italic" v-if="this.mcVersionIsloading" style="width: 100%;">正在加载...</p>
         </card>
         <card margin="10,0,0,0" title="Forge" :description="forgeDescription" icon="forge" :is-swaped="true"
-            :can-swap="true" :padding="[16,20,16,20]" :flexStart="true">
+            :can-swap="true" :padding="[16,20,16,20]" :flexStart="true" ref="forgeVersionList">
             <ul class="show-scroolbar"
                 v-if="!this.forgeVersionIsloading && !!this.config.minecraft && !this.config.fabric && !this.config.quilt && !noForgeVersion"
                 style="width: 100%;">
@@ -95,7 +95,7 @@ const newInstance = {
             <p class="text-center text-gray text-italic" v-if="noForgeVersion">无可用版本</p>
         </card>
         <card margin="10,0,0,0" title="Fabric" :description="fabricDescription" icon="fabric" :is-swaped="true"
-            :can-swap="true" :padding="[16,20,16,20]" :logoPixelated="true" :flexStart="true">
+            :can-swap="true" :padding="[16,20,16,20]" :logoPixelated="true" :flexStart="true" ref="fabricVersionList">
             <ul class="show-scroolbar"
                 v-if="!this.fabricVersionIsloading && !!this.config.minecraft && !this.config.forge && !this.config.quilt && !noFabricVersion"
                 style="width: 100%;">
@@ -119,7 +119,7 @@ const newInstance = {
             <p class="text-center text-gray text-italic" v-if="noFabricVersion">无可用版本</p>
         </card>
         <card margin="10,0,0,0" title="Quilt" :description="quiltDescription" icon="quilt" :is-swaped="true"
-            :can-swap="true" :padding="[16,20,16,20]" :logoPixelated="true" :flexStart="true">
+            :can-swap="true" :padding="[16,20,16,20]" :logoPixelated="true" :flexStart="true" ref="quiltVersionList">
             <ul class="show-scroolbar"
                 v-if="!this.quiltVersionIsloading && !!this.config.minecraft && !this.config.forge && !this.config.fabric"
                 style="width: 100%;">
@@ -183,6 +183,9 @@ const newInstance = {
         this.updateVersionList()
     },
     methods: {
+        test() {
+            this.$refs.foo.test()
+        },
         async setInstanceName() {
             this.instanceName = '未命名配置'
             let number = 0
@@ -216,36 +219,28 @@ const newInstance = {
             this.config.fabric = ''
             this.config.forge = ''
             this.config.quilt = ''
-            expanded_card(currentTarget
-                .parentNode
-                .parentNode
-                .parentNode
-                .parentNode
-                .parentNode
-                .parentNode
-                .firstElementChild
-                .lastElementChild)
-            $(".rua").animate({ scrollTop: 0 }, 0);
+            $(".rua").animate({ scrollTop: 0 }, 200);
             this.updateForgeVersionList()
             this.updateFabricVersionList()
             this.updateQuiltVersionList()
+            this.$refs.minecraftVersionList.card()
         },
         chooseForgeVersion({ currentTarget }) {
-            $(".rua").animate({ scrollTop: 0 }, 0);
+            $(".rua").animate({ scrollTop: 0 }, 200);
             this.config.forge = currentTarget.dataset.version
-            expanded_card(currentTarget.parentNode.parentNode.parentNode.parentNode.firstElementChild.lastElementChild)
+            this.$refs.forgeVersionList.card()
         },
         chooseFabricVersion({ currentTarget }) {
-            $(".rua").animate({ scrollTop: 0 }, 0);
+            $(".rua").animate({ scrollTop: 0 }, 200);
             console.log(currentTarget.dataset.version)
             this.config.fabric = currentTarget.dataset.version
-            expanded_card(currentTarget.parentNode.parentNode.parentNode.parentNode.firstElementChild.lastElementChild)
+            this.$refs.fabricVersionList.card()
         },
         chooseQuiltVersion({ currentTarget }) {
-            $(".rua").animate({ scrollTop: 0 }, 0);
+            $(".rua").animate({ scrollTop: 0 }, 200);
             console.log(currentTarget.dataset.version)
             this.config.quilt = currentTarget.dataset.version
-            expanded_card(currentTarget.parentNode.parentNode.parentNode.parentNode.firstElementChild.lastElementChild)
+            this.$refs.quiltVersionList.card()
         },
         async updateVersionList() {
             this.mcVersionIsloading = true
