@@ -27,6 +27,7 @@ export default {
         }
     },
     template: /* html */ `
+    <KeepAlive>
     <div id="489C5E28">
     <card :card-header=false>
     <p>如果你不清楚这些选项的作用，请不要乱动它们。你可以使用右上角的重置按钮将此页设置恢复为默认值</p>
@@ -51,7 +52,8 @@ export default {
     <command-button name="导出启动器日志" text="导出"></command-button>
     <command-button name="打开开发人员工具" text="启动 DevTools" @click="OpenDevtools"></command-button>
 </card>
-    </div>`,
+    </div>
+    </KeepAlive>`,
     components: { inputText, checkbox, cardHeader, commandButton, card },
     methods: {
         updateData(key, val) {

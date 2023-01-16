@@ -16,13 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { installQuiltVersion } from "@xmcl/installer";
+import { Version } from '@xmcl/core'
+import { installQuiltVersion, installDependenciesTask } from "@xmcl/installer";
 import fs from "fs";
 import f from 'fs/promises'
 import path from "path";
-import { InstallGameByJSON, InstallVanillaGame } from "./DefaultGameInstaller.mjs";
-import { downloadFileByAria2 } from "./FileDownloader.mjs";
-import { GetPath, MargeVersionJSON } from "./InstallerHelper.mjs";
+import { getEventObj } from "../utils/Other.mjs";
+import { InstallVanillaGame } from "./DefaultGameInstaller.mjs";
+import { GetPath, GetTaskStatus, MargeVersionJSON, renameGame } from "./InstallerHelper.mjs";
 
 /**
  * 安装原版游戏并安装Quilt
@@ -30,22 +31,49 @@ import { GetPath, MargeVersionJSON } from "./InstallerHelper.mjs";
  * @param {String} QuiltVersion Quilt加载器版本
  * @param {String} VersionName 命名为
  */
-export async function InstallGameWithQuilt(MinecraftVersion, QuiltVersion, VersionName) {
+export async function InstallGameWithQuilt(VersionName, MinecraftVersion, QuiltVersion, instanceName) {
     const MinecraftLocation = GetPath().gamePath;
-    if (!fs.existsSync(path.join(MinecraftLocation, "versions", VersionName))) {
-        await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false);
+    const event = getEventObj()
+    try {
+        if (!fs.existsSync(path.join(MinecraftLocation, `versions/${MinecraftVersion}/${MinecraftVersion}.json`))) {
+            await InstallVanillaGame(MinecraftVersion, MinecraftVersion, true, false, instanceName);
+        }
+        await installQuiltVersion({
+            minecraftVersion: MinecraftVersion,
+            version: QuiltVersion,
+            minecraft: MinecraftLocation,
+        });
+        const VersionDir = path.join(GetPath().gamePath, `versions/${VersionName}`);
+        await renameGame(`quilt-loader-${QuiltVersion}-${MinecraftVersion}`, VersionName)
+        const VersionJSON = await MargeVersionJSON(
+            path.join(VersionDir, `${VersionName}.json`),
+            true
+        );
+        await f.writeFile(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
+    } catch (error) {
+        event.reply('download-faild', { instanceName: instanceName, error: error })
+        await removeDir(path.join(MinecraftLocation, `versions/${MinecraftVersion}`))
+        return
     }
-    installQuiltVersion({
-        minecraftVersion: MinecraftVersion,
-        version: QuiltVersion,
-        minecraft: MinecraftLocation,
+    const Task = installDependenciesTask(await Version.parse(MinecraftLocation, VersionName))
+    const AutoUpdateUI = setInterval(() => {
+        if (Task.isDone) {
+            clearInterval(AutoUpdateUI);
+        }
+        const stat = {
+            instanceName: instanceName,
+            status: GetTaskStatus(Task)
+        }
+        event.reply('update-download-task', stat)
+    }, 300);
+    await Task.startAndWait({
+        onFailed(task, error) {
+            console.log(`为实例'${instanceName}'执行的安装任务失败`)
+            try {
+                Task.cancel();
+            } catch (error) { }
+            event.reply('download-faild', { instanceName: instanceName, error: error })
+            clearInterval(AutoUpdateUI);
+        },
     });
-    const VersionDir = path.join(GetPath().gamePath, `versions/${VersionName}`);
-    await f.rename(path.join(MinecraftLocation, `versions/quilt-loader-${QuiltVersion}-${MinecraftVersion}`), VersionDir,);
-    const VersionJSON = MargeVersionJSON(
-        path.join(VersionDir, `quilt-loader-${QuiltVersion}-${MinecraftVersion}.json`),
-        true
-    );
-    await f.writeFile(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-    InstallGameByJSON(VersionName, true);
 }

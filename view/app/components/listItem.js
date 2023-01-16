@@ -19,21 +19,26 @@
 export const listItem = {
     data() {
         return {
+            listItemClass: !!this.inputID ? 'list-item choose-able' : 'list-item',
             listItemStyle: this.click ? "" : "pointer-events: none;",
+            chooseAble: !!this.inputID
         };
     },
     template: /* template */ `
-    <li class="list-item" style="listItemStyle">
+    <li :class="listItemClass" style="listItemStyle">
+    <div>
+        <slot></slot>
+    </div>
+    <input type="radio" class="in-list-item" :name="inputID" v-if="chooseAble">
+    
+    <div>
+        <div class="logo" :style="logoStyle"></div>
         <div>
-            <div class="logo" :style="logoStyle"></div>
-            <div>
-                <h4>{{title}}</h4>
-                <p>{{description}}</p>
-            </div>
+            <h4>{{title}}</h4>
+            <p>{{description}}</p>
         </div>
-        <div>
-            <slot></slot>
-        </div>
+    </div>
+    <div class="radio"></div>
     </li>
     `,
     props: {
@@ -41,11 +46,13 @@ export const listItem = {
         title: String,
         description: String,
         click: Boolean,
-        havelogo: Boolean
+        havelogo: Boolean,
+        logoPixelated: Boolean,
+        inputID: String || undefined
     },
     computed: {
         logoStyle() {
-            return !this.logo && !this.havelogo ? "display: none" : `background-image:url(${this.logo})`
+            return !this.logo && !this.havelogo ? "display: none" : `background-image:url(${this.logo});${this.logoPixelated ? "image-rendering: pixelated;" : ""}`
         }
     }
 };

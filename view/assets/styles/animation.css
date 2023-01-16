@@ -358,7 +358,8 @@ move-down: 下移
     transform: translate(0, 0px);
     opacity: 1;
 }
-.list-item-move, 
+
+.list-item-move,
 /* 对移动中的元素应用的过渡 */
 .list-item-enter-active {
     transition: all 300ms ease;
@@ -373,16 +374,56 @@ move-down: 下移
 /* 确保将离开的元素从布局流中删除
   以便能够正确地计算移动的动画。 */
 .list-item-leave-active {
-   position: absolute;
-   left: 0;
-   right: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.popup-enter-active,
+.popup-leave-active {
+    transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.v-enter-to,
+.v-leave-from {
+    transform: scale(1);
+    opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::after,
     *::before {
         animation: none !important;
         transition: none !important;
+    }
+}
+
+@keyframes dialog {
+    from {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes background-position {
+    from {
+        background-position: 0vw;
+    }
+
+    to {
+        background-position: 100vw;
     }
 }

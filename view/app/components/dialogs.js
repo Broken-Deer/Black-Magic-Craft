@@ -1,5 +1,4 @@
 import colorChooser from "./dialog/colorChooser.js";
-import gameInstall from "./dialog/gameInstall.js";
 import msLogin from "./dialog/msLogin.js";
 
 export const dialogs = Vue.createApp({
@@ -11,11 +10,9 @@ export const dialogs = Vue.createApp({
     template: /* html */ `
     <color-chooser></color-chooser>
     <ms-login></ms-login>
-    <game-install></game-install>
     `,
     components: {
         colorChooser,
-        gameInstall,
         msLogin,
     },
     props: {
@@ -25,8 +22,10 @@ export const dialogs = Vue.createApp({
     methods: {
         openDialog(name) {
             $('#dialog > *').attr('style', 'display: none')
-            $(`#${name}`).attr('style', '')
             $(".dialog").addClass("dialog_display");
+            setTimeout(() => {
+                $(`#${name}`).attr('style', '')
+            }, 100);
         },
         closeDialog() {
             $(".dialog").removeClass("dialog_display");

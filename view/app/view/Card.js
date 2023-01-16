@@ -7,7 +7,7 @@ function expanded_card(eventobj, value) {
     setTimeout(() => {
         /* 动画完成后恢复按钮 */
         $(eventobj).removeClass("btn-disable");
-    }, 250);
+    }, 300);
     if ($(card).hasClass("not-expanded")) {
         /* 如果已经处于折叠状态 */
         $(body.firstElementChild).removeClass('dont_display')
@@ -22,7 +22,7 @@ function expanded_card(eventobj, value) {
         setTimeout(() => {
             /* 动画播放完成后移除“溢出隐藏” */
             $(body).attr("style", "");
-        }, 280);
+        }, 300);
     } else {
         /* 如果没有处于折叠状态 */
         $(card).addClass("not-expanded");

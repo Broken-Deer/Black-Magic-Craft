@@ -23,7 +23,7 @@ export default {
             };
         }
     },
-    template: /* html */ `
+    template: /* html */ `<KeepAlive>
 <div id="7277F10D">
 <div class="card">
     <div class="card-body">
@@ -43,7 +43,7 @@ export default {
 </div>
 </div>
 </div>
-    `,
+</KeepAlive> `,
     components: { cardHeader, checkbox, sliderBar },
     methods: {
         clickUpdateUI() {

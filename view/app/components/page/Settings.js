@@ -16,6 +16,7 @@ export default {
         }
     },
     template: /* html */ `
+    <KeepAlive>
     <div id="setting_pg" class="settings">
         <div class="child-sidebar">
             <ul>
@@ -34,16 +35,16 @@ export default {
         <component :is="activeComponent"></component>
         </Transition>
         </div>
-    </div>`,
+    </div>
+    </KeepAlive>`,
     methods: {
-        setActiveComponent(el, componentName, id) {
-            el = el.currentTarget
+        setActiveComponent({currentTarget}, componentName, id) {
             setTimeout(() => {
-                $(el.parentNode.parentNode.parentNode.lastElementChild).scrollTop(0);
+                $(currentTarget.parentNode.parentNode.parentNode.lastElementChild).scrollTop(0);
             }, 100);
 
-            $(el).siblings().removeClass("active");
-            $(el).addClass("active");
+            $(currentTarget).siblings().removeClass("active");
+            $(currentTarget).addClass("active");
             if (id < this.activeID) {
                 this.transitionName = 'slide-down'
             } else {

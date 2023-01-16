@@ -5,7 +5,8 @@ import { commandButton } from "../commandButton.js";
 import card from "../card.js";
 
 export default {
-    template: /* html */ `
+  template: /* html */ `
+  <KeepAlive>
     <div id="09B2534F">
       <card :card-header=false>
         <p>Black Magic Launcher 是一个优雅、开源、可扩展的 Minecraft 启动器，由 Broken_Deer 用 ❤️ 制作，您的赞助将帮助 Black Magic Launcher 获得更好的发展</p>
@@ -18,6 +19,7 @@ export default {
         <checkbox name="有重大安全更新时自动更新" config="globle.update.safe"></checkbox>
         <command-button name="立即检查更新" text="检查更新"></command-button>
       </card>
-    </div>`,
+    </div>
+    </KeepAlive>`,
     components: { inputText, checkbox, cardHeader, commandButton, card },
 };

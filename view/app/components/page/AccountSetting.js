@@ -5,7 +5,8 @@ import { commandButton } from "../commandButton.js";
 import card from "../card.js";
 
 export default {
-    template: /* html */ `
+  template: /* html */ `
+  <KeepAlive>
   <div id="A3FAE39B">
     <card :card-header=false>
       <p>如果你需要管理你的 Minecraft 帐户，请在「仪表盘」中操作</p>
@@ -40,6 +41,7 @@ export default {
         </div>
       </div>
     </div>
-    </div>`,
+    </div>
+    </KeepAlive>`,
     components: { inputText, checkbox, cardHeader, commandButton, card },
 };

@@ -22,7 +22,7 @@ async function getAccessToken(code) {
             "&scope=" +
             encodeURI("service::user.auth.xboxlive.com::MBI_SSL"),
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw '获取 Microsoft 授权令牌失败，请检查你的帐户'
     })).body)
 }
@@ -45,7 +45,7 @@ async function getAccessTokenFromRefreshToken(refreshToken) {
             "&scope=" +
             encodeURI("service::user.auth.xboxlive.com::MBI_SSL"),
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw '获取 Microsoft 授权令牌失败，请重新添加Microsoft账户（也可能是网络问题）'
     })).body)
 }
@@ -71,7 +71,7 @@ async function XboxAuthenticate(AccessToken) {
                 TokenType: "JWT",
             }),
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw 'Xbox 身份验证失败，请检查你的帐户'
     })).body)
     return {
@@ -100,7 +100,7 @@ async function XSTSAuthenticate(xblToken) {
                 TokenType: "JWT",
             }),
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw 'XSTS 身份验证失败，请检查你的帐户'
     })).body).Token
 }
@@ -119,7 +119,7 @@ async function MinecraftAuthenticate(XBLuhs, XSTStoken) {
                 identityToken: `XBL3.0 x=${XBLuhs}; ${XSTStoken}`,
             }),
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw 'XSTS 身份验证失败，请检查你的帐户'
     })).body).access_token
 }
@@ -134,7 +134,7 @@ async function CheckGame(minecraftAccessToken) {
             "Authorization": `Bearer ${minecraftAccessToken}`,
         },
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw '无法获取游戏档案，可能是还没有购买'
     })
 }
@@ -149,7 +149,7 @@ async function getPlayerInfomations(minecraftAccessToken) {
             "Authorization": `Bearer ${minecraftAccessToken}`,
         },
     }).catch(reason => {
-        console.log(reason) // 以后改为写入日志
+        console.log(reason) // 以后改成写入日志
         throw '无法获取游戏档案，详细信息请查看启动器日志'
     })).body)
 }

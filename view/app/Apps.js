@@ -29,6 +29,7 @@ import { listItem, listItemButton } from "./components/listItem.js";
 import WareHouse from "./components/page/WareHouse.js";
 import downloadPage from "./components/page/DownloadPage.js";
 import settings from "./components/page/Settings.js";
+import NewInstancePage from "./components/page/NewInstancePage.js";
 
 import sidebar from "./components/sidebar.js";
 // import { dialogs } from "./components/dialogs.js";
@@ -69,7 +70,7 @@ Vue.createApp({
     `,
     components: { sidebar }
 }).mount(".sidebar-links");
-export const page = Vue.createApp({
+page = Vue.createApp({
     data() {
         return {
             transitionName: 'page-winui',
@@ -78,12 +79,10 @@ export const page = Vue.createApp({
     },
     template: `
     <Transition :name="transitionName" mode="out-in">
-    <KeepAlive>
         <component :is="activeComponent"></component>
-        </KeepAlive>
     </Transition>
         `,
-    components: { downloadPage, settings, WareHouse },
+    components: { downloadPage, settings, WareHouse, NewInstancePage },
 }).mount("#main");
 /* Vue.createApp({
     template:  `

@@ -28,11 +28,11 @@ async function newInstance(
     instanceName,
     minecraftVersion,
     forgeVersion,
-    liteloaderVersion,
+    // liteloaderVersion,
     fabricLoaderVersion,
-    optifineVersion,
+    // optifineVersion,
     quiltVersion,
-    author
+    // author
 ) {
     const InstancePath = getInstancePath(instanceName)
     const InstanceJSON = JSON.stringify({
@@ -40,30 +40,33 @@ async function newInstance(
         runtime: {
             minecraft: minecraftVersion,
             forge: forgeVersion,
-            liteloader: liteloaderVersion,
+            liteloader: '',
             fabricLoader: fabricLoaderVersion,
-            optifine: optifineVersion,
+            // optifine: optifineVersion,
+            optifine: "",
             quilt: quiltVersion,
         },
-        author: author
+        author: '', // 暂时用不到
+        version: '', // 暂时用不到
+        "tags": [], // 暂时用不到
+        "icon": "", // 暂时用不到
     })
     try {
         if (typeof await f.access(InstancePath) === 'undefined') throw '实例名称重复'
-
     } catch (e) {
         if (e.errno !== -4058) throw '实例名称重复'
     }
     await f.mkdir(InstancePath).catch(reason => { throw reason })
     await f.writeFile(path.join(InstancePath, 'instance.json'), InstanceJSON)
+    await f.writeFile(path.join(InstancePath, 'options.txt'), 'lang:zh_cn')
+    return 'complete'
 }
 
 async function deleteInstance(instanceName) {
-    if (typeof instanceName !== 'string') throw '实例名称不能为空'
     await removeDir(getInstancePath(instanceName))
 }
 
 async function renameInstance(oldInstanceName, newInstanceName) {
-    if (typeof oldInstanceName !== 'string' || newInstanceName) throw '实例名称不能为空'
     const OldInstancePath = getInstancePath(oldInstanceName)
     const NewInstancePath = getInstancePath(newInstanceName)
     var OldInstanceJSON = JSON.parse(await f.readFile(path.join(OldInstancePath, 'instance.json')))
@@ -75,6 +78,12 @@ async function renameInstance(oldInstanceName, newInstanceName) {
 
 async function getInstances() {
     const InstancePath = getInstancePath()
+    if (!fs.existsSync(GetPath().gamePath)) {
+        await f.mkdir(GetPath().gamePath)
+    }
+    if (!fs.existsSync(InstancePath)) {
+        await f.mkdir(InstancePath)
+    }
     const Dirs = await f.readdir(InstancePath)
     let Instances = []
     for (let index = 0; index < Dirs.length; index++) {
@@ -115,6 +124,19 @@ async function getInstances() {
     return Instances
 }
 
+async function hasInstance(instanceName) {
+    let has = false
+    let instances = await getInstances()
+    for (let index = 0; index < instances.length; index++) {
+        const element = instances[index];
+        if (element.name === instanceName) {
+            has = true
+            break
+        }
+    }
+    return has
+}
+
 function getInstancePath(instanceName) {
     if (typeof instanceName === 'string') {
         return path.join(GetPath().gamePath, 'instances', instanceName)
@@ -129,4 +151,5 @@ export {
     renameInstance,
     getInstances,
     getInstancePath,
+    hasInstance,
 }

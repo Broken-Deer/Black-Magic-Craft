@@ -44,7 +44,6 @@ export async function InstallGameWithFabric(VersionName, MinecraftVersion, Fabri
             true
         );
         await fs.writeFile(path.join(VersionDir, `${VersionName}.json`), JSON.stringify(VersionJSON));
-        /* event.reply('download-complete', instanceName) */
     } catch (error) {
         event.reply('download-faild', { instanceName: instanceName, error: error })
         await removeDir(path.join(MinecraftLocation, `versions/${MinecraftVersion}`))
@@ -69,10 +68,6 @@ export async function InstallGameWithFabric(VersionName, MinecraftVersion, Fabri
             } catch (error) { }
             event.reply('download-faild', { instanceName: instanceName, error: error })
             clearInterval(AutoUpdateUI);
-            throw error;
         },
-        onSucceed() {
-            event.reply('download-complete', instanceName)
-        }
     });
 }

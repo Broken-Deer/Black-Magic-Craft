@@ -44,7 +44,7 @@ export default {
               <li @click="setActiveComponent($event,'UserManager',2)"><i class="user"></i>帐户</li>
               <div>
               <p @click="updateInstances">游戏</p>
-              <i class="plus add" style="font-family: 'fa-pro', fonr-style: normal  ;  font-weight: 400;"></i>
+              <i class="plus add" @click="openAddPage" style="font-family: 'fa-pro', fonr-style: normal  ;  font-weight: 400;"></i>
               </div>
               <ul class="gamelist" id="gamelist">
               <TransitionGroup name="list-item">
@@ -58,9 +58,7 @@ export default {
           </div>
           <div>
           <Transition :name="transitionName" mode="out-in">
-          <KeepAlive include="UserManager">
           <component :is="activeComponent" :saves="saves" :mods="mods" :resourcepacks="resourcepacks" :shaderpacks="shaderpacks" :instanceInfo="instanceInfoData" :key="instanceInfoData.instanceName"></component>
-          </KeepAlive>
           </Transition>
           </div>
         </div>
@@ -78,8 +76,9 @@ export default {
         this.updateInstances()
     },
     methods: {
-        test() {
-            alert('114514')
+        openAddPage() {
+            page.transitionName = 'zoom-out'
+            page.activeComponent = 'NewInstancePage'
         },
         setActiveComponent(el, componentName, id, index) {
             el = el.currentTarget
@@ -133,8 +132,7 @@ export default {
             })
         },
         async updateInstances() {
-            let gotInstances = await ipcInvoke('get-instances')
-            this.instances = gotInstances
+            this.instances = await ipcInvoke('get-instances')
         },
         async updateSaves(instanceName, index) {
             this.instanceInfoData.savesIsLoading = true

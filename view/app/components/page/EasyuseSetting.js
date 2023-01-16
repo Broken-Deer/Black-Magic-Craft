@@ -23,7 +23,7 @@ export default {
       };
     }
   },
-  template: /* html */ `
+  template: /* html */ `<KeepAlive>
     <div id="6783F38B">
     <div class="card">
     <card-header title="辅助功能" description="使你的启动器更易于使用" icon="hand"></card-header>
@@ -56,7 +56,7 @@ export default {
     </div>
   </div>
     </div>
- 
+    </KeepAlive>
     `,
   components: { checkbox, cardHeader },
   methods: {

@@ -43,7 +43,7 @@ const createWindow = show => {
         webviewTag: true,
         webPreferences: {
             spellcheck: false,
-            nodeIntegration: show,
+            nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,
             webSecurity: false,
@@ -59,6 +59,7 @@ const createWindow = show => {
             event.preventDefault();
             closeWindow.reply("close-window");
         }
+        
         if ((
             input.code === 'KeyW' ||
             input.code === 'KeyR' ||

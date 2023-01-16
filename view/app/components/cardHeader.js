@@ -25,7 +25,7 @@ export default {
     template: /* html */ `
         <div class="card-header">
           <div class="card-title">
-            <div class="card-icon"><i :class="icon"></i></div>
+            <div class="card-icon"><i :class="icon" :style="iconStyle"></i></div>
             <div>
                 <h4 id="text">{{ title }}</h4>
                 <p id="text">{{ description }}</p>
@@ -39,9 +39,15 @@ export default {
         description: String,
         icon: String,
         canSwap: Boolean,
+        logoPixelated: Boolean,
         click: {
             type: String,
             default: "expanded_card(this)",
         },
     },
+    computed: {
+        iconStyle() {
+            return this.logoPixelated ? "image-rendering: pixelated;" : ""
+        }
+    }
 };

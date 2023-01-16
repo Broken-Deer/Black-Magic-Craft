@@ -14,29 +14,37 @@ function setDetector(win) {
         if (!store.has(key)) {
             const keyNames = key.split('.')
             var setting = getSettings().defaultLaunchSettings
+
             for (let index = 0; index < keyNames.length; index++) {   
                 setting = setting[keyNames[index]] 
             }
+
             return setting
         }
+
         return store.get(key)
     })
+
     ipcMain.handle('update-config', (event, { key, value }) => {
         store.set(key, value)
-
     })
+
     ipcMain.on('event-obj', (event) => {
         setEventObj(event)
     })
+
     ipcMain.on("window-min", () => {
         win.minimize();
     });
+
     ipcMain.on("window-close", () => {
         app.exit();
     });
+
     ipcMain.on("OpenDevTools", () => {
-        win.webContents.openDevTools();
+        win.webContents.openDevTools({ mode: 'undocked' });
     });
+    
     ipcMain.on("choose_java", event => {
         win.focus();
         // 如果平台是“win32”或“Linux”

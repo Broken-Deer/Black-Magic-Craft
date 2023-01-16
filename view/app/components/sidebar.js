@@ -17,7 +17,6 @@
  */
 
 import sidebarItem from "./sidebarItem.js";
-import { page } from "../Apps.js";
 
 export default {
     template: /* html */ `
@@ -33,9 +32,9 @@ export default {
         `,
     methods: {
         changePage(pageName) {
-            if (pageName === 'downloadPage' && page.activeComponent != 'downloadPage') {
-                version_list('vanilla')
-            }
+            // if (pageName === 'downloadPage' && page.activeComponent != 'downloadPage') {
+            //     version_list('vanilla')
+            // }
             if (pageName === 'settings') {
                 page.transitionName = 'zoom-out'
                 if ($("#sidebar").hasClass("sidebar-close")) {

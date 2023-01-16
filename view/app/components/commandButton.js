@@ -29,8 +29,7 @@ export const commandButton = {
 };
 export const commandButtonMini = {
     template: /* html */ `
-            <button class="command-button" v-bind="$attrs"
-            :onclick="click">{{text}}</button>
+            <button v-bind="$attrs" class="command-button">{{text}}</button>
         `,
     props: {
         text: String,

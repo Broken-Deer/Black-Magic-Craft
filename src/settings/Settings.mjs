@@ -57,7 +57,7 @@ function getSettings() {
                 },
                 appearance: {
                     theme: "default",
-                    themecolor: "#600081",
+                    themecolor: "#6a11cb",
                     backgroundType: "Gradient"
                 },
                 download: {

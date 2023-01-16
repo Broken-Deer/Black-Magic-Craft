@@ -40,6 +40,7 @@ export default {
     }
   },
   template: /* html */ `
+  <KeepAlive>
   <div id="AF3BE70D">
     <card :title="ui.global_settings.java_path_title" :description=" ui.global_settings.java_path_description" icon="java-logo fa-brands">
       <checkbox :name="ui.global_settings.auto_choose_java" click="disable(this,'E16616C6')"  config="globle.game.autojv"></checkbox>
@@ -108,6 +109,7 @@ export default {
       <checkbox :name="ui.global_settings.use_system_OpenAL" config="globle.game.sysOpenAL"></checkbox>
     </card>
   </div>
+  </KeepAlive>
    
 `,
   components: { inputText, checkbox, cardHeader, commandButton, sliderBar, inputTextMini, card },

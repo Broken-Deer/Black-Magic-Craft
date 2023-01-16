@@ -25,3 +25,6 @@ window.onload = () => {
     ipc.send('onload')
     ipc.send('event-obj')
 };
+
+/* Vue Apps */
+var page

@@ -7,7 +7,7 @@ export default {
         }
     },
     template: /* html */ `
-    <div class="dialog_main" id="color_chooser">
+    <div class="dialog_main" id="color_chooser" style="display; none">
         <div>
             <ul>
                 <li>

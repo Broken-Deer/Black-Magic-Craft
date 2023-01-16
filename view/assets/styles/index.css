@@ -11,6 +11,19 @@
     background: rgba(45, 170, 219, 0.3);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    height: fit-content;
+}
+
+li {
+    list-style: none;
+}
+
 .text-center {
     text-align: center;
 }
@@ -77,12 +90,14 @@ img {
 div.title-bar {
     height: 50px;
     -webkit-app-region: drag;
-    /* border-radius: 8px 8px 0 0; */
     display: flex;
     justify-content: space-between;
-    background: rgba(var(--theme-color), 1);
     color: #fff;
+    background-image: linear-gradient(90deg, #65379b 0%, #764fc1 50%, #65379b 100%);
+    animation: 3s background-position cubic-bezier(1, 1, 0, 0) infinite;
 }
+
+.title-bar {}
 
 div.title {
     display: flex;
@@ -278,9 +293,9 @@ a {
     color: #007bff;
 }
 
-.info {
+/* .info {
     padding: 5px 5px 5px 10px;
-}
+} */
 
 .user-panel {
     margin: 0 0 1rem 0;
@@ -414,11 +429,11 @@ div.page {
 
 .card-header h4 {
     font-weight: 100;
-    height: 1.3em;
+    height: 20.5px;
 }
 
 .card-header p {
-    font-size: 0.7rem;
+    font-size: 12.3px;
     color: #0000009c;
     margin: 0;
     font-weight: normal;
@@ -441,8 +456,8 @@ div.page {
     padding: 0;
     display: flex;
     flex-direction: column;
+    transition: all 300ms cubic-bezier(0.75, -0.01, 0.2, 1);
     justify-content: flex-end;
-    transition: all 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .card-body>div {
@@ -644,16 +659,23 @@ div.page>iframe>* {
     align-items: center;
 }
 
+.dialog>div {
+    animation: 0.4s dialog cubic-bezier(0, 0.47, 0.25, 1);
+}
+
 .dialog_display {
     opacity: 1;
     z-index: 20000;
     pointer-events: all;
 }
 
+.dialog_display>div {
+    animation: 0.4s dialog cubic-bezier(0, 0.47, 0.25, 1);
+}
+
 .dialog_main {
     border-radius: 8px;
     background: #fff;
-    animation: 0.4s dialog cubic-bezier(0, 0.47, 0.25, 1);
     transition: all 0.2s ease;
     box-shadow: 0 0 50px 0px #00000033;
 }
@@ -675,18 +697,6 @@ div.page>iframe>* {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-@keyframes dialog {
-    from {
-        transform: scale(0.9);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
 }
 
 #login-fail-msg {
@@ -811,40 +821,6 @@ ul.list div.button i::before {
 ul.list hr {
     border: none;
     border-bottom: 1px solid #00000030;
-}
-
-#download_pg div.input {
-    margin-bottom: 0;
-}
-
-#download_pg .card {
-    margin: 20px 0 0px 0;
-    width: -webkit-fill-available;
-    background: #fff;
-    border-radius: 6px;
-    border: 1px solid hsla(210, 18%, 87%, 1);
-}
-
-#download_pg .card-body>div {
-    margin: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#download_pg .card-body {
-    border-radius: 7px 7px 0 0;
-    /* box-shadow: 0px 3px 9px 0px #00000014; */
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 19px 0 0;
-}
-
-#download_pg div.input {
-    justify-content: flex-start;
 }
 
 .list-last-one {
@@ -1053,17 +1029,21 @@ div.child-sidebar i {
     justify-content: center;
     align-items: center;
 }
-div.child-sidebar i.add{
+
+div.child-sidebar i.add {
     width: 36px;
     height: 36px;
     transition: all .2s ease;
 }
+
 div.child-sidebar i.add:hover {
     color: rgb(var(--theme-color));
     background: #0000000f;
 }
 
-div.child-sidebar i.add:active {transform: scale(0.86);}
+div.child-sidebar i.add:active {
+    transform: scale(0.86);
+}
 
 #main .rua {
     flex: 1;
@@ -1071,7 +1051,8 @@ div.child-sidebar i.add:active {transform: scale(0.86);}
     flex-direction: column;
     align-items: center;
     overflow: hidden overlay;
-    padding: 4px 16px;
+    padding: 4px 16px 20px 16px;
+    position: relative;
 }
 
 #download_pg .input-data-list {
@@ -1344,42 +1325,54 @@ ul.gamelist>li {
 
 .list-item {
     display: flex;
-    padding: 8px 10px;
+    padding: 10px 12px;
     border-radius: 8px;
     transition: all .1s cubic-bezier(0, 0.43, 0.25, 1);
     justify-content: space-between;
     border: 1px solid #00000017;
     background: #fdfdfd;
     margin-bottom: 6px;
+    position: relative;
+    flex-direction: row-reverse;
+    overflow: hidden;
 }
 
 .list-item>div {
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .list-item>div:first-child {
     flex: 1;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     overflow-y: visible;
-    justify-content: flex-start;
+    justify-content: flex-end;
+}
+
+.list-item>div>div:last-child {
+    max-width: inherit;
 }
 
 .list-item div.logo {
     flex-shrink: 0;
-    width: 32px;
+    width: 31px;
     height: 32px;
     background-size: cover;
-    margin-right: 10px;
+    margin-right: 6px;
     overflow: hidden;
     border-radius: 4px;
-    image-rendering: pixelated;
+    /* image-rendering: pixelated; */
     background-image: url(./assets/images/Unknown_server.webp);
 }
 
 .list-item h4 {
     font-weight: normal;
     font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100vw - 530px);
 }
 
 .list-item p {
@@ -1388,7 +1381,7 @@ ul.gamelist>li {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100%);
+    max-width: calc(100vw - 530px);
 }
 
 .list-item .list-item-btn {
@@ -1400,6 +1393,7 @@ ul.gamelist>li {
     transition: all .2s ease;
     font-size: 15px;
     margin: 0 6px;
+    z-index: 1;
 }
 
 .list-item .list-item-btn:hover {
@@ -1411,6 +1405,114 @@ ul.gamelist>li {
 }
 
 ul.in-card {
-    max-height: 300px;
+    max-height: 350px;
     overflow: overlay;
+    width: 100%;
+}
+
+li.list-group>div {
+    padding: 6px 4px;
+    margin: 0px 6px 10px 6px;
+    position: sticky;
+    left: 0;
+    top: -4px;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-bottom: 1px solid #00000024;
+    z-index: 114514;
+}
+
+li.list-group>ul {
+    padding: 4px 10px;
+}
+
+li.list-group>div p {
+    font-size: 20px;
+    font-weight: 800;
+    margin-left: -6px;
+}
+
+li.list-item-active {
+    background-color: #000;
+}
+
+li.choose-able {}
+
+/* input.in-list-item {
+    display: none;
+} */
+
+.list-item input {
+    appearance: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    border: 0;
+    width: 100%;
+    height: calc(100% + 1px);
+    border-radius: 8px;
+}
+
+.list-item input:hover {
+    background: #0000000f;
+}
+
+.list-item input:active {
+    background: #00000029;
+}
+
+.list-item input:checked {
+    background: rgba(var(--theme-color), 0.09);
+    color: rgba(var(--theme-color), 1);
+}
+
+.list-item input~div.radio {}
+
+.list-item input~div.radio::before {
+    content: '';
+    background-color: rgba(var(--theme-color), 1);
+    height: 14px;
+    width: 4px;
+    position: relative;
+    left: -11px;
+    border-radius: 5px;
+    transition: all 0.15s ease;
+    opacity: 0;
+}
+
+.list-item input:checked~div.radio::before {
+    height: 20px;
+    opacity: 1;
+}
+
+.flex-start {
+    justify-content: flex-start;
+}
+
+.newInstanceInfo {
+    display: flex;
+    margin-bottom: 12px;
+    height: 40px;
+    align-items: center;
+}
+
+.newInstanceInfo .icon {
+    background-image: url(../images/Grass_Block.webp);
+    background-size: cover;
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+}
+
+.newInstanceInfo .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.newInstanceInfo h4 {
+    /* font-weight: normal; */
+    font-size: 15px;
 }

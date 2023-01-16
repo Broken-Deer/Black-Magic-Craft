@@ -17,40 +17,41 @@
  */
 
 import { ipcMain } from "electron";
-import { newInstance, renameInstance, deleteInstance, getInstances } from "./InstanceManager.mjs";
+import { newInstance, renameInstance, deleteInstance, getInstances, hasInstance } from "./InstanceManager.mjs";
 import { addMod, getModFileSystem, getModFilePath, getModMeta, getMods, getModType, removeMod } from "./Mod.mjs";
 import { addResourcepacks, getResourcepacks, removeResourcepacks } from "./Resourcepack.mjs";
 import { addShaderpack, getShaderpacks, removeShaderpack } from "./Shaderpack.mjs";
 import { addWorld, getWorldInfo, getWorldList, getWorldName, removeWorld } from "./Worlds.mjs";
 
-var activeID = 0 // 对应WareHouse.js文件的activeID，用来表示用户正在查看的instance。获取列表时如果发现此id与调用函数时获取的id不同，则认定用户在加载完成之前离开了此页面并停止查询
+var activeID = 0 // 对应WareHouse.js文件的activeID，用来表示用户正在查看的instance。获取列表时如果发现此id与调用函数时获取的id不同，则认定用户在加载完成之前离开了此页面并停止查询存档、模组等信息
 function setInstanceManagerDetector() {
-    ipcMain.on('new-instance', async (event, {
-        instanceName,
-        minecraftVersion,
-        forgeVersion,
-        liteloaderVersion,
-        fabricLoaderVersion,
-        optifineVersion,
-        quiltVersion,
-        author
+    ipcMain.handle('new-instance', async (event, {
+        name,
+        minecraft,
+        forge,
+        // liteloaderVersion,
+        fabric,
+        // optifineVersion,
+        quilt,
+        // author
     }) => {
         let result
         let err
         try {
             result = await newInstance(
-                instanceName,
-                minecraftVersion,
-                forgeVersion,
-                liteloaderVersion,
-                fabricLoaderVersion,
-                optifineVersion,
-                quiltVersion,
-                author)
+                name,
+                minecraft,
+                forge,
+                // liteloaderVersion,
+                fabric,
+                // optifineVersion,
+                quilt,
+                // author
+            )
         } catch (error) {
             err = error
         }
-        event.reply('new-instance', { result: result, err: err })
+        return { result: result, err: err }
     })
     ipcMain.on('rename-instance', async (event, { oldInstanceName, newInstanceName }) => {
         let result
@@ -74,6 +75,9 @@ function setInstanceManagerDetector() {
     })
     ipcMain.handle('get-instances', async () => {
         return await getInstances()
+    })
+    ipcMain.handle('has-instance', async (event, instanceName) => {
+        return await hasInstance(instanceName)
     })
     ipcMain.handle('get-mod-meta', async (event, { instanceName, modfileName }) => {
         try {
@@ -185,7 +189,7 @@ function setInstanceManagerDetector() {
     ipcMain.handle('change-activeID', (event, id) => {
         activeID = id
     })
-    
+
 }
 
 function GetActiveID() {

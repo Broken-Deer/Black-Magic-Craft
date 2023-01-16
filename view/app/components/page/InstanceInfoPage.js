@@ -21,10 +21,12 @@ export default {
         progressBar
     },
     template: /* template */`
+    <KeepAlive>
     <div>
     <div class="version-info card" :style="banner">
         <div>
-            <div><img src="./assets/images/Grass_Block_JE2.webp">{{instanceInfo.minecraftVersion}}</div>
+            <div><img src="./assets/images/minecraft.webp">{{instanceInfo.minecraftVersion}}</div>
+            <Transition name="popup">
             <div v-if="isDownloading" style="display: flex;
             flex-direction: column;">
             <p v-if="loading && !downloadedDone">正在检查版本要求</p>
@@ -33,6 +35,7 @@ export default {
             <progress-bar :loading="loading" :value="downloading.percentage" width="174"></progress-bar>
             <p v-if="!loading && !downloadedDone">{{downloading.progress}}MB / {{downloading.total}}MB</p>
             </div>
+            </Transition>
         </div>
         <div>
             <p class="version-name">{{instanceInfo.instanceName}}</p>
@@ -108,6 +111,7 @@ export default {
             <p class="text-center text-gray text-italic" v-if="this.instanceInfo.shaderpacksIsLoading">正在加载...</p>
     </card>
 </div>
+</KeepAlive>
     `,
     props: {
         saves: Array,

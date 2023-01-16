@@ -4,7 +4,6 @@ div.input {
     align-items: center;
     margin-bottom: 0.6rem;
     position: relative;
-    bottom: 0;
     height: 32px;
     pointer-events: none;
 }
@@ -220,6 +219,7 @@ button.command-button {
     border-radius: 4px;
     transition: all .1s ease;
     pointer-events: all;
+    margin-left: auto;
 }
 
 button.command-button:active,
@@ -724,5 +724,24 @@ div#color_chooser>div:last-child>ul>li input:focus-visible {
 }
 
 :root {
-    --theme-color: 96, 0, 129;
+    --theme-color: 101,55,155;
 }
+
+/* * {
+    animation: progress-loading 1.6s cubic-bezier(0.66, 0.01, 0.5, 0.97) 0s infinite;
+}
+
+@keyframes progress-loading {
+    0% {
+        transform: scale(1) translate(-10px,0) 
+    }
+
+    50% {
+        transform: scale(1.05) translate(10px,0px) 
+    }
+
+    100% {
+        transform: scale(1) translate(0,0) 
+    }
+}
+ */

@@ -61,5 +61,4 @@ export async function InstallGameWithForge(versionName, MinecraftVersion, ForgeV
             await MargeVersionJSON(path.join(MinecraftLocation, `versions/${versionName}/${versionName}.json`))
         )
     );
-    event.reply('download-complete', instanceName)
 }

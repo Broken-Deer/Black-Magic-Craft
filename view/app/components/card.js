@@ -24,22 +24,21 @@ export default {
         typeof this.margin == "string" ? (margin = this.margin.split(",")) : (margin = "");
         return {
             cardStyle: `margin: ${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px;flex: ${this.flex}`,
-            bodyStyle: `width: ${this.width}px;height: ${this.height}px;${this.isSwaped ? "height: 0;overflow: hidden;" : ""
-                }`,
+            bodyClass: this.flexStart ? 'card-body flex-start' : 'card-body',
+            bodyStyle: `width: ${this.width}px;height: ${this.height}px;${this.isSwaped ? "height: 0;overflow: hidden;" : ""};`,
             content: this.padding ? `margin: ${this.padding[0]}px ${this.padding[1]}px ${this.padding[2]}px ${this.padding[3]}px;` : '',
             contentClass: this.isSwaped ? "dont_display" : "",
             cardClass: this.isSwaped ? "card not-expanded" : "card",
-            headStyle: this.cardHeader ? "" : "display: none",
         };
     },
     template: /* html */ `
     <div :class="cardClass" :style="cardStyle">
-    <card-header :title="title" :description="description" :icon="icon" :canSwap="canSwap" :style="headStyle"></card-header>
-        <div class="card-body" :style="bodyStyle">
-            <div :style="content" :class="contentClass">
-            <slot></slot>
-            </div>
+    <card-header v-if="this.cardHeader" :title="title" :description="description" :icon="icon" :canSwap="canSwap" :logoPixelated="logoPixelated"></card-header>
+    <div :class="bodyClass" :style="bodyStyle">
+        <div :style="content" :class="contentClass">
+        <slot></slot>
         </div>
+    </div>
     </div>
     `,
     props: {
@@ -52,6 +51,8 @@ export default {
         margin: String,
         flex: String,
         icon: String,
+        logoPixelated: Boolean,
+        flexStart: Boolean,
         cardHeader: {
             type: Boolean,
             default: true,

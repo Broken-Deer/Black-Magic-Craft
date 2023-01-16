@@ -10,6 +10,7 @@ export default {
     return zh_cn;
   },
   template: /* html */ `
+  <KeepAlive>
   <div>
   <div class="card">
   <card-header title="主题" description="更改主题、加载自定义主题" icon="brush"></card-header>
@@ -31,7 +32,7 @@ export default {
   </div>
 </div>
   </div>
-   
+  </KeepAlive>
 `,
   components: { inputText, checkbox, cardHeader, commandButton },
   methods: {
